@@ -102,6 +102,6 @@ def fine_tune():
             epochs=epochs,
             verbose=1)
 
-        model.save('model_'+str(epochs)+'epochs.h5')
+        model.save('model_'+str(epochs)+'epoch.h5')
 
 fine_tune()
