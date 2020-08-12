@@ -32,7 +32,7 @@ labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', '
 for label in labels:
     # load testing data
     R = np.load(DATA_DIRECTORY + '/Tobacco_test/' + label + '.npy')
-    # tranform blackWhite to RGB
+    # transform blackWhite to RGB
 
     X = np.stack((R[:][:][:], R[:][:][:], R[:][:][:]), axis=3)
     # load labels

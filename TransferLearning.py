@@ -26,6 +26,39 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 
 DATA_DIRECTORY = 'Data'
 
+def fetch_data():
+    '''
+    collect all training or test numpy arrays plus labels and shuffle them
+    '''
+    labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
+    # load training data
+    X = np.load(DATA_DIRECTORY + '/Tobacco_train/' + labels[0] + '.npy')
+    # load labels
+    r = np.load(DATA_DIRECTORY + '/Tobacco_train/' + labels[0] + '_target.npy')
+    y = np.stack([r] * X.shape[0])
+    print(X.shape)
+    print(y.shape)
+    for label in labels[1:]:
+        print(label)
+        # load training data
+        Xstar = np.load(DATA_DIRECTORY + '/Tobacco_train/' + label + '.npy')
+        X = np.concatenate((X,Xstar),axis=0)
+        # load labels
+        r = np.load(DATA_DIRECTORY + '/Tobacco_train/' + label + '_target.npy')
+        ystar = np.stack([r] * Xstar.shape[0])
+        y = np.concatenate((y,ystar),axis=0)
+        print(X.shape)
+        print(y.shape)
+
+    s = np.arange(X.shape[0])
+    np.random.shuffle(s)
+    X = X[s]
+    y = y[s]
+
+    return(X,y)
+
+
+
 def fine_tune():
     # create the base pre-trained model
     base_model = InceptionV3(weights='imagenet', include_top=False)
@@ -57,9 +90,7 @@ def fine_tune():
     labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
     for label in labels:
         #load training data
-        R = np.load(DATA_DIRECTORY+'/Tobacco_train/'+label+'.npy')
-        #tranform blackWhite to RGB
-        X = np.stack((R[:][:][:],R[:][:][:],R[:][:][:]), axis=3)
+        X = np.load(DATA_DIRECTORY+'/Tobacco_train/'+label+'.npy')
         #load labels
         r = np.load(DATA_DIRECTORY+'/Tobacco_train/'+label+'_target.npy')
         y = np.stack([r]*X.shape[0])
@@ -104,4 +135,21 @@ def fine_tune():
 
         model.save('model_'+str(epochs)+'epoch.h5')
 
-fine_tune()
+
+def retrain(model,epochs,batch_size,unseen_batch_class):#,unseen_batch_target):
+
+    model = keras.models.load_model(model)
+    print(model.summary())
+    X = np.load(DATA_DIRECTORY + '/Tobacco_unseen/' + unseen_batch_class + '.npy')
+    # load labels
+    r = np.load(DATA_DIRECTORY + '/Tobacco_unseen/' + unseen_batch_class + '_target.npy')
+    y = np.stack([r] * X.shape[0])
+    print('start retraining')
+    model.fit(X,y,batch_size=batch_size,
+            epochs=epochs,
+            verbose=1)
+
+    model.save(model+ '_retrained.h5')
+
+
+#retrain('model_1epochs.h5',1,32,'Email')
