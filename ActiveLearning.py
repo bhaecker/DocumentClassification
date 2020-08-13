@@ -28,36 +28,35 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 DATA_DIRECTORY = 'Data'
 
 #unseen_data is a class in our setup
-def seperation(model,unseen_data,batch_size,method):
+def seperation(X,y,model,batch_size,method):
     '''
     unseen data gets ranked with respect to the model predictions and method
     returns batch_sized batch of most informative samples and remaining samples
     '''
-
-    # load unseen data
-    R = np.load(DATA_DIRECTORY + '/Tobacco_unseen/'+unseen_data+'.npy')
-    # transform blackWhite to RGB
-    X = np.stack((R[:][:][:], R[:][:][:], R[:][:][:]), axis=3)
-    #get the right data type for model prediction
-    X = X.astype('float16')
-    model = keras.models.load_model(model)
-    ystar = model.predict(X)
+    try:
+        ystar = model.predict(X)
+    except:
+        model = keras.models.load_model(model)
+        ystar = model.predict(X)
+    #print('happy')
     scores = np.array(list(map(method,ystar)))
     #todo check if we need the highest or lowest values for all functions
     n_highest = np.argpartition(scores, -batch_size)[-batch_size:]
-    #TODO implement transforme blackWhite to RGB in preprocessing already !!
-    #Todo mix trainingsdata etc
 
     #seperate unseen data in winner and looser data set
     Xwinner = X[n_highest,:,:]
+    ywinner = y[n_highest]
 
     mask = np.ones_like(scores,dtype = bool)
     mask[n_highest] = False
     Xloser = X[mask,:,:]
+    yloser = y[mask]
+    print('seperation made')
+    #print(Xwinner.shape)
+    #print(Xloser.shape)
 
-    print(Xwinner.shape)
-    print(Xloser.shape)
+    #print(ywinner.shape)
+    #print(yloser.shape)
 
-    return(Xwinner,Xloser)
+    return(Xwinner,ywinner,Xloser,yloser)
 
-print(seperation('model_0epochs.h5','Resume',3,margin_sampling_fn))

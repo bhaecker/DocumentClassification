@@ -24,42 +24,48 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 
+from Testing import loadmodel,savemodel
+
+
+
 DATA_DIRECTORY = 'Data'
 
-def fetch_data():
+def fetch_data(string):
     '''
-    collect all training or test numpy arrays plus labels and shuffle them
+    collect all training/test or unseen numpy arrays plus labels and shuffle them
     '''
+    file = '/Tobacco_'+string+'/'
     labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
     # load training data
-    X = np.load(DATA_DIRECTORY + '/Tobacco_train/' + labels[0] + '.npy')
+    X = np.load(DATA_DIRECTORY + file + labels[0] + '.npy')
     # load labels
-    r = np.load(DATA_DIRECTORY + '/Tobacco_train/' + labels[0] + '_target.npy')
+    r = np.load(DATA_DIRECTORY + file + labels[0] + '_target.npy')
     y = np.stack([r] * X.shape[0])
-    print(X.shape)
-    print(y.shape)
     for label in labels[1:]:
-        print(label)
         # load training data
-        Xstar = np.load(DATA_DIRECTORY + '/Tobacco_train/' + label + '.npy')
+        Xstar = np.load(DATA_DIRECTORY + file + label + '.npy')
         X = np.concatenate((X,Xstar),axis=0)
         # load labels
-        r = np.load(DATA_DIRECTORY + '/Tobacco_train/' + label + '_target.npy')
+        r = np.load(DATA_DIRECTORY + file + label + '_target.npy')
         ystar = np.stack([r] * Xstar.shape[0])
         y = np.concatenate((y,ystar),axis=0)
-        print(X.shape)
-        print(y.shape)
+
 
     s = np.arange(X.shape[0])
     np.random.shuffle(s)
     X = X[s]
     y = y[s]
+    print(string+' data fetched')
 
     return(X,y)
 
 
 
-def fine_tune():
+def fine_tune(X,y,epochs):
+    '''
+    fine tune Inception image network to our data set
+    '''
+
     # create the base pre-trained model
     base_model = InceptionV3(weights='imagenet', include_top=False)
     # save model
@@ -86,70 +92,104 @@ def fine_tune():
     # compile the model (should be done *after* setting layers to non-trainable)
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
 
-    #train each class
-    labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
-    for label in labels:
-        #load training data
-        X = np.load(DATA_DIRECTORY+'/Tobacco_train/'+label+'.npy')
-        #load labels
-        r = np.load(DATA_DIRECTORY+'/Tobacco_train/'+label+'_target.npy')
-        y = np.stack([r]*X.shape[0])
-
-
-        # train the model on the new data for a few epochs
-        batch_size = 32
-        epochs = 1
-        print('training for class '+label)
-        model.fit(X, y,
+    # train the model on the new data for a few epochs
+    batch_size = 32
+    epochs = epochs
+    #print('training for class '+label)
+    model.fit(X, y,
             batch_size=batch_size,
             epochs=epochs,
             verbose=1)
 
-        # at this point, the top layers are well trained and we can start fine-tuning
-        # convolutional layers from inception V3. We will freeze the bottom N layers
-        # and train the remaining top layers.
+    # at this point, the top layers are well trained and we can start fine-tuning
+    # convolutional layers from inception V3. We will freeze the bottom N layers
+    # and train the remaining top layers.
 
-        # let's visualize layer names and layer indices to see how many layers
-        # we should freeze:
-        #for i, layer in enumerate(base_model.layers):
-            #print(i, layer.name)
+    # let's visualize layer names and layer indices to see how many layers
+    # we should freeze:
+    #for i, layer in enumerate(base_model.layers):
+    #print(i, layer.name)
 
-        # we chose to train the top 2 inception blocks, i.e. we will freeze
-        # the first 249 layers and unfreeze the rest:
-        for layer in model.layers[:249]:
-            layer.trainable = False
-        for layer in model.layers[249:]:
-            layer.trainable = True
+    # we chose to train the top 2 inception blocks, i.e. we will freeze
+    # the first 249 layers and unfreeze the rest:
+    for layer in model.layers[:249]:
+        layer.trainable = False
+    for layer in model.layers[249:]:
+        layer.trainable = True
 
-        # we need to recompile the model for these modifications to take effect
-        # we use SGD with a low learning rate
-        from tensorflow.keras.optimizers import SGD
-        model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy')
+    # we need to recompile the model for these modifications to take effect
+    # we use SGD with a low learning rate
+    from tensorflow.keras.optimizers import SGD
+    model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy')
 
-        # we train our model again (this time fine-tuning the top 2 inception blocks
-        # alongside the top Dense layers
-        model.fit(X, y,
-            batch_size=batch_size,
-            epochs=epochs,
-            verbose=1)
+    # we train our model again (this time fine-tuning the top 2 inception blocks
+    # alongside the top Dense layers
+    model.fit(X, y,
+        batch_size=batch_size,
+        epochs=epochs,
+        verbose=1)
 
-        model.save('model_'+str(epochs)+'epoch.h5')
+    #model.save('model_'+str(epochs)+'epochs.h5')
+    savemodel(model,'model_'+str(epochs)+'epochs')
+
+    return(model)
 
 
-def retrain(model,epochs,batch_size,unseen_batch_class):#,unseen_batch_target):
-
-    model = keras.models.load_model(model)
-    print(model.summary())
-    X = np.load(DATA_DIRECTORY + '/Tobacco_unseen/' + unseen_batch_class + '.npy')
-    # load labels
-    r = np.load(DATA_DIRECTORY + '/Tobacco_unseen/' + unseen_batch_class + '_target.npy')
-    y = np.stack([r] * X.shape[0])
+def retrain(model,epochs,batch_size,X,y):
+    '''
+    retrain model
+    '''
+    if type(model) == str:
+        model = loadmodel(model)
     print('start retraining')
     model.fit(X,y,batch_size=batch_size,
             epochs=epochs,
             verbose=1)
+    savemodel(model,'retrained_'+str(epochs)+'epochs')
+    return(model)
 
-    model.save(model+ '_retrained.h5')
+################
+from ActiveLearning import seperation
+from baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
+from Testing import tester
+from tensorflow.python.keras.metrics import Metric
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
 
+#train the model
+epochs = 0
 
-#retrain('model_1epochs.h5',1,32,'Email')
+Xtrain,ytrain = fetch_data('train')
+
+model_base = fine_tune(Xtrain,ytrain,epochs)
+
+#test the model
+#print('***base line performance***')
+Xtest,ytest, = fetch_data('test')
+#ypred = tester(Xtest,ytest,'model_'+str(epochs)+'epochs')
+
+#get unseen data
+Xunseen,yunseen = fetch_data('unseen')
+
+#retrain with random unseen data
+print('***random choosen samples***')
+Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,random_fn)
+model_random = retrain(model_base,1,32,Xwinner,ywinner)
+tester(Xtest,ytest,model_random)
+
+#retrain with least_confident_fn unseen data
+print('***highest least confident samples***')
+Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,least_confident_fn)
+model_ent = retrain(model_base,1,32,Xwinner,ywinner)
+tester(Xtest,ytest,model_ent)
+
+#retrain with most informative unseen data
+print('***highest entropy samples***')
+Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,entropy_fn)
+model_ent = retrain(model_base,1,32,Xwinner,ywinner)
+tester(Xtest,ytest,model_ent)
+
+#todo: balance out classes during training process
+#a = np.argmax(ytrain, axis=1)
+#unique, counts = np.unique(a, return_counts=True)
+#print(dict(zip(unique, counts)))
