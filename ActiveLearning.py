@@ -4,7 +4,13 @@ import glob
 import os
 import numpy as np
 import keras
-from tensorflow import keras
+import tensorflow
+
+config = tensorflow.ConfigProto( device_count = {'GPU': 1 , 'CPU': 1} )
+sess = tensorflow.Session(config=config)
+keras.backend.set_session(sess)
+
+#from tensorflow import keras
 
 DATA_DIRECTORY = 'Data'
 
