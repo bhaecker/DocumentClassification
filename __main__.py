@@ -5,7 +5,7 @@ from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random
 
 import tensorflow as tf
 
-epochs = 0
+epochs = 5
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -26,17 +26,17 @@ def __main__():
     Xunseen,yunseen = fetch_data('unseen')
 
     print('***random choosen samples***')
-    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,random_fn)
+    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,25,random_fn)
     model_random = retrain(model_base,epochs,32,Xwinner,ywinner)
     tester(Xtest,ytest,model_random)
 
     print('***highest least confident samples***')
-    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,least_confident_fn)
+    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,25,least_confident_fn)
     model_ent = retrain(model_base,epochs,32,Xwinner,ywinner)
     tester(Xtest,ytest,model_ent)
 
     print('***highest entropy samples***')
-    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,entropy_fn)
+    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,25,entropy_fn)
     model_ent = retrain(model_base,epochs,32,Xwinner,ywinner)
     tester(Xtest,ytest,model_ent)
 
