@@ -3,9 +3,15 @@ from .Testing import tester
 from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 
+import tensorflow as tf
+
 epochs = 0
 
 def __main__():
+    print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
+
+    tf.config.experimental.list_physical_devices('GPU')
+    tf.device('/device:GPU:0')
 
     Xtrain,ytrain = fetch_data('train')
 

@@ -4,11 +4,16 @@ import glob
 import os
 import numpy as np
 import keras
-import tensorflow
+import tensorflow as tf
 
-config = tensorflow.ConfigProto( device_count = {'GPU': 1 , 'CPU': 1} )
-sess = tensorflow.Session(config=config)
-keras.backend.set_session(sess)
+import tensorflow as tf
+
+print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
+
+
+#config = tf.config.experimental(device_count = {'GPU': 1 , 'CPU': 1} )
+#sess = tf.Session(config=config)
+#keras.backend.set_session(sess)
 
 #from tensorflow import keras
 
