@@ -31,7 +31,7 @@ def make_split(split):
         images = np.asarray(images)
         images = np.stack((images[:][:][:], images[:][:][:], images[:][:][:]), axis=3)
         images = images.astype('float16')
-        np.save('Data/Tobacco_train/' + label + 's.npy', images)
+        np.save('Data/Tobacco_train/' + label + '.npy', images)
 
         images = [cv2.resize(imageio.imread(path), (244, 244)) for path in test_array_split]
         images = np.asarray(images)
