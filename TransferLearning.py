@@ -3,38 +3,26 @@ import math
 import glob
 import os
 import numpy as np
-import os.path as path
-from scipy import misc
-import imageio
-import keras
-from PIL import Image
-import cv2
-from tensorflow import keras
 
-from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
-from sklearn.model_selection import train_test_split
 from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint
 
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 
-from Testing import loadmodel,savemodel
+from .Testing import loadmodel,savemodel
 
 
 
-DATA_DIRECTORY = 'Data'
+DATA_DIRECTORY = 'DocumentClassification/Data/'
 
 def fetch_data(string):
     '''
     collect all training/test or unseen numpy arrays plus labels and shuffle them
     '''
-    file = '/Tobacco_'+string+'/'
+    file = 'Tobacco_'+string+'/'
     labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
     # load training data
     X = np.load(DATA_DIRECTORY + file + labels[0] + '.npy')
@@ -149,47 +137,3 @@ def retrain(model,epochs,batch_size,X,y):
     return(model)
 
 ################
-from ActiveLearning import seperation
-from baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
-from Testing import tester
-from tensorflow.python.keras.metrics import Metric
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
-
-#train the model
-epochs = 0
-
-Xtrain,ytrain = fetch_data('train')
-
-model_base = fine_tune(Xtrain,ytrain,epochs)
-
-#test the model
-#print('***base line performance***')
-Xtest,ytest, = fetch_data('test')
-#ypred = tester(Xtest,ytest,'model_'+str(epochs)+'epochs')
-
-#get unseen data
-Xunseen,yunseen = fetch_data('unseen')
-
-#retrain with random unseen data
-print('***random choosen samples***')
-Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,random_fn)
-model_random = retrain(model_base,1,32,Xwinner,ywinner)
-tester(Xtest,ytest,model_random)
-
-#retrain with least_confident_fn unseen data
-print('***highest least confident samples***')
-Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,least_confident_fn)
-model_ent = retrain(model_base,1,32,Xwinner,ywinner)
-tester(Xtest,ytest,model_ent)
-
-#retrain with most informative unseen data
-print('***highest entropy samples***')
-Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,100,entropy_fn)
-model_ent = retrain(model_base,1,32,Xwinner,ywinner)
-tester(Xtest,ytest,model_ent)
-
-#todo: balance out classes during training process
-#a = np.argmax(ytrain, axis=1)
-#unique, counts = np.unique(a, return_counts=True)
-#print(dict(zip(unique, counts)))
