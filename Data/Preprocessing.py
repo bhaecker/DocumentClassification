@@ -6,6 +6,7 @@ import numpy as np
 import os.path as path
 import imageio
 import cv2
+import random
 
 #load data for fine tuning
 
@@ -17,7 +18,11 @@ def make_split(split):
 
     for counter, label in enumerate(labels):
         #fetch all images of a label
+
         file_paths = glob.glob(os.path.join(FILE_DIRECTORY+label, '*.jpg'))
+
+        #shuffle to aviod bias
+        random.shuffle(file_paths)
         #split the collection of images with respect to input
         length = len(file_paths)
 
