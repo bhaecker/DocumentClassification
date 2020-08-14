@@ -5,3 +5,11 @@
 /elephant.jpg
 /Data/__init__.py
 /base_model.h5
+/retrained_10epochs.h5
+/retrained_1epochs.json
+/retrained_1epochs.h5
+/model_2epochs.h5
+/model_0epochs.json
+/model_0epochs.h5
+/base_model.h5
+/Data/_old/

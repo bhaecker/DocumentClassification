@@ -3,32 +3,18 @@ import math
 import glob
 import os
 import numpy as np
-import os.path as path
-from scipy import misc
-import imageio
-import keras
-from PIL import Image
-import cv2
+
+
+
 #from tensorflow import keras
-import keras.backend.tensorflow_backend as K
+#import keras.backend.tensorflow_backend as K
+import keras
 import tensorflow as tf
 
-from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
-from sklearn.model_selection import train_test_split
-from keras.models import Sequential, load_model
-from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
-from keras.callbacks import ModelCheckpoint
-
-from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from keras.models import model_from_json
 
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
-
 
 DATA_DIRECTORY = 'Data'
 
@@ -41,7 +27,7 @@ def savemodel(model,name):
     print('model saved')
 
 def loadmodel(name):
-    from keras.models import model_from_json
+
     json_file = open(str(name)+'.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
