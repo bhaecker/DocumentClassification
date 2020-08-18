@@ -7,7 +7,7 @@ from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random
 import tensorflow as tf
 import sys
 import numpy as np
-epochs = 30
+epochs = 10
 
 def __main__():
 

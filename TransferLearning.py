@@ -109,7 +109,7 @@ def fine_tune(X,y,epochs):
 
     # we need to recompile the model for these modifications to take effect
     # we use SGD with a low learning rate
-    from tensorflow.keras.optimizers import SGD
+    #from tensorflow.keras.optimizers import SGD
     model.compile(optimizer=Adam(lr=0.0001), loss='categorical_crossentropy',metrics=['accuracy']) #todo Try increasing the batch size and reduce the learning rate while training.
 
     # we train our model again (this time fine-tuning the top 2 inception blocks
