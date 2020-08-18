@@ -7,7 +7,10 @@ from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random
 import tensorflow as tf
 import sys
 import numpy as np
-epochs = 10
+
+epochs = 70
+batch_size = 128
+retrain_batch = 200
 
 def __main__():
 
@@ -18,11 +21,11 @@ def __main__():
 
     Xtrain,ytrain = fetch_data('train')
 
-    model_base,history_topDense,history_topBlocks = fine_tune(Xtrain,ytrain,epochs)
+    model_base,history_topDense,history_all = fine_tune(Xtrain,ytrain,epochs,batch_size)
 
-    np.save('history_topBlocks.npy',history_topBlocks.history)
-
-    np.save('history_topDense.npy', history_topDense.history)
+    np.save('history_topDense.npy',history_topDense.history)
+    np.save('history_all.npy', history_all.history)
+    print('history saved')
 
     #test the model
     print('***base line performance***')
@@ -33,18 +36,18 @@ def __main__():
     Xunseen,yunseen = fetch_data('unseen')
 
     print('***random choosen samples***')
-    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,25,random_fn)
-    model_random = retrain(model_base,epochs,32,Xwinner,ywinner)
+    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,retrain_batch,random_fn)
+    model_random, history = retrain(model_base,epochs,32,Xwinner,ywinner)
     tester(Xtest,ytest,model_random)
 
     print('***highest least confident samples***')
-    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,25,least_confident_fn)
-    model_ent = retrain(model_base,epochs,32,Xwinner,ywinner)
+    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,retrain_batch,least_confident_fn)
+    model_ent, history = retrain(model_base,epochs,32,Xwinner,ywinner)
     tester(Xtest,ytest,model_ent)
 
     print('***highest entropy samples***')
-    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,25,entropy_fn)
-    model_ent = retrain(model_base,epochs,32,Xwinner,ywinner)
+    Xwinner, ywinner, Xloser, yloser = seperation(Xunseen,yunseen,model_base,retrain_batch,entropy_fn)
+    model_ent, history = retrain(model_base,epochs,32,Xwinner,ywinner)
     tester(Xtest,ytest,model_ent)
 
 if __name__ == "__main__":

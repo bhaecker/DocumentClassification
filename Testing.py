@@ -45,7 +45,7 @@ def tester(Xtest,ytest,model):
         #model = tf.keras.models.load_model(model)
         model = loadmodel(model)
 
-    loss = model.evaluate(Xtest, ytest, verbose=1)
+    loss = model.evaluate(Xtest, ytest, verbose=0)
     print('loss :'+ str(loss))
 
     ypred = model.predict(Xtest)

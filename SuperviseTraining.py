@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-history=np.load('history_topDense.npy',allow_pickle='FALSE').item()
+history=np.load('history_topBlocks.npy',allow_pickle='FALSE').item()
 
 print(history)
 

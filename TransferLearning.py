@@ -50,7 +50,7 @@ def fetch_data(string):
 
 
 
-def fine_tune(X,y,epochs):
+def fine_tune(X,y,epochs,batch_size):
     '''
     fine tune Inception image network to X and y
     '''
@@ -65,9 +65,11 @@ def fine_tune(X,y,epochs):
     # add a global spatial average pooling layer
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
-    # let's add a fully-connected layer
-    x = Dense(256, activation='relu')(x)
-    x = Dropout(0.7)(x)
+    # let's add fully-connected layers
+    x = Dense(64, activation='relu')(x)
+    x = Dropout(0.5)(x)
+    x = Dense(64, activation='relu')(x)
+    x = Dropout(0.5)(x)
     # and a logistic layer -- let's say we have 10 classes
     predictions = Dense(10, activation='softmax')(x)
 
@@ -83,7 +85,7 @@ def fine_tune(X,y,epochs):
     model.compile(optimizer='Adam', loss='categorical_crossentropy',metrics=['accuracy'])
 
     # train the model on the new data for a few epochs
-    batch_size = 128
+
     #print('training for class '+label)
     history_topDense = model.fit(X, y,
             validation_split=0.2,
@@ -102,19 +104,19 @@ def fine_tune(X,y,epochs):
 
     # we chose to train the top 2 inception blocks, i.e. we will freeze
     # the first 249 layers and unfreeze the rest:
-    for layer in model.layers[:249]:
-        layer.trainable = False
-    for layer in model.layers[249:]:
+    #for layer in model.layers[:249]:
+        #layer.trainable = False
+    for layer in model.layers:
         layer.trainable = True
 
     # we need to recompile the model for these modifications to take effect
     # we use SGD with a low learning rate
-    #from tensorflow.keras.optimizers import SGD
+
     model.compile(optimizer=Adam(lr=0.0001), loss='categorical_crossentropy',metrics=['accuracy']) #todo Try increasing the batch size and reduce the learning rate while training.
 
     # we train our model again (this time fine-tuning the top 2 inception blocks
     # alongside the top Dense layers
-    history_topBlocks = model.fit(X, y,
+    history_all = model.fit(X, y,
         validation_split = 0.2,
         batch_size=batch_size,
         epochs=epochs,
@@ -123,7 +125,7 @@ def fine_tune(X,y,epochs):
     #model.save('model_'+str(epochs)+'epochs.h5')
     savemodel(model,'model_'+str(epochs)+'epochs')
 
-    return(model,history_topDense,history_topBlocks)
+    return(model,history_topDense,history_all)
 
 
 def retrain(model,epochs,batch_size,X,y):
@@ -133,10 +135,12 @@ def retrain(model,epochs,batch_size,X,y):
     if type(model) == str:
         model = loadmodel(model)
     print('start retraining')
-    model.fit(X,y,batch_size=batch_size,
+    history = model.fit(X,y,
+            validation_split=0.2,
+            batch_size=batch_size,
             epochs=epochs,
             verbose=1)
     savemodel(model,'retrained_'+str(epochs)+'epochs')
-    return(model)
+    return(model,history)
 
 ################
