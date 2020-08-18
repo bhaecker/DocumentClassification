@@ -80,12 +80,13 @@ def fine_tune(X,y,epochs):
         layer.trainable = False
 
     # compile the model (should be done *after* setting layers to non-trainable)
-    model.compile(optimizer='Adam', loss='categorical_crossentropy')
+    model.compile(optimizer='Adam', loss='categorical_crossentropy',metrics=['accuracy'])
 
     # train the model on the new data for a few epochs
     batch_size = 128
     #print('training for class '+label)
     history_topDense = model.fit(X, y,
+            validation_split=0.2,
             batch_size=batch_size,
             epochs=0,
             verbose=1)
@@ -109,11 +110,12 @@ def fine_tune(X,y,epochs):
     # we need to recompile the model for these modifications to take effect
     # we use SGD with a low learning rate
     from tensorflow.keras.optimizers import SGD
-    model.compile(optimizer=Adam(lr=0.0001), loss='categorical_crossentropy') #todo Try increasing the batch size and reduce the learning rate while training.
+    model.compile(optimizer=Adam(lr=0.0001), loss='categorical_crossentropy',metrics=['accuracy']) #todo Try increasing the batch size and reduce the learning rate while training.
 
     # we train our model again (this time fine-tuning the top 2 inception blocks
     # alongside the top Dense layers
     history_topBlocks = model.fit(X, y,
+        validation_split = 0.2,
         batch_size=batch_size,
         epochs=epochs,
         verbose=1)
