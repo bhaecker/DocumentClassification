@@ -5,9 +5,10 @@ import os
 import numpy as np
 
 from keras.models import Sequential, load_model
-from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint
 
+from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
@@ -51,7 +52,7 @@ def fetch_data(string):
 
 def fine_tune(X,y,epochs):
     '''
-    fine tune Inception image network to our data set
+    fine tune Inception image network to X and y
     '''
 
     # create the base pre-trained model
@@ -60,12 +61,13 @@ def fine_tune(X,y,epochs):
     #base_model.save('base_model.h5')
     # load model
     #model = keras.models.load_model('model_1epochs.h5')
-    #print(base_model.summary())
+    print(base_model.summary())
     # add a global spatial average pooling layer
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
     # let's add a fully-connected layer
-    x = Dense(1024, activation='relu')(x)
+    x = Dense(256, activation='relu')(x)
+    x = Dropout(0.7)(x)
     # and a logistic layer -- let's say we have 10 classes
     predictions = Dense(10, activation='softmax')(x)
 
@@ -78,15 +80,14 @@ def fine_tune(X,y,epochs):
         layer.trainable = False
 
     # compile the model (should be done *after* setting layers to non-trainable)
-    model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+    model.compile(optimizer='Adam', loss='categorical_crossentropy')
 
     # train the model on the new data for a few epochs
-    batch_size = 32
-    epochs = epochs
+    batch_size = 128
     #print('training for class '+label)
     model.fit(X, y,
             batch_size=batch_size,
-            epochs=epochs,
+            epochs=0,
             verbose=1)
 
     # at this point, the top layers are well trained and we can start fine-tuning
@@ -95,8 +96,8 @@ def fine_tune(X,y,epochs):
 
     # let's visualize layer names and layer indices to see how many layers
     # we should freeze:
-    #for i, layer in enumerate(base_model.layers):
-    #print(i, layer.name)
+    for i, layer in enumerate(model.layers):
+        print(i, layer.name)
 
     # we chose to train the top 2 inception blocks, i.e. we will freeze
     # the first 249 layers and unfreeze the rest:
@@ -108,7 +109,7 @@ def fine_tune(X,y,epochs):
     # we need to recompile the model for these modifications to take effect
     # we use SGD with a low learning rate
     from tensorflow.keras.optimizers import SGD
-    model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy')
+    model.compile(optimizer=Adam(lr=0.0001), loss='categorical_crossentropy') #todo Try increasing the batch size and reduce the learning rate while training.
 
     # we train our model again (this time fine-tuning the top 2 inception blocks
     # alongside the top Dense layers
