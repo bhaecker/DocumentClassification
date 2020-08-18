@@ -88,7 +88,7 @@ def fine_tune(X,y,epochs):
     history_topDense = model.fit(X, y,
             validation_split=0.2,
             batch_size=batch_size,
-            epochs=0,
+            epochs=epochs,
             verbose=1)
 
     # at this point, the top layers are well trained and we can start fine-tuning
