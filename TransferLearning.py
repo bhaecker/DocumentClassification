@@ -85,7 +85,7 @@ def fine_tune(X,y,epochs):
     # train the model on the new data for a few epochs
     batch_size = 128
     #print('training for class '+label)
-    model.fit(X, y,
+    history_topDense = model.fit(X, y,
             batch_size=batch_size,
             epochs=0,
             verbose=1)
@@ -96,8 +96,8 @@ def fine_tune(X,y,epochs):
 
     # let's visualize layer names and layer indices to see how many layers
     # we should freeze:
-    for i, layer in enumerate(model.layers):
-        print(i, layer.name)
+    #for i, layer in enumerate(model.layers):
+        #print(i, layer.name)
 
     # we chose to train the top 2 inception blocks, i.e. we will freeze
     # the first 249 layers and unfreeze the rest:
@@ -113,7 +113,7 @@ def fine_tune(X,y,epochs):
 
     # we train our model again (this time fine-tuning the top 2 inception blocks
     # alongside the top Dense layers
-    model.fit(X, y,
+    history_topBlocks = model.fit(X, y,
         batch_size=batch_size,
         epochs=epochs,
         verbose=1)
@@ -121,7 +121,7 @@ def fine_tune(X,y,epochs):
     #model.save('model_'+str(epochs)+'epochs.h5')
     savemodel(model,'model_'+str(epochs)+'epochs')
 
-    return(model)
+    return(model,history_topDense,history_topBlocks)
 
 
 def retrain(model,epochs,batch_size,X,y):

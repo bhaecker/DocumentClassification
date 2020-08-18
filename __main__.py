@@ -3,24 +3,13 @@ from .Testing import tester
 from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 
-import tensorflow as tf
 
-epochs = 5
+import tensorflow as tf
+import sys
+import numpy as np
+epochs = 30
 
 def __main__():
-    import matplotlib.pyplot as plt
-    import numpy as np
-
-    t = np.arange(0.0, 2.0, 0.01)
-    s = 1 + np.sin(2 * np.pi * t)
-    plt.plot(t, s)
-
-    plt.title('About as simple as it gets, folks')
-    plt.show()
-
-
-
-
 
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
@@ -29,7 +18,11 @@ def __main__():
 
     Xtrain,ytrain = fetch_data('train')
 
-    model_base = fine_tune(Xtrain,ytrain,epochs)
+    model_base,history_topDense,history_topBlocks = fine_tune(Xtrain,ytrain,epochs)
+
+    np.save('history_topBlocks.npy',history_topBlocks.history)
+
+    np.save('history_topDense.npy', history_topDense.history)
 
     #test the model
     print('***base line performance***')
