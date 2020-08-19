@@ -9,11 +9,16 @@ import sys
 import numpy as np
 
 epochs = 10
-epochs_retrain = 10
+epochs_retrain = 1
 batch_size = 128
 retrain_batch = 50
 
 def __main__():
+    print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
+    tf.config.experimental.list_physical_devices('GPU')
+    tf.device('/device:GPU:0')
+
+
     Xtrain, ytrain = fetch_data('train')
     model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
     #savemodel(model,'testmodel')
@@ -24,10 +29,7 @@ def __main__():
 
 
     sys.exit()
-    print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
-    tf.config.experimental.list_physical_devices('GPU')
-    tf.device('/device:GPU:0')
 
     Xtrain,ytrain = fetch_data('train')
 
