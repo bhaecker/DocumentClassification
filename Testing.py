@@ -46,8 +46,8 @@ def tester(Xtest,ytest,model):
     return(accuracy,ypred)
 
 def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_methods):
-    '''
 
+    '''
     :param model: initial fine tuned model, which is retrained
     :param epochs_retrain: number of epochs to retrain
     :param retrain_size: number of samples to retrain with
@@ -55,6 +55,8 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     :param list_methods: list of methods to choose the samples for retraining
     :return two dimensional array over methods and retrain cycles with performance measures
     '''
+
+    #todo: retrain with new and old samples
 
     if type(model_base) == str:
         model_base = loadmodel(model_base)
@@ -67,6 +69,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     df = pd.DataFrame([[number_samples]+[base_performance]*len(list_methods)], columns = ['number of samples'] + [method.__name__ for method in list_methods])
 
     Xunseen_orig, yunseen_orig = fetch_data('unseen')
+    print(np.shape(Xunseen_orig))
     #Xunseen_orig, yunseen_orig = Xunseen_orig[:10], yunseen_orig[:10]
 
     for method in list_methods:

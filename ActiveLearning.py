@@ -10,6 +10,8 @@ import tensorflow as tf
 #sess = tf.Session(config=config)
 #keras.backend.set_session(sess)
 
+from.TransferLearning import loadmodel
+
 #from tensorflow import keras
 
 DATA_DIRECTORY = 'Data'
@@ -19,12 +21,10 @@ def seperation(X,y,model,batch_size,method):
     unseen data gets ranked with respect to the model predictions and method.
     returns batch_sized batch of most informative samples and remaining samples.
     '''
-    try:
-        ystar = model.predict(X)
-    except:
-        model = keras.models.load_model(model)
-        ystar = model.predict(X)
-    #print('happy')
+    if type(model) == str:
+        model = loadmodel(model)
+    ystar = model.predict(X)
+
     scores = np.array(list(map(method,ystar)))
     #todo check if we need the highest or lowest values for all functions
     n_highest = np.argpartition(scores, -batch_size)[-batch_size:]
