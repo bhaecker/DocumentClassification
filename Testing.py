@@ -82,7 +82,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         index = 1
         while number_samples <= np.shape(Xunseen_orig)[0]:
             print(method.__name__,number_samples)
-            Xtrain_new, ytrain_new = np.append(Xtrain_new,Xwinner), np.append(ytrain_new,ywinner)
+            Xtrain_new, ytrain_new = np.concatenate((Xtrain_new,Xwinner),axis=0), np.concatenate((ytrain_new,ywinner),axis=0)
             model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
             accuracy = tester(Xtest,ytest, model_new)[0]
             df.at[index, 'number of samples'] = number_samples
