@@ -4,24 +4,42 @@ import glob
 import os
 import numpy as np
 
-from keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
-from keras.callbacks import ModelCheckpoint
 
+import tensorflow as tf
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications.inception_v3 import InceptionV3
+from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 
-from .Testing import loadmodel,savemodel
-
-
+#from .Testing import loadmodel,savemodel
 
 DATA_DIRECTORY = 'DocumentClassification/Data/'
 
+def savemodel(model,name):
+    model.save_weights(str(name)+'.h5')
+    model_json = model.to_json()
+    with open(str(name)+'.json', "w") as json_file:
+        json_file.write(model_json)
+    json_file.close()
+    print('model saved')
+
+def loadmodel(name):
+
+    json_file = open(str(name)+'.json', 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    model = tf.keras.models.model_from_json(loaded_model_json)
+    model.load_weights(str(name)+'.h5')
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+    print('model loaded')
+    return(model)
+
+
+
 def fetch_data(string):
     '''
-    collect all training/test or unseen numpy arrays plus labels and shuffle them
+    collect ALL training/test or unseen numpy arrays plus labels and shuffle them
     '''
     file = 'Tobacco_'+string+'/'
     labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
@@ -136,7 +154,7 @@ def retrain(model,epochs,batch_size,X,y):
         model = loadmodel(model)
     print('start retraining')
     history = model.fit(X,y,
-            validation_split=0.2,
+            #validation_split=0.2,
             batch_size=batch_size,
             epochs=epochs,
             verbose=1)

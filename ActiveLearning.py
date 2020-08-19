@@ -14,11 +14,10 @@ import tensorflow as tf
 
 DATA_DIRECTORY = 'Data'
 
-#unseen_data is a class in our setup
 def seperation(X,y,model,batch_size,method):
     '''
-    unseen data gets ranked with respect to the model predictions and method
-    returns batch_sized batch of most informative samples and remaining samples
+    unseen data gets ranked with respect to the model predictions and method.
+    returns batch_sized batch of most informative samples and remaining samples.
     '''
     try:
         ystar = model.predict(X)
