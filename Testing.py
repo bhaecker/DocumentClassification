@@ -97,4 +97,5 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             number_samples = number_samples + retrain_size
             model_old = model_new
 
+    df.to_pickle("./RESULTS.pkl")
     return(df)
