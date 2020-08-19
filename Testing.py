@@ -63,6 +63,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:10], ytest[:10]
+    Xtrain, ytrain = fetch_data('train')
 
     base_performance = tester(Xtest, ytest, model_base)[0]
     number_samples = 0
@@ -70,17 +71,19 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
     Xunseen_orig, yunseen_orig = fetch_data('unseen')
     print(np.shape(Xunseen_orig))
+    print(np.shape(Xtrain))
     #Xunseen_orig, yunseen_orig = Xunseen_orig[:10], yunseen_orig[:10]
 
     for method in list_methods:
-
+        Xtrain_new, ytrain_new = Xtrain, ytrain
         Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base, retrain_size, method)
         number_samples = retrain_size
         model_old = model_base
         index = 1
-        while number_samples < np.shape(Xunseen_orig)[0]:
+        while number_samples <= np.shape(Xunseen_orig)[0]:
             print(method.__name__,number_samples)
-            model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xwinner,ywinner)[0]
+            Xtrain_new, ytrain_new = np.append(Xtrain_new,Xwinner), np.append(ytrain_new,ywinner)
+            model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
             accuracy = tester(Xtest,ytest, model_new)[0]
             df.at[index, 'number of samples'] = number_samples
             df.at[index, str(method.__name__)] = accuracy

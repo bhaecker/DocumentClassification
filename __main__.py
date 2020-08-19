@@ -8,8 +8,8 @@ import tensorflow as tf
 import sys
 import numpy as np
 
-epochs = 20
-epochs_retrain = 20
+epochs = 10
+epochs_retrain = 10
 batch_size = 128
 retrain_batch = 50
 
