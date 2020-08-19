@@ -21,6 +21,9 @@ def seperation(X,y,model,batch_size,method):
     unseen data gets ranked with respect to the model predictions and method.
     returns batch_sized batch of most informative samples and remaining samples.
     '''
+    if np.shape(X)[0] == 0:
+        return(X,y,X,y)
+
     if type(model) == str:
         model = loadmodel(model)
     ystar = model.predict(X)

@@ -78,13 +78,12 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         number_samples = retrain_size
         model_old = model_base
         index = 1
-        while number_samples <= np.shape(Xunseen_orig)[0]:
+        while number_samples < np.shape(Xunseen_orig)[0]:
             print(method.__name__,number_samples)
             model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xwinner,ywinner)[0]
             accuracy = tester(Xtest,ytest, model_new)[0]
             df.at[index, 'number of samples'] = number_samples
             df.at[index, str(method.__name__)] = accuracy
-
 
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
 
