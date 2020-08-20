@@ -8,21 +8,20 @@ import tensorflow as tf
 import sys
 import numpy as np
 
-epochs = 1
-epochs_retrain = 1
+epochs = 30
+epochs_retrain = 10
 batch_size = 128
-retrain_batch = 200
+retrain_batch = 100
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-
     Xtrain, ytrain = fetch_data('train')
     model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
-    #savemodel(model,'testmodel')
 
+    #savemodel(model,'testmodel')
     #model = loadmodel('testmodel')
 
     print(experiment(model,epochs_retrain,retrain_batch,batch_size,[entropy_fn,least_confident_fn, margin_sampling_fn, random_fn]))

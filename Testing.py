@@ -56,8 +56,6 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     :return two dimensional array over methods and retrain cycles with performance measures
     '''
 
-    #todo: retrain with new and old samples
-
     if type(model_base) == str:
         model_base = loadmodel(model_base)
 
@@ -84,6 +82,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             print(method.__name__,number_samples)
             Xtrain_new, ytrain_new = np.concatenate((Xtrain_new,Xwinner),axis=0), np.concatenate((ytrain_new,ywinner),axis=0)
             model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
+            del model_old
             accuracy = tester(Xtest,ytest, model_new)[0]
             df.at[index, 'number of samples'] = number_samples
             df.at[index, str(method.__name__)] = accuracy

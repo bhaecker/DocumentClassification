@@ -3,16 +3,14 @@ import math
 import glob
 import os
 import numpy as np
-import keras
 import tensorflow as tf
+#from tensorflow import keras
 
 #config = tf.config.experimental(device_count = {'GPU': 1 , 'CPU': 1} )
 #sess = tf.Session(config=config)
 #keras.backend.set_session(sess)
 
-from.TransferLearning import loadmodel
-
-#from tensorflow import keras
+from .TransferLearning import loadmodel
 
 DATA_DIRECTORY = 'Data'
 
@@ -22,17 +20,24 @@ def seperation(X,y,model,batch_size,method):
     returns batch_sized batch of most informative samples and remaining samples.
     '''
     if np.shape(X)[0] == 0:
+        print(X.shape,y.shape)
         return(X,y,X,y)
+    if batch_size > np.shape(X)[0]:
+        X_empty = np.empty([0,np.shape(X)[1],np.shape(X)[2]])
+        y_empty = np.empty([0])
+        return(X,y,X_empty,y_empty)
 
     if type(model) == str:
         model = loadmodel(model)
     ystar = model.predict(X)
-
+    print(ystar)
     scores = np.array(list(map(method,ystar)))
-    #todo check if we need the highest or lowest values for all functions
+
+    #todo check everytime, if we need the highest or lowest values for ALL functions
+    #get the indices of the batch_sized highest scores
     n_highest = np.argpartition(scores, -batch_size)[-batch_size:]
 
-    #seperate unseen data in winner and looser data set
+    #seperate unseen data in winner and looser data set by the indices
     Xwinner = X[n_highest,:,:]
     ywinner = y[n_highest]
 
@@ -40,12 +45,13 @@ def seperation(X,y,model,batch_size,method):
     mask[n_highest] = False
     Xloser = X[mask,:,:]
     yloser = y[mask]
+
     print('seperation made')
+
     #print(Xwinner.shape)
     #print(Xloser.shape)
-
     #print(ywinner.shape)
     #print(yloser.shape)
-
     return(Xwinner,ywinner,Xloser,yloser)
+
 
