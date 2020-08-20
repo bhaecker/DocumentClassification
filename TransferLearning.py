@@ -16,6 +16,7 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 
 DATA_DIRECTORY = 'DocumentClassification/Data/'
 
+
 def savemodel(model,name):
     model.save_weights(str(name)+'.h5')
     model_json = model.to_json()

@@ -20,7 +20,6 @@ def seperation(X,y,model,batch_size,method):
     returns batch_sized batch of most informative samples and remaining samples.
     '''
     if np.shape(X)[0] == 0:
-        print(X.shape,y.shape)
         return(X,y,X,y)
     if batch_size > np.shape(X)[0]:
         X_empty = np.empty([0,np.shape(X)[1],np.shape(X)[2]])
@@ -30,7 +29,7 @@ def seperation(X,y,model,batch_size,method):
     if type(model) == str:
         model = loadmodel(model)
     ystar = model.predict(X)
-    print(ystar)
+
     scores = np.array(list(map(method,ystar)))
 
     #todo check everytime, if we need the highest or lowest values for ALL functions

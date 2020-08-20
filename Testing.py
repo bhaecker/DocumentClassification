@@ -4,6 +4,7 @@ import glob
 import os
 import numpy as np
 import pandas as pd
+import collections
 
 
 #from tensorflow import keras
@@ -65,7 +66,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
     base_performance = tester(Xtest, ytest, model_base)[0]
     number_samples = 0
-    df = pd.DataFrame([[number_samples]+[base_performance]*len(list_methods)], columns = ['number of samples'] + [method.__name__ for method in list_methods])
+    df = pd.DataFrame([[number_samples]+[base_performance]*len(list_methods)], columns = ['number of samples'] + [str(method.__name__) for method in list_methods])
 
     Xunseen_orig, yunseen_orig = fetch_data('unseen')
     print(np.shape(Xunseen_orig))
@@ -89,7 +90,10 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
 
-            #Xunseen, yunseen = Xloser, yloser
+            #get the class distribution
+            class_distribution = collections.Counter(np.where(ywinner == 1)[1])
+            print(class_distribution)
+
             index = index + 1
             print(df)
             #df.loc[len(df)] = [number_samples] + accuracy_list
