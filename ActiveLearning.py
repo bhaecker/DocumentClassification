@@ -22,8 +22,8 @@ def seperation(X,y,model,batch_size,method):
     if np.shape(X)[0] == 0:
         return(X,y,X,y)
     if batch_size > np.shape(X)[0]:
-        X_empty = np.empty([0,np.shape(X)[1],np.shape(X)[2]])
-        y_empty = np.empty([0])
+        X_empty = np.empty([0,np.shape(X)[1],np.shape(X)[2],np.shape(X)[3]])
+        y_empty = np.empty([0,np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
 
     if type(model) == str:
