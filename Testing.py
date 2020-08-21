@@ -89,7 +89,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         index = 1
         #while number_samples <= np.shape(Xunseen_orig)[0]:
         while np.shape(Xwinner)[0] > 0:
-            print(method.__name__,number_samples)
+            print(method.__name__,np.shape(Xwinner)[0])
             model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
             del model_old
 
@@ -100,8 +100,8 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
 
             #get the class distribution
-            class_distribution = collections.Counter(np.where(ywinner == 1)[1])
-            print(class_distribution)
+            #class_distribution = collections.Counter(np.where(ywinner == 1)[1])
+            print(np.shape(ywinner))
 
             Xtrain_new, ytrain_new = np.concatenate((Xtrain_new, Xwinner), axis=0), np.concatenate((ytrain_new, ywinner), axis=0)
             index = index + 1
