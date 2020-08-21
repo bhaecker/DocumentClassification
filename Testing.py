@@ -76,6 +76,10 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     for method in list_methods:
         Xtrain_new, ytrain_new = Xtrain, ytrain
         Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base, retrain_size, method)
+        # get the class distribution
+        class_distribution = collections.Counter(np.where(ywinner == 1)[1])
+        print(class_distribution)
+
         number_samples = retrain_size
         model_old = model_base
         index = 1
@@ -99,6 +103,6 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             #df.loc[len(df)] = [number_samples] + accuracy_list
             number_samples = number_samples + retrain_size
             model_old = model_new
-
+    df.to_csv(index=False)
     df.to_pickle("./RESULTS.pkl")
     return(df)
