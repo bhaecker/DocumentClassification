@@ -99,10 +99,11 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             print(class_distribution)
 
             index = index + 1
-            print(df)
+
             #df.loc[len(df)] = [number_samples] + accuracy_list
             number_samples = number_samples + retrain_size
             model_old = model_new
-    df.to_csv(index=False)
+    #df.to_csv(index=False)
     df.to_csv('RESULTS.csv', index = False)
+    print(df)
     return(df)
