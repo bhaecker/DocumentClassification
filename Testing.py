@@ -80,16 +80,17 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         class_distribution = collections.Counter(np.where(ywinner == 1)[1])
         print(class_distribution)
 
-        number_samples = retrain_size
+        #number_samples = retrain_size
         model_old = model_base
         index = 1
-        while number_samples <= np.shape(Xunseen_orig)[0]:
+        #while number_samples <= np.shape(Xunseen_orig)[0]:
+        while np.shape(Xtrain_new)[0] > 0:
             print(method.__name__,number_samples)
             Xtrain_new, ytrain_new = np.concatenate((Xtrain_new,Xwinner),axis=0), np.concatenate((ytrain_new,ywinner),axis=0)
             model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
             del model_old
             accuracy = tester(Xtest,ytest, model_new)[0]
-            df.at[index, 'number of samples'] = number_samples
+            df.at[index, 'number of samples'] = np.shape(Xtrain_new)[0]-np.shape(Xtrain)[0]#number_samples
             df.at[index, str(method.__name__)] = accuracy
 
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
@@ -101,7 +102,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             index = index + 1
 
             #df.loc[len(df)] = [number_samples] + accuracy_list
-            number_samples = number_samples + retrain_size
+            #number_samples = number_samples + retrain_size
             model_old = model_new
     #df.to_csv(index=False)
     df.to_csv('RESULTS.csv', index = False)
