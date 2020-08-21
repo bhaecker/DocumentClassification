@@ -74,21 +74,25 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     #Xunseen_orig, yunseen_orig = Xunseen_orig[:10], yunseen_orig[:10]
 
     for method in list_methods:
-        Xtrain_new, ytrain_new = Xtrain, ytrain
+        #Xtrain_new, ytrain_new = Xtrain, ytrain
         Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base, retrain_size, method)
+
         # get the class distribution
         class_distribution = collections.Counter(np.where(ywinner == 1)[1])
         print(class_distribution)
+        #new trainings batch consists of old training samples plus the new unseen ones
+        Xtrain_new, ytrain_new = np.concatenate((Xtrain, Xwinner), axis=0), np.concatenate((ytrain, ywinner),axis=0)
 
-        #number_samples = retrain_size
+        ##number_samples = retrain_size
+
         model_old = model_base
         index = 1
         #while number_samples <= np.shape(Xunseen_orig)[0]:
-        while np.shape(Xtrain_new)[0] > 0:
+        while np.shape(Xwinner)[0] > 0:
             print(method.__name__,number_samples)
-            Xtrain_new, ytrain_new = np.concatenate((Xtrain_new,Xwinner),axis=0), np.concatenate((ytrain_new,ywinner),axis=0)
             model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
             del model_old
+
             accuracy = tester(Xtest,ytest, model_new)[0]
             df.at[index, 'number of samples'] = np.shape(Xtrain_new)[0]-np.shape(Xtrain)[0]#number_samples
             df.at[index, str(method.__name__)] = accuracy
@@ -99,11 +103,12 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             class_distribution = collections.Counter(np.where(ywinner == 1)[1])
             print(class_distribution)
 
+            Xtrain_new, ytrain_new = np.concatenate((Xtrain_new, Xwinner), axis=0), np.concatenate((ytrain_new, ywinner), axis=0)
             index = index + 1
-
             #df.loc[len(df)] = [number_samples] + accuracy_list
             #number_samples = number_samples + retrain_size
             model_old = model_new
+            print(df)
     #df.to_csv(index=False)
     df.to_csv('RESULTS.csv', index = False)
     print(df)
