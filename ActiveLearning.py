@@ -11,7 +11,7 @@ import tensorflow as tf
 #keras.backend.set_session(sess)
 
 from .TransferLearning import loadmodel
-
+#TODOo UNKOMMENTIEREn
 DATA_DIRECTORY = 'Data'
 
 def seperation(X,y,model,batch_size,method):

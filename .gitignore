@@ -17,3 +17,7 @@
 /RESULTS.csv
 /RESULTS.pkl
 /stats
+/METHODTESTER.py
+/model_40epochs.h5
+/model_40epochs.json
+/_old

@@ -15,7 +15,7 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 #from .Testing import loadmodel,savemodel
 
 DATA_DIRECTORY = 'DocumentClassification/Data/'
-
+#DATA_DIRECTORY = 'Data/' #TODOo UNKOMMEn
 
 def savemodel(model,name):
     model.save_weights(str(name)+'.h5')
