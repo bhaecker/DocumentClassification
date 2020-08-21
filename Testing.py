@@ -101,11 +101,11 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
             #get the class distribution
             #class_distribution = collections.Counter(np.where(ywinner == 1)[1])
-            print(np.shape(Xtrain_new))
-            print(np.shape(Xwinner))
+            #print(np.shape(Xtrain_new))
+            #print(np.shape(Xwinner))
 
-            print(np.shape(ytrain_new))
-            print(np.shape(ywinner))
+            #print(np.shape(ytrain_new))
+            #print(np.shape(ywinner))
 
             Xtrain_new, ytrain_new = np.concatenate((Xtrain_new, Xwinner), axis=0), np.concatenate((ytrain_new, ywinner), axis=0)
             index = index + 1

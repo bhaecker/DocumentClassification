@@ -8,10 +8,10 @@ import tensorflow as tf
 import sys
 import numpy as np
 
-epochs = 2
-epochs_retrain = 1
+epochs = 40
+epochs_retrain = 10
 batch_size = 128
-retrain_batch = 400
+retrain_batch = 100
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
