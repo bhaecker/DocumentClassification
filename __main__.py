@@ -19,7 +19,7 @@ def __main__():
     tf.device('/device:GPU:0')
 
     Xtrain, ytrain = fetch_data('train')
-    model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
+    #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
 
     #savemodel(model,'testmodel')
     model = loadmodel('model_40epochs')
