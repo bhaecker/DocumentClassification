@@ -1,15 +1,8 @@
 from sklearn.metrics import mutual_info_score,normalized_mutual_info_score
 from numpy import linalg as LA
 import numpy as np
-from TransferLearning import fetch_data, loadmodel
+from .TransferLearning import fetch_data, loadmodel
 
-#a = np.array([0,1,3])
-#b = np.array([0,2,3])
-#print(LA.norm(b-a))
-#print(normalized_mutual_info_score([0.1,0.1,0.1],[0,1,0]))
-#print(normalized_mutual_info_score([1,1,1],[0,0,0]))
-
-#store predictions as they come in
 
 def metric_method(X,y,number_samples,model):
     '''
