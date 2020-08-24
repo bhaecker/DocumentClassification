@@ -11,7 +11,7 @@ from TransferLearning import fetch_data, loadmodel
 
 #store predictions as they come in
 
-def f(X,y,number_samples,model):
+def metric_method(X,y,number_samples,model):
     '''
 
     '''
@@ -20,20 +20,49 @@ def f(X,y,number_samples,model):
     if type(model) == str:
         model = loadmodel(model)
     Ypred = model.predict(X)
-    #print(Ypred)
-    matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
+
+    #matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
+    distance_list = []
     for row, ypred_a in enumerate(Ypred):
         #print(row)
         for column, ypred_b in enumerate(Ypred):
-            matrix[row][column] = LA.norm(ypred_a-ypred_b)
-    print('matrix')
-    print(matrix)
-    #todo: include samples with highest distance until number_samples is reached. Attention: Indicies needed for split
-    return()#X,y,X,y)
+            #matrix[row][column] = LA.norm(ypred_a-ypred_b)
+            #fill index_list
+            if row != column:
+                current_distance = LA.norm(ypred_a - ypred_b)
+                distance_list.append((current_distance,(row,column)))
+
+    distance_list = sorted(distance_list, key =lambda x: x[0], reverse=True)
+    #get the indices coresponding to the distances in the right order
+    index_list = [index[1][i] for index in distance_list for i in range(0,2)]
+    #shorten the list to desired length without duplicates
+    n_farest = []
+    i = 0
+    while len(n_farest)+1 <= number_samples:
+        if index_list[i] not in n_farest:
+            n_farest = n_farest + [index_list[i]]
+        i += 1
+    #seperate unseen data in winner and looser data set by the indices
+    Xwinner = X[n_farest, :, :]
+    ywinner = y[n_farest]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[n_farest] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+
+    return(Xwinner, ywinner, Xloser, yloser)
 
 
 
 X,y = fetch_data('unseen')
-X,y = X[:20],y[:20]
+X,y = X[:5],y[:5]
 model = 'model_40epochs'
-print(f(X,y,10,model))
+Xwinner, ywinner, Xloser, yloser= metric_method(X,y,2,model)
+from PIL import Image
+#for data in Xwinner:
+ #   img = Image.fromarray(data, 'RGB')
+  #  img.show()
+for data in Xloser:
+    img = Image.fromarray(data, 'RGB')
+    img.show()

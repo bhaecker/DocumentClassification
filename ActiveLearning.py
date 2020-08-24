@@ -10,6 +10,7 @@ import tensorflow as tf
 #sess = tf.Session(config=config)
 #keras.backend.set_session(sess)
 
+from .MetricsMethod import metric_method
 from .TransferLearning import loadmodel
 #TODOo UNKOMMENTIEREn
 DATA_DIRECTORY = 'Data'
@@ -25,6 +26,10 @@ def seperation(X,y,model,batch_size,method):
         X_empty = np.empty([0,np.shape(X)[1],np.shape(X)[2],np.shape(X)[3]])
         y_empty = np.empty([0,np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
+
+    if method == 'metric':
+        metric_method(X,y,batch_size,model)
+
 
     if type(model) == str:
         model = loadmodel(model)

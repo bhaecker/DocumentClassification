@@ -2,6 +2,7 @@ from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmod
 from .Testing import tester, experiment
 from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
+from .MetricsMethod import metric_method
 
 
 import tensorflow as tf
@@ -9,9 +10,9 @@ import sys
 import numpy as np
 
 epochs = 60
-epochs_retrain = 10
+epochs_retrain = 5
 batch_size = 128
-retrain_batch = 50
+retrain_batch = 200
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -19,12 +20,12 @@ def __main__():
     tf.device('/device:GPU:0')
 
     Xtrain, ytrain = fetch_data('train')
-    model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
+    #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
 
     #savemodel(model,'testmodel')
-    #model = loadmodel('model_40epochs')
+    model = loadmodel('model_60epochs')
 
-    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[entropy_fn,least_confident_fn, margin_sampling_fn, random_fn]))
+    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[metric,entropy_fn,least_confident_fn, margin_sampling_fn, random_fn]))
 
 
     sys.exit()
