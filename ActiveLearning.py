@@ -28,7 +28,8 @@ def seperation(X,y,model,batch_size,method):
         return(X,y,X_empty,y_empty)
 
     if method == metric_method:
-        metric_method(X,y,batch_size,model)
+        Xwinner, ywinner, Xloser, yloser = metric_method(X,y,batch_size,model)
+        return(Xwinner, ywinner, Xloser, yloser)
 
 
     if type(model) == str:
