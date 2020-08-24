@@ -25,7 +25,7 @@ def __main__():
     #savemodel(model,'testmodel')
     model = loadmodel('model_60epochs')
 
-    print(experiment(model,epochs_retrain,retrain_batch,batch_size,['metric',entropy_fn,least_confident_fn, margin_sampling_fn, random_fn]))
+    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[metric_method,entropy_fn,least_confident_fn, margin_sampling_fn, random_fn]))
 
 
     sys.exit()

@@ -27,7 +27,7 @@ def seperation(X,y,model,batch_size,method):
         y_empty = np.empty([0,np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
 
-    if method == 'metric':
+    if method == metric_method:
         metric_method(X,y,batch_size,model)
 
 
