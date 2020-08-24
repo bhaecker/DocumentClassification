@@ -20,7 +20,7 @@ from sklearn.metrics import accuracy_score
 from TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
 from Testing import tester
 from ActiveLearning import seperation
-from baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
+from baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_normal_fn, diff_normal_fn
 from MetricsMethod import metric_method
 
 model = loadmodel('model_40epochs')
@@ -28,7 +28,7 @@ model = loadmodel('model_40epochs')
 Xunseen, yunseen  = fetch_data('unseen')
 Xunseen, yunseen = Xunseen[1:200], yunseen[1:200]
 #ypred = tester(Xtest, ytest,model)[1]
-for method in [metric_method,entropy_fn, least_confident_fn, margin_sampling_fn, random_fn]:
+for method in [diff_normal_fn,entropy_fn, least_confident_fn, margin_sampling_fn, random_fn]:
     Xtest, ytest, a,b = seperation(Xunseen, yunseen,model,50,method)
     print(str(method.__name__))
     ypred = tester(Xtest, ytest, model)[1]

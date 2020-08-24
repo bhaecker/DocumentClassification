@@ -6,7 +6,7 @@ from .TransferLearning import fetch_data, loadmodel#TODOo
 
 def metric_method(X,y,number_samples,model):
     '''
-
+    gives back the samples, which predictions are most far away (with respect to L2 norm) in prediction space
     '''
     if np.shape(X)[0] <= number_samples:
         return(X,y,X,y)
@@ -25,7 +25,7 @@ def metric_method(X,y,number_samples,model):
                 current_distance = LA.norm(ypred_a - ypred_b)
                 distance_list.append((current_distance,(row,column)))
 
-    distance_list = sorted(distance_list, key =lambda x: x[0], reverse=False)
+    distance_list = sorted(distance_list, key =lambda x: x[0], reverse=True)
     print(distance_list)
     #get the indices coresponding to the distances in the right order
     index_list = [index[1][i] for index in distance_list for i in range(0,2)]

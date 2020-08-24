@@ -1,7 +1,7 @@
 from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
 from .Testing import tester, experiment
 from .ActiveLearning import seperation
-from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
+from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_normal_fn, diff_normal_fn
 from .MetricsMethod import metric_method
 
 
@@ -9,8 +9,8 @@ import tensorflow as tf
 import sys
 import numpy as np
 
-epochs = 40
-epochs_retrain = 5
+epochs = 70
+epochs_retrain = 10
 batch_size = 128
 retrain_batch = 150
 
@@ -19,13 +19,13 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    Xtrain, ytrain = fetch_data('train')
+    #Xtrain, ytrain = fetch_data('train')
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
 
     #savemodel(model,'testmodel')
-    model = loadmodel('model_40epochs')
+    model = loadmodel('model_70epochs')
 
-    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[metric_method,entropy_fn,least_confident_fn, margin_sampling_fn, random_fn]))
+    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[mutural_info_normal_fn, metric_method,diff_normal_fn, margin_sampling_fn, random_fn]))
 
 
     sys.exit()
