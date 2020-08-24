@@ -53,16 +53,3 @@ def metric_method(X,y,number_samples,model):
 
     return(Xwinner, ywinner, Xloser, yloser)
 
-
-
-X,y = fetch_data('unseen')
-X,y = X[:5],y[:5]
-model = 'model_40epochs'
-Xwinner, ywinner, Xloser, yloser= metric_method(X,y,2,model)
-from PIL import Image
-#for data in Xwinner:
- #   img = Image.fromarray(data, 'RGB')
-  #  img.show()
-for data in Xloser:
-    img = Image.fromarray(data, 'RGB')
-    img.show()
