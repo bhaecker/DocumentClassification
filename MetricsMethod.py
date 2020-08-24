@@ -1,7 +1,7 @@
 from sklearn.metrics import mutual_info_score,normalized_mutual_info_score
 from numpy import linalg as LA
 import numpy as np
-from .TransferLearning import fetch_data, loadmodel
+from .TransferLearning import fetch_data, loadmodel#TODOo
 
 
 def metric_method(X,y,number_samples,model):
@@ -25,7 +25,8 @@ def metric_method(X,y,number_samples,model):
                 current_distance = LA.norm(ypred_a - ypred_b)
                 distance_list.append((current_distance,(row,column)))
 
-    distance_list = sorted(distance_list, key =lambda x: x[0], reverse=True)
+    distance_list = sorted(distance_list, key =lambda x: x[0], reverse=False)
+    print(distance_list)
     #get the indices coresponding to the distances in the right order
     index_list = [index[1][i] for index in distance_list for i in range(0,2)]
     #shorten the list to desired length without duplicates

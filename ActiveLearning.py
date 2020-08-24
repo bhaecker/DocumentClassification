@@ -10,7 +10,7 @@ import tensorflow as tf
 #sess = tf.Session(config=config)
 #keras.backend.set_session(sess)
 
-from .MetricsMethod import metric_method
+from .MetricsMethod import metric_method#TODO .Package
 from .TransferLearning import loadmodel
 #TODOo UNKOMMENTIEREn
 DATA_DIRECTORY = 'Data'
