@@ -7,15 +7,15 @@ import pandas as pd
 import collections
 
 import tensorflow as tf
-from tensorflow import keras as K
-from keras.models import model_from_json
+#from tensorflow import keras as K
+#from keras.models import model_from_json
 
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
 from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
+#from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 from .ActiveLearning import seperation
-from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 
 
 DATA_DIRECTORY = 'Data'

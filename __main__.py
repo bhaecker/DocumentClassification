@@ -1,13 +1,12 @@
+import sys
+import numpy as np
+import tensorflow as tf
+
 from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
 from .Testing import tester, experiment
 from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
 from .MetricsMethod import metric_method, mutural_info_method
-
-
-import tensorflow as tf
-import sys
-import numpy as np
 
 epochs = 50
 epochs_retrain = 5

@@ -2,8 +2,7 @@ import numpy as np
 from numpy import linalg as LA
 from sklearn.metrics import mutual_info_score,normalized_mutual_info_score
 
-from .TransferLearning import fetch_data, loadmodel#TODOo
-
+from .TransferLearning import fetch_data, loadmodel
 
 def metric_method(X,y,number_samples,model):
     '''
