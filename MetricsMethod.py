@@ -9,7 +9,9 @@ def metric_method(X,y,number_samples,model):
     gives back the samples, which predictions are most far away (with respect to L2 norm) in prediction space
     '''
     if np.shape(X)[0] <= number_samples:
-        return(X,y,X,y)
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
     if type(model) == str:
         model = loadmodel(model)
     Ypred = model.predict(X)
