@@ -69,6 +69,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     #Xunseen_orig, yunseen_orig = Xunseen_orig[:10], yunseen_orig[:10]
 
     for method in list_methods:
+        print('start',method.__name__)
         #Xtrain_new, ytrain_new = Xtrain, ytrain
         Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base, retrain_size, method)
 

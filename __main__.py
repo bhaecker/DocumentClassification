@@ -18,13 +18,13 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    Xtrain, ytrain = fetch_data('train')
-    model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
-    del Xtrain, ytrain
+    #Xtrain, ytrain = fetch_data('train')
+    #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
+    #del Xtrain, ytrain
 
-    #model = loadmodel('model_70epochs')
+    model = loadmodel('model_50epochs')
 
-    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[random_fn,diff_uniform_fn,mutural_info_uniform_fn,metric_method,mutural_info_method]))
+    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[mutural_info_method,random_fn,diff_uniform_fn,mutural_info_uniform_fn,metric_method]))
 
 if __name__ == "__main__":
     __main__()
