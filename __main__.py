@@ -8,10 +8,10 @@ from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
 from .MetricsMethod import metric_method, mutural_info_method
 
-epochs = 50
+epochs = 60
 epochs_retrain = 5
 batch_size = 128
-retrain_batch = 150
+retrain_batch = 100
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -22,9 +22,9 @@ def __main__():
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
     #del Xtrain, ytrain
 
-    model = loadmodel('model_50epochs')
+    model = loadmodel('model_60epochs')
 
-    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[random_fn,margin_sampling_fn,diff_uniform_fn,mutural_info_uniform_fn,metric_method]))
+    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[random_fn,margin_sampling_fn,entropy_fn,diff_uniform_fn,mutural_info_uniform_fn,metric_method]))
 
 if __name__ == "__main__":
     __main__()

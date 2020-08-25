@@ -33,10 +33,10 @@ def mutural_info_uniform_fn(annotation_vector):
     '''
     calculates the mutural info score between annotation vector and the corresponding uniform vector (uniform distribution of the sum of all weights)
     '''
-
     vector_sum = sum(annotation_vector)
-    normal_vector = np.full_like(annotation_vector,vector_sum/len(annotation_vector))
-    return(normalized_mutual_info_score(annotation_vector,normal_vector))#,average_method='arithmetic'))
+    length = len(annotation_vector)
+    normalized_vector = np.full_like(annotation_vector,vector_sum/length)
+    return(normalized_mutual_info_score(annotation_vector,normalized_vector))#,average_method='arithmetic'))
 
 def diff_uniform_fn(annotation_vector):
     '''
