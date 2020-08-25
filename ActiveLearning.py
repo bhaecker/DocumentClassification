@@ -10,9 +10,9 @@ import tensorflow as tf
 #sess = tf.Session(config=config)
 #keras.backend.set_session(sess)
 
-from .MetricsMethod import metric_method#TODO .Package
+from .MetricsMethod import metric_method, mutural_info_method
 from .TransferLearning import loadmodel
-#TODOo UNKOMMENTIEREn
+
 DATA_DIRECTORY = 'Data'
 
 def seperation(X,y,model,batch_size,method):
@@ -27,10 +27,13 @@ def seperation(X,y,model,batch_size,method):
         y_empty = np.empty([0,np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
 
+    if method == mutural_info_method:
+        Xwinner, ywinner, Xloser, yloser = mutural_info_method(X,y,batch_size,model)
+        return(Xwinner, ywinner, Xloser, yloser)
+
     if method == metric_method:
         Xwinner, ywinner, Xloser, yloser = metric_method(X,y,batch_size,model)
         return(Xwinner, ywinner, Xloser, yloser)
-
 
     if type(model) == str:
         model = loadmodel(model)

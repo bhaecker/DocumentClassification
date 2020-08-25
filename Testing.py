@@ -6,21 +6,16 @@ import numpy as np
 import pandas as pd
 import collections
 
-
-#from tensorflow import keras
-#import keras.backend.tensorflow_backend as K
-import keras
 import tensorflow as tf
-
+from tensorflow import keras as K
 from keras.models import model_from_json
 
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
-from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel#TODO
-from .ActiveLearning import seperation#TODO
-#from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn #TODO
-#TODOo unkommentieren
+from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
+from .ActiveLearning import seperation
+from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 
 
 DATA_DIRECTORY = 'Data'
@@ -113,7 +108,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             #number_samples = number_samples + retrain_size
             model_old = model_new
             print(df)
-    #df.to_csv(index=False)
+
     df.to_csv('RESULTS.csv', index = False)
     print(df)
     return(df)

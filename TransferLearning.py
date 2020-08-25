@@ -12,10 +12,10 @@ from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 
-#from .Testing import loadmodel,savemodel
+from .Testing import loadmodel,savemodel
 
 DATA_DIRECTORY = 'DocumentClassification/Data/'
-#DATA_DIRECTORY = 'Data/' #TODO comment out when using server
+#DATA_DIRECTORY = 'Data/' #TODOo comment out when using server
 
 def savemodel(model,name):
     model.save_weights(str(name)+'.h5')
@@ -35,7 +35,6 @@ def loadmodel(name):
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
     print('model loaded')
     return(model)
-
 
 
 def fetch_data(string):
@@ -66,7 +65,6 @@ def fetch_data(string):
     print(string+' data fetched')
 
     return(X,y)
-
 
 
 def fine_tune(X,y,epochs,batch_size):
@@ -136,7 +134,7 @@ def fine_tune(X,y,epochs,batch_size):
     # we train our model again (this time fine-tuning the top 2 inception blocks
     # alongside the top Dense layers
     history_all = model.fit(X, y,
-        validation_split = 0.2,
+        validation_split = 0.1,
         batch_size=batch_size,
         epochs=epochs,
         verbose=1)
@@ -162,4 +160,4 @@ def retrain(model,epochs,batch_size,X,y):
     savemodel(model,'retrained_'+str(epochs)+'epochs')
     return(model,history)
 
-################
+
