@@ -24,7 +24,7 @@ def __main__():
 
     model = loadmodel('model_50epochs')
 
-    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[mutural_info_method,random_fn,diff_uniform_fn,mutural_info_uniform_fn,metric_method]))
+    print(experiment(model,epochs_retrain,retrain_batch,batch_size,[random_fn,margin_sampling_fn,diff_uniform_fn,mutural_info_uniform_fn,metric_method]))
 
 if __name__ == "__main__":
     __main__()

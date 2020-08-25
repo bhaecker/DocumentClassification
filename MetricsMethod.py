@@ -49,6 +49,7 @@ def metric_method(X,y,number_samples,model):
 
 
 def mutural_info_method(X,y,number_samples,model):
+    #IMPORTANT: Too slow
     '''
     gives back the samples, which predictions differ the most (with respect to normalized_mutual_info_score)
     '''
