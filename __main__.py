@@ -9,20 +9,20 @@ from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random
 from .MetricsMethod import metric_method, mutural_info_method
 
 epochs = 100
-epochs_retrain = 1
+epochs_retrain = 2
 batch_size = 128
-retrain_batch = 1
+retrain_batch = 25
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    Xtrain, ytrain = fetch_data('train')
-    model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
-    del Xtrain, ytrain
+    #Xtrain, ytrain = fetch_data('train')
+    #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
+    #del Xtrain, ytrain
 
-    #model = loadmodel('model_60epochs')
+    model = loadmodel('model_100epochs')
 
     print(experiment(model,epochs_retrain,retrain_batch,batch_size,[metric_method,margin_sampling_fn]))
 
