@@ -28,7 +28,7 @@ def RandomForest_method(X,y,number_samples,model):
     decisions = np.array([0 if ytrain_classes[i] != ypredtrain_classes[i] else 1 for i in range(len(ytrain_classes))])
 
     #train RF on decisions
-    clf = RandomForestClassifier(max_depth=10, random_state=0)
+    clf = RandomForestClassifier(n_estimators = 500,max_depth=100, random_state=0)
     clf.fit(ypred_train, decisions)
 
     ypredunseen = model.predict(X)
