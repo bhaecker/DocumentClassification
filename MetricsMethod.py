@@ -50,6 +50,15 @@ def metric_method(X,y,number_samples,model):
     return(Xwinner, ywinner, Xloser, yloser)
 
 
+
+
+def f():
+    #chosediversity
+    return(Xwinner, ywinner, Xloser, yloser)
+
+
+
+
 def mutural_info_method(X,y,number_samples,model):
     #IMPORTANT: Too slow
     '''

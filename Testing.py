@@ -21,6 +21,7 @@ from .ActiveLearning import seperation
 DATA_DIRECTORY = 'Data'
 
 
+
 def tester(Xtest,ytest,model):
     print('start evaluating')
     if type(model) == str:

@@ -7,12 +7,13 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D
+
+
 
 DATA_DIRECTORY = 'DocumentClassification/Data/'
-#DATA_DIRECTORY = 'Data/' #TODOo comment out when using server
+DATA_DIRECTORY = 'Data/' #TODOo comment out when using server
 
 def savemodel(model,name):
     model.save_weights(str(name)+'.h5')

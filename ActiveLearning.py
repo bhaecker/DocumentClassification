@@ -11,6 +11,7 @@ import tensorflow as tf
 #keras.backend.set_session(sess)
 
 from .MetricsMethod import metric_method, mutural_info_method
+from .RandomForest import RandomForest_method
 from .TransferLearning import loadmodel
 
 DATA_DIRECTORY = 'Data'
@@ -34,6 +35,11 @@ def seperation(X,y,model,batch_size,method):
     if method == metric_method:
         Xwinner, ywinner, Xloser, yloser = metric_method(X,y,batch_size,model)
         return(Xwinner, ywinner, Xloser, yloser)
+
+    if model == RandomForest_method:
+        Xwinner, ywinner, Xloser, yloser = RandomForest_method(X, y, batch_size, model)
+        return (Xwinner, ywinner, Xloser, yloser)
+
 
     if type(model) == str:
         model = loadmodel(model)

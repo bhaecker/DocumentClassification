@@ -1,0 +1,67 @@
+import sys
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+
+from .TransferLearning import fetch_data, loadmodel
+
+
+def RandomForest_method(X,y,number_samples,model):
+
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+
+    if type(model) == str:
+        model = loadmodel(model)
+
+    #train a Random Forest classifier on predictions and their correctness of the training set
+    Xtrain,ytrain = fetch_data('train')
+    Xtrain,ytrain = Xtrain,ytrain
+
+    ytrain_classes = np.argmax(ytrain, axis=1)
+
+    ypred_train = model.predict(Xtrain)
+    ypredtrain_classes = np.argmax(ypred_train,axis=1)
+
+    #0 needs retraining, 1 is good to go
+    decisions = np.array([0 if ytrain_classes[i] != ypredtrain_classes[i] else 1 for i in range(len(ytrain_classes))])
+
+    #train RF on decisions
+    clf = RandomForestClassifier(max_depth=10, random_state=0)
+    clf.fit(ypred_train, decisions)
+
+    ypredunseen = model.predict(X)
+    decisions_unseen = clf.predict(ypredunseen)
+    Xneed, yneed = X[decisions_unseen == 0, :, :], y[decisions_unseen == 0]
+    Xnoneed, ynoneed = X[decisions_unseen == 1, :, :], y[decisions_unseen == 1]
+
+    # count samples which need retraining
+    number_retrain = np.shape(Xneed)[0] #np.count_nonzero(decisions_unseen == 0)
+    number_noretrain = np.shape(Xnoneed)[0]
+    print('number_retrain:',number_retrain)
+    print('number_noretrain:',number_noretrain)
+
+
+    if number_retrain < number_samples:
+        ind = np.arange(number_noretrain)
+        np.random.shuffle(ind)
+        Xwinner = np.concatenate((Xneed,Xnoneed[ind[:(number_samples-number_retrain)],:,:]), axis=0)
+        Xloser = Xnoneed[ind[(number_samples-number_retrain):],:,:]
+        ywinner = np.concatenate((yneed, ynoneed[ind[:(number_samples - number_retrain)]]), axis=0)
+        yloser = ynoneed[ind[(number_samples - number_retrain):]]
+    else:
+        ind = np.arange(number_retrain)
+        np.random.shuffle(ind)
+        Xwinner = Xneed[ind[:number_samples], :, :]
+        Xloser = np.concatenate((Xnoneed, Xneed[ind[number_samples:], :, :]), axis=0)
+        ywinner = yneed[ind[:number_samples]]
+        yloser = np.concatenate((ynoneed, yneed[ind[number_samples:]]), axis=0)
+
+    #print(np.shape(Xwinner))
+    #print(np.shape(ywinner))
+    #print(np.shape(Xloser))
+    #print(np.shape(yloser))
+
+    return (Xwinner, ywinner, Xloser, yloser)
+

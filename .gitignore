@@ -21,3 +21,6 @@
 /model_40epochs.h5
 /model_40epochs.json
 /_old
+/TeachersAlgorithm.py
+/SOM.py
+/Qlearning.py
