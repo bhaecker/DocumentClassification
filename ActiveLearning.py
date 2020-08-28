@@ -36,7 +36,7 @@ def seperation(X,y,model,batch_size,method):
         Xwinner, ywinner, Xloser, yloser = metric_method(X,y,batch_size,model)
         return(Xwinner, ywinner, Xloser, yloser)
 
-    if model == RandomForest_method:
+    if method == RandomForest_method:
         Xwinner, ywinner, Xloser, yloser = RandomForest_method(X, y, batch_size, model)
         return (Xwinner, ywinner, Xloser, yloser)
 
