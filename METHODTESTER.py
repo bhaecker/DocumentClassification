@@ -17,14 +17,15 @@ from TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmode
 from Testing import tester
 from ActiveLearning import seperation
 from baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
-from MetricsMethod import metric_method, mutural_info_method
+from MetricsMethod import metric_method, mutural_info_method,diversity_method
+from RandomForest import RandomForest_method
 
 model = loadmodel('model_40epochs')
 
 Xunseen, yunseen  = fetch_data('unseen')
 Xunseen, yunseen = Xunseen[300:700], yunseen[300:700]
 #ypred = tester(Xtest, ytest,model)[1]
-for method in [mutural_info_uniform_fn, diff_uniform_fn, mutural_info_method, metric_method, random_fn]:
+for method in [diversity_method,least_confident_fn,metric_method,diversity_method, random_fn, diff_uniform_fn, mutural_info_method]:
     Xtest, ytest, a,b = seperation(Xunseen, yunseen,model,50,method)
     print(str(method.__name__))
     ypred = tester(Xtest, ytest, model)[1]

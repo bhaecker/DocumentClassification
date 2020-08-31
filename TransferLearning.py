@@ -11,7 +11,6 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D
 
 
-
 DATA_DIRECTORY = 'DocumentClassification/Data/'
 #DATA_DIRECTORY = 'Data/' #TODOo comment out when using server
 

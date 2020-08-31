@@ -14,7 +14,7 @@ def entropy_fn(annotation_vector):
 # annotation_vector with highest score is annotation_vector
 # that has smallest maximum value
 def least_confident_fn(annotation_vector):
-    return 1 - max(annotation_vector)
+    return(1 - max(annotation_vector))
 
 # 1 - (max1 - max2) 
 # annotation_vector with highest score is annotation_vector
@@ -51,5 +51,7 @@ def diff_uniform_fn(annotation_vector):
     diff_vector = abs(norm_ann_vec-normalized_vector)
 
     return(-sum(diff_vector))
+
+
 
 

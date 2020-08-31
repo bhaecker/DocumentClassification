@@ -42,7 +42,8 @@ def RandomForest_method(X,y,number_samples,model):
     print('number_retrain:',number_retrain)
     print('number_noretrain:',number_noretrain)
 
-
+    #chose as many retraining samples as we need
+    #fill the rest with randomly choosen samples from the other group
     if number_retrain < number_samples:
         ind = np.arange(number_noretrain)
         np.random.shuffle(ind)

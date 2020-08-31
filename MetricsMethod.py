@@ -1,3 +1,5 @@
+import math
+import random
 import numpy as np
 from numpy import linalg as LA
 from sklearn.metrics import mutual_info_score,normalized_mutual_info_score
@@ -52,12 +54,52 @@ def metric_method(X,y,number_samples,model):
 
 
 
-def f():
+def diversity_method(X,y,number_samples,model):
     #chosediversity
-    return(Xwinner, ywinner, Xloser, yloser)
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return (X, y, X_empty, y_empty)
+    if type(model) == str:
+        model = loadmodel(model)
+    Ypred = model.predict(X)
+
+    number_classes = np.shape(Ypred)[1]
+    print(np.shape(Ypred))
+    #make a list of lists for each class, containing the indicies of the samples, which have the highest prediction value for said class
+    index_list_lists = [[] for _ in range(number_classes)]
+    for row,ypred in enumerate(Ypred):
+        index_list_lists[np.where(ypred == np.amax(ypred))[0][0]].append(row)
+    #we want an equal amount of samples from each predicted class in our winner set
+    samples_class = math.floor(number_samples/number_classes)
+    #choose a random sample of samples if there are too many samples for one class
+    winner_indices = []
+    for index_list in index_list_lists:
+        if len(index_list) > samples_class:
+            winner_indices.extend(random.sample(index_list,samples_class))
+        else:
+            winner_indices.extend(index_list)
+    #add randomly choosen samples if there are not enough for desired size
+    if len(winner_indices) < number_samples:
+        index_list_flatten =  [item for sublist in index_list_lists for item in sublist]
+        indicies_left = [x for x in index_list_flatten if x not in winner_indices]
+        winner_indices = winner_indices + random.sample(indicies_left,number_samples-len(winner_indices))
+
+    # seperate unseen data in winner and looser data set by the indices
+    Xwinner = X[winner_indices, :, :]
+    ywinner = y[winner_indices]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[winner_indices] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+
+    return (Xwinner, ywinner, Xloser, yloser)
 
 
 
+
+####################################################################################
 
 def mutural_info_method(X,y,number_samples,model):
     #IMPORTANT: Too slow
