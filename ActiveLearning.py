@@ -28,22 +28,8 @@ def seperation(X,y,model,batch_size,method):
         y_empty = np.empty([0,np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
 
-    if method == mutural_info_method:
-        Xwinner, ywinner, Xloser, yloser = mutural_info_method(X,y,batch_size,model)
-        return(Xwinner, ywinner, Xloser, yloser)
-
-    if method == metric_method:
-        Xwinner, ywinner, Xloser, yloser = metric_method(X,y,batch_size,model)
-        return(Xwinner, ywinner, Xloser, yloser)
-
-    if method == RandomForest_method:
-        Xwinner, ywinner, Xloser, yloser = RandomForest_method(X, y, batch_size, model)
-        return (Xwinner, ywinner, Xloser, yloser)
-
-    if method == diversity_method:
-        Xwinner, ywinner, Xloser, yloser = diversity_method(X, y, batch_size, model)
-        return (Xwinner, ywinner, Xloser, yloser)
-
+    if str(method.__name__).endswith('method'):
+        return(method(X,y,batch_size,model))
 
     if type(model) == str:
         model = loadmodel(model)

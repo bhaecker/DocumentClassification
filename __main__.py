@@ -12,7 +12,7 @@ from .RandomForest import RandomForest_method
 epochs = 100
 epochs_retrain = 5
 batch_size = 128
-retrain_batch = 200
+retrain_batch = 700
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
