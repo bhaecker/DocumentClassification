@@ -12,23 +12,21 @@ from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegr
 epochs = 100
 epochs_retrain = 5
 batch_size = 128
-retrain_batch = 250
+retrain_batch = 100
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    Xtrain, ytrain = fetch_data('train')
-    Xtrain, ytrain = Xtrain[:300], ytrain[:300]
+    #Xtrain, ytrain = fetch_data('train')
+    #Xtrain, ytrain = Xtrain[:300], ytrain[:300]
 
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
     #del Xtrain, ytrain
 
     model = loadmodel('model_100epochs')
-    RandomForestRegressor_pretraining(Xtrain, ytrain,model,1)
-
-    sys.exit()
+    #RandomForestRegressor_pretraining(Xtrain, ytrain,model,1)
 
     method_list = [RandomForest_fn,margin_sampling_fn,diversity_method,RandomForest_method,metric_method]
     print(experiment(model,epochs_retrain,retrain_batch,batch_size,method_list))
