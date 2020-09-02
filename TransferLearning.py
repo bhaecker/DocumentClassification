@@ -12,7 +12,7 @@ from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2
 
 
 DATA_DIRECTORY = 'DocumentClassification/Data/'
-#DATA_DIRECTORY = 'Data/' #TODOo comment out when using server
+DATA_DIRECTORY = 'Data/' #TODO comment out when using server
 
 def savemodel(model,name):
     model.save_weights(str(name)+'.h5')

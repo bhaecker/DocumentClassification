@@ -19,9 +19,10 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    #Xtrain, ytrain = fetch_data('train')
-    #Xtrain, ytrain = Xtrain[:300], ytrain[:300]
-
+    Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = Xtrain[:300], ytrain[:300]
+    print(np.argmax(ytrain,axis=1))
+    sys.exit()
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
     #del Xtrain, ytrain
 
