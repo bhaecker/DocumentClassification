@@ -8,7 +8,9 @@ from .TransferLearning import fetch_data, loadmodel, retrain
 
 
 def RandomForest_method(X,y,number_samples,model):
-
+    '''
+    Todo: write it
+    '''
     if np.shape(X)[0] <= number_samples:
         X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
         y_empty = np.empty([0, np.shape(y)[1]])
