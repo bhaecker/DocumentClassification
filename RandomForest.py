@@ -74,19 +74,17 @@ def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sam
         basemodel = loadmodel(basemodel)
 
     Xtest, ytest = fetch_data('test')
-    Xtest, ytest = Xtest, ytest
+
     ypred = basemodel.predict(Xtest)
 
     ytest_flat = np.argmax(ytest, axis=1)
     ypred_flat = np.argmax(ypred, axis=1)
     base_accuracy = accuracy_score(ytest_flat, ypred_flat)
 
-    score = np.empty(np.shape(Xtrain)[0])
-    for idx in range(np.shape(Xtrain)[0]):
-
-        image = np.expand_dims(Xtrain[idx,:,:], axis=0)
-        #print(image)
-        #print(ytrain[idx])
+    sample_size = np.shape(Xtrain)[0]
+    score = np.empty(sample_size)
+    for idx in range(sample_size):
+        print(idx/sample_size)
         model_new = retrain(basemodel,epochs_retrain_sample,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
         ypred = model_new.predict(Xtest)
         ypred_flat = np.argmax(ypred, axis=1)
@@ -94,8 +92,8 @@ def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sam
         score[idx] = new_accuracy-base_accuracy
 
     ypred_train = basemodel.predict(Xtrain)
-
-    clf = RandomForestRegressor(n_estimators=100, max_depth=100, random_state=0)
+    print(score)
+    clf = RandomForestRegressor(n_estimators=500, random_state=8)
     clf.fit(ypred_train, score)
     with open('RF', 'wb') as f:
         pickle.dump(clf, f)

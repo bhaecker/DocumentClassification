@@ -7,7 +7,7 @@ from .Testing import tester, experiment
 from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
 from .MetricsMethod import metric_method, mutural_info_method, diversity_method
-from .RandomForest import RandomForest_method, RandomForest_fn
+from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
 
 epochs = 100
 epochs_retrain = 5
@@ -19,11 +19,15 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    #Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = fetch_data('train')
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
     #del Xtrain, ytrain
 
     model = loadmodel('model_100epochs')
+    RandomForestRegressor_pretraining(Xtrain, ytrain,model,1)
+
+    sys.exit()
+
     method_list = [RandomForest_fn,margin_sampling_fn,diversity_method,RandomForest_method,metric_method]
     print(experiment(model,epochs_retrain,retrain_batch,batch_size,method_list))
 
