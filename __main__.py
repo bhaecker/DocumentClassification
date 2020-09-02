@@ -20,6 +20,8 @@ def __main__():
     tf.device('/device:GPU:0')
 
     Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = Xtrain[:300], ytrain[:300]
+
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
     #del Xtrain, ytrain
 
