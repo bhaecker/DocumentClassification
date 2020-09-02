@@ -107,7 +107,9 @@ def RandomForest_fn(annotation_vector):
     Xtrain, ytrain = fetch_data('train')
     Xtrain, ytrain = Xtrain[:500], ytrain[:500]
     basemodel = 'model_100epochs'
-    RF = RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,1)
+    #RF = RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,1)
+    with open('RF', 'rb') as f:
+        RF = pickle.load(f)
     annotation_vector = annotation_vector.reshape(1,-1)
     score = RF.predict(annotation_vector)
     return(score[0])
