@@ -1,10 +1,10 @@
 import sys
 import numpy as np
+import pickle
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.metrics import accuracy_score
 
 from .TransferLearning import fetch_data, loadmodel, retrain
-
 
 
 def RandomForest_method(X,y,number_samples,model):
@@ -74,7 +74,7 @@ def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sam
         basemodel = loadmodel(basemodel)
 
     Xtest, ytest = fetch_data('test')
-    Xtest, ytest = Xtest[:10], ytest[:10]
+    Xtest, ytest = Xtest, ytest
     ypred = basemodel.predict(Xtest)
 
     ytest_flat = np.argmax(ytest, axis=1)
@@ -95,21 +95,22 @@ def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sam
 
     ypred_train = basemodel.predict(Xtrain)
 
-    clf = RandomForestRegressor(n_estimators=500, max_depth=100, random_state=0)
+    clf = RandomForestRegressor(n_estimators=100, max_depth=100, random_state=0)
     clf.fit(ypred_train, score)
-
+    with open('RF', 'wb') as f:
+        pickle.dump(clf, f)
     return(clf)
 
 
 
 def RandomForest_fn(annotation_vector):
     Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = Xtrain[:500], ytrain[:500]
     basemodel = 'model_100epochs'
     RF = RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,1)
+    annotation_vector = annotation_vector.reshape(1,-1)
     score = RF.predict(annotation_vector)
     return(score[0])
-
-
 
 
 

@@ -148,13 +148,13 @@ def retrain(model,epochs,batch_size,X,y):
     '''
     if type(model) == str:
         model = loadmodel(model)
-    print('start retraining')
+    #print('start retraining')
     history = model.fit(X,y,
             #validation_split=0.2,
             batch_size=batch_size,
             epochs=epochs,
-            verbose=1)
-    savemodel(model,'retrained_'+str(epochs)+'epochs')
+            verbose=0)
+    #savemodel(model,'retrained_'+str(epochs)+'epochs')
     return(model,history)
 
 
