@@ -104,9 +104,9 @@ def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sam
 
 
 def RandomForest_fn(annotation_vector):
-    Xtrain, ytrain = fetch_data('train')
-    Xtrain, ytrain = Xtrain[:500], ytrain[:500]
-    basemodel = 'model_100epochs'
+    #Xtrain, ytrain = fetch_data('train')
+    #Xtrain, ytrain = Xtrain[:500], ytrain[:500]
+    #basemodel = 'model_100epochs'
     #RF = RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,1)
     with open('RF', 'rb') as f:
         RF = pickle.load(f)
