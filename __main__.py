@@ -7,12 +7,12 @@ from .Testing import tester, experiment
 from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
 from .MetricsMethod import metric_method, mutural_info_method, diversity_method
-from .RandomForest import RandomForest_method
+from .RandomForest import RandomForest_method, RandomForest_fn
 
 epochs = 100
 epochs_retrain = 5
 batch_size = 128
-retrain_batch = 700
+retrain_batch = 250
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -24,7 +24,7 @@ def __main__():
     #del Xtrain, ytrain
 
     model = loadmodel('model_100epochs')
-    method_list = [diversity_method,RandomForest_method,metric_method,margin_sampling_fn]
+    method_list = [RandomForest_fn,margin_sampling_fn,diversity_method,RandomForest_method,metric_method]
     print(experiment(model,epochs_retrain,retrain_batch,batch_size,method_list))
 
 if __name__ == "__main__":

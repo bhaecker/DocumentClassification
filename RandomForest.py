@@ -1,8 +1,10 @@
 import sys
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.metrics import accuracy_score
 
-from .TransferLearning import fetch_data, loadmodel
+from .TransferLearning import fetch_data, loadmodel, retrain
+
 
 
 def RandomForest_method(X,y,number_samples,model):
@@ -17,7 +19,7 @@ def RandomForest_method(X,y,number_samples,model):
 
     #train a Random Forest classifier on predictions and their correctness of the training set
     Xtrain,ytrain = fetch_data('train')
-    Xtrain,ytrain = Xtrain,ytrain
+    #Xtrain,ytrain = Xtrain,ytrain
 
     ytrain_classes = np.argmax(ytrain, axis=1)
 
@@ -65,4 +67,53 @@ def RandomForest_method(X,y,number_samples,model):
     #print(np.shape(yloser))
 
     return (Xwinner, ywinner, Xloser, yloser)
+
+
+def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sample):
+    if type(basemodel) == str:
+        basemodel = loadmodel(basemodel)
+
+    Xtest, ytest = fetch_data('test')
+    Xtest, ytest = Xtest[:10], ytest[:10]
+    ypred = basemodel.predict(Xtest)
+
+    ytest_flat = np.argmax(ytest, axis=1)
+    ypred_flat = np.argmax(ypred, axis=1)
+    base_accuracy = accuracy_score(ytest_flat, ypred_flat)
+
+    score = np.empty(np.shape(Xtrain)[0])
+    for idx in range(np.shape(Xtrain)[0]):
+
+        image = np.expand_dims(Xtrain[idx,:,:], axis=0)
+        #print(image)
+        #print(ytrain[idx])
+        model_new = retrain(basemodel,epochs_retrain_sample,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
+        ypred = model_new.predict(Xtest)
+        ypred_flat = np.argmax(ypred, axis=1)
+        new_accuracy = accuracy_score(ytest_flat, ypred_flat)
+        score[idx] = new_accuracy-base_accuracy
+
+    ypred_train = basemodel.predict(Xtrain)
+
+    clf = RandomForestRegressor(n_estimators=500, max_depth=100, random_state=0)
+    clf.fit(ypred_train, score)
+
+    return(clf)
+
+
+
+def RandomForest_fn(annotation_vector):
+    Xtrain, ytrain = fetch_data('train')
+    basemodel = 'model_100epochs'
+    RF = RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,1)
+    score = RF.predict(annotation_vector)
+    return(score[0])
+
+
+
+
+
+
+
+
 

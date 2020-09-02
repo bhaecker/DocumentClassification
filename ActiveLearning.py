@@ -2,6 +2,7 @@ import sys
 import math
 import glob
 import os
+import functools
 import numpy as np
 import tensorflow as tf
 #from tensorflow import keras
@@ -10,8 +11,6 @@ import tensorflow as tf
 #sess = tf.Session(config=config)
 #keras.backend.set_session(sess)
 
-from .MetricsMethod import metric_method, mutural_info_method, diversity_method
-from .RandomForest import RandomForest_method
 from .TransferLearning import loadmodel
 
 DATA_DIRECTORY = 'Data'

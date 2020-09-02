@@ -16,6 +16,7 @@ from sklearn.metrics import accuracy_score
 from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
 #from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 from .ActiveLearning import seperation
+#from .RandomForest import RandomForestRegressor_pretraining
 
 
 DATA_DIRECTORY = 'Data'
