@@ -32,7 +32,7 @@ def __main__():
     Xunseen, yunseen = Xunseen[:10], yunseen[:10]
     yunseen_predict = CNN_model.predict(Xunseen)
 
-    decision = trained_RL_model.predict(Xunseen, yunseen_predict)
+    decision = trained_RL_model.predict([Xunseen, yunseen_predict])
     yunseen_flat = np.argmax(yunseen, axis=1)
     yunseen_predict_flat = np.argmax(yunseen_predict, axis=1)
     decision_flat = np.argmax(decision, axis=1)
