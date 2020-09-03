@@ -30,10 +30,10 @@ def RL_model(number_classes):
 
     concat_layer = Concatenate()([prediction_input, flat_layer])
     dense_layer = Dense(256, activation="relu")(concat_layer)
-    dropout_layer = Dropout(0.3)(dense_layer)
-    dense_layer = Dense(256, activation="relu")(dropout_layer)
-    dropout_layer = Dropout(0.3)(dense_layer)
-    dense_layer = Dense(256, activation="relu")(dropout_layer)
+    #dropout_layer = Dropout(0.3)(dense_layer)
+    #dense_layer = Dense(256, activation="relu")(dropout_layer)
+    #dropout_layer = Dropout(0.3)(dense_layer)
+    #dense_layer = Dense(256, activation="relu")(dropout_layer)
     dropout_layer = Dropout(0.3)(dense_layer)
     output_layer = Dense(2, activation="softmax")(dropout_layer)#output the decision: 1,0 model, 0,1 human
 
