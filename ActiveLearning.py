@@ -29,7 +29,11 @@ def seperation(X,y,model,batch_size,method):
         return(X,y,X_empty,y_empty)
 
     if str(method.__name__).endswith('method'):
-        return(method(X,y,batch_size,model))
+        Xwinner,ywinner,Xloser,yloser = method(X, y, batch_size, model)
+        # get the class distribution
+        class_distribution = collections.Counter(np.where(ywinner == 1)[1])
+        print(class_distribution)
+        return(Xwinner,ywinner,Xloser,yloser)
 
     if type(model) == str:
         model = loadmodel(model)
