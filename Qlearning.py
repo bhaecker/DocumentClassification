@@ -96,6 +96,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                             batch_size=1,
                             epochs=1,
                             verbose=0)
+            idx += 1
 
     savemodel(RL_model,'Rl_model')
     return(RL_model)
