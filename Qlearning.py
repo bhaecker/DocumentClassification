@@ -60,6 +60,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
             sample = np.expand_dims(sample, axis=0)
             target_class = ytrain[idx]
             target_class = np.expand_dims(target_class, axis=0)
+
             predicted_class = CNN_model.predict(sample)
             #choose random action or let RL model decide
             if np.random.random() < eps:
@@ -72,6 +73,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                 #CNN predicts correct
                 if np.argmax(target_class, axis=1) == np.argmax(predicted_class, axis=1):
                     r += 1
+                    print('CNN predicted correct')
                 # CNN predicts incorrect
                 else:
                     r -= 1
