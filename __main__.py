@@ -23,13 +23,13 @@ def __main__():
 
     CNN_model = loadmodel('model_100epochs')
     Xtrain, ytrain = fetch_data('test')
-    Xtrain, ytrain = Xtrain[:350], ytrain[:350]
+    Xtrain, ytrain = Xtrain[:450], ytrain[:450]
     RL_modell = RL_model(10)
 
     trained_RL_model = train_RL_model(Xtrain, ytrain, RL_modell, CNN_model, 2)
 
     Xunseen, yunseen = fetch_data('unseen')
-    Xunseen, yunseen = Xunseen[:100], yunseen[:100]
+    #Xunseen, yunseen = Xunseen[:100], yunseen[:100]
     yunseen_predict = CNN_model.predict(Xunseen)
 
     decision = trained_RL_model.predict([Xunseen, yunseen_predict])

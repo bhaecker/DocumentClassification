@@ -77,11 +77,11 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                 # CNN predicts incorrect
                 else:
                     print('CNN predicted INcorrect')
-                    r -= 1.1
+                    r -= 2
             #RL model decides for human prediction
             else:
                 print('please help me human')
-                r -= 0.02
+                r -= 0.5
             #next step in environment
             sample_new = Xtrain[idx+1]
             sample_new = np.expand_dims(sample_new, axis=0)
