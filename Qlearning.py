@@ -46,7 +46,7 @@ def RL_model(number_classes):
 
 def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
     y = 0.95
-    eps = 0.5
+    eps = 0.4
     decay_factor = 0.999
     for i in range(num_episodes):
         #exploration to explotation
@@ -77,7 +77,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                 # CNN predicts incorrect
                 else:
                     print('CNN predicted INcorrect')
-                    r -= 1
+                    r -= 1.1
             #RL model decides for human prediction
             else:
                 print('please help me human')
