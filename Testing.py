@@ -82,9 +82,6 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         #Xtrain_new, ytrain_new = Xtrain, ytrain
         Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base, retrain_size, method)
 
-        # get the class distribution
-        class_distribution = collections.Counter(np.where(ywinner == 1)[1])
-        print(class_distribution)
         #new trainings batch consists of old training samples plus the new unseen ones
         Xtrain_new, ytrain_new = np.concatenate((Xtrain, Xwinner), axis=0), np.concatenate((ytrain, ywinner),axis=0)
 

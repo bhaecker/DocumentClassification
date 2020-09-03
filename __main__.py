@@ -20,12 +20,12 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    Xtrain, ytrain = fetch_data('train')
-    Xtrain, ytrain = Xtrain[:300], ytrain[:300]
-    class_distribution = collections.Counter(np.where(ytrain == 1)[1])
-    print(class_distribution)
+    #Xtrain, ytrain = fetch_data('train')
+    #Xtrain, ytrain = Xtrain[:300], ytrain[:300]
+    #class_distribution = collections.Counter(np.where(ytrain == 1)[1])
+    #print(class_distribution)
 
-    sys.exit()
+
     #RandomForest_fn()
 
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
@@ -34,7 +34,7 @@ def __main__():
     model = loadmodel('model_100epochs')
     #yunseen_pred = model.predict(Xunseen)
     #for smallunseen in yunseen_pred:
-    #   print(RandomForest_fn(smallunseen))
+     #   print(RandomForest_fn(smallunseen))
     #todo: scores are too similar, it always chooes first class then
 
     #RandomForestRegressor_pretraining(Xtrain, ytrain,model,25)

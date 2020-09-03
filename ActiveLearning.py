@@ -4,6 +4,7 @@ import glob
 import os
 import functools
 import numpy as np
+import collections
 import tensorflow as tf
 #from tensorflow import keras
 
@@ -39,10 +40,14 @@ def seperation(X,y,model,batch_size,method):
     #todo check everytime, if we need the highest or lowest values for ALL functions
     #get the indices of the batch_sized highest scores
     n_highest = np.argpartition(scores, -batch_size)[-batch_size:]
-
+    print(n_highest)
     #seperate unseen data in winner and looser data set by the indices
     Xwinner = X[n_highest,:,:]
     ywinner = y[n_highest]
+
+    # get the class distribution
+    class_distribution = collections.Counter(np.where(ywinner == 1)[1])
+    print(class_distribution)
 
     mask = np.ones_like(scores,dtype = bool)
     mask[n_highest] = False
