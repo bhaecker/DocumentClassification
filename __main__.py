@@ -40,7 +40,7 @@ def __main__():
     #RandomForestRegressor_pretraining(Xtrain, ytrain,model,25)
 
 
-    method_list = [RandomForest_fn,margin_sampling_fn,diversity_method,RandomForest_method,metric_method]
+    method_list = [diversity_method,RandomForest_fn,margin_sampling_fn,RandomForest_method,metric_method]
     print(experiment(model,epochs_retrain,retrain_batch,batch_size,method_list))
 
 if __name__ == "__main__":
