@@ -76,9 +76,11 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                     print('CNN predicted correct')
                 # CNN predicts incorrect
                 else:
+                    print('CNN predicted INcorrect')
                     r -= 1
             #RL model decides for human prediction
             else:
+                print('human pls help')
                 r -= 0.05
             #next step in environment
             sample_new = Xtrain[idx+1]
