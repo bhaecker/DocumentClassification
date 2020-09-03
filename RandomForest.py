@@ -9,7 +9,8 @@ from .TransferLearning import fetch_data, loadmodel, retrain
 
 def RandomForest_method(X,y,number_samples,model):
     '''
-    Todo: write it
+    we train a RF classifier on right and wrong predictions made by the model on the training (!) set
+    then we choose the unseen samples, for which the RF predicts "wrong predictions by model"
     '''
     if np.shape(X)[0] <= number_samples:
         X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
@@ -72,6 +73,10 @@ def RandomForest_method(X,y,number_samples,model):
 
 
 def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sample):
+    '''
+    We train a RF regressor to predict the improvment a single training sample has on the basemodel, when used for retraining for epochs_retrain_sample epochs
+    '''
+
     if type(basemodel) == str:
         basemodel = loadmodel(basemodel)
 
@@ -104,6 +109,10 @@ def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sam
 
 
 def RandomForest_fn(annotation_vector):
+    '''
+    we use a RF regressor to predict the improvment of annotation_vector if used for retraining a base model
+    '''
+
     #todo better way then always unpickle RF
     with open('RF', 'rb') as f:
         RF = pickle.load(f)
