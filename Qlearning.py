@@ -54,7 +54,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
         r = 0
         number_sample = np.shape(Xtrain)[0]
         idx = 0
-        while idx < number_sample:
+        while idx < number_sample-1:
             #prepare input for RL model
             sample = Xtrain[idx]
             sample = np.expand_dims(sample, axis=0)
