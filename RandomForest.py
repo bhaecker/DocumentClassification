@@ -106,8 +106,6 @@ def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sam
         pickle.dump(clf, f)
     return(clf)
 
-
-
 def RandomForest_fn(annotation_vector):
     '''
     we use a RF regressor to predict the improvment of annotation_vector if used for retraining a base model

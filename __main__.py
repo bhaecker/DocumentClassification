@@ -9,6 +9,7 @@ from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
 from .MetricsMethod import metric_method, mutural_info_method, diversity_method
 from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
+from .Qlearning import RL_model, train_RL_model
 
 epochs = 100
 epochs_retrain = 5
@@ -20,25 +21,46 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
+    CNN_model = loadmodel('model_100epochs')
+    Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = Xtrain[:100], ytrain[:100]
+    RL_modell = RL_model(10)
+
+    trained_RL_model = train_RL_model(Xtrain, ytrain, RL_modell, CNN_model, 2)
+
+    Xunseen, yunseen = fetch_data('unseen')
+    Xunseen, yunseen = Xunseen[:10], yunseen[:10]
+    yunseen_predict = CNN_model.predict(Xunseen)
+
+    decision = trained_RL_model.predict(Xunseen, yunseen_predict)
+    yunseen_flat = np.argmax(yunseen, axis=1)
+    yunseen_predict_flat = np.argmax(yunseen_predict, axis=1)
+    decision_flat = np.argmax(decision, axis=1)
+
+    print(yunseen_flat)
+    print(yunseen_predict_flat)
+    print(decision_flat)
+
+    sys.exit()
+
+
     #Xtrain, ytrain = fetch_data('train')
     #Xtrain, ytrain = Xtrain[:300], ytrain[:300]
     #class_distribution = collections.Counter(np.where(ytrain == 1)[1])
     #print(class_distribution)
-
 
     #RandomForest_fn()
 
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
     #del Xtrain, ytrain
     #Xunseen, _ = fetch_data('unseen')
-    model = loadmodel('model_100epochs')
+
     #yunseen_pred = model.predict(Xunseen)
     #for smallunseen in yunseen_pred:
      #   print(RandomForest_fn(smallunseen))
-    #todo: scores are too similar, it always chooes first class then
+
 
     #RandomForestRegressor_pretraining(Xtrain, ytrain,model,25)
-
 
     method_list = [diversity_method,RandomForest_fn,margin_sampling_fn,RandomForest_method,metric_method]
     print(experiment(model,epochs_retrain,retrain_batch,batch_size,method_list))
