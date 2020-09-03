@@ -81,7 +81,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
             #RL model decides for human prediction
             else:
                 print('please help me human')
-                r -= 0.05
+                r -= 0.02
             #next step in environment
             sample_new = Xtrain[idx+1]
             sample_new = np.expand_dims(sample_new, axis=0)
