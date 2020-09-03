@@ -23,7 +23,7 @@ def __main__():
 
     CNN_model = loadmodel('model_100epochs')
     Xtrain, ytrain = fetch_data('test')
-    Xtrain, ytrain = Xtrain[:150], ytrain[:150]
+    Xtrain, ytrain = Xtrain[:350], ytrain[:350]
     RL_modell = RL_model(10)
 
     trained_RL_model = train_RL_model(Xtrain, ytrain, RL_modell, CNN_model, 2)

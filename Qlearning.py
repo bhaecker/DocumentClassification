@@ -35,7 +35,7 @@ def RL_model(number_classes):
     #dropout_layer = Dropout(0.3)(dense_layer)
     #dense_layer = Dense(256, activation="relu")(dropout_layer)
     dropout_layer = Dropout(0.3)(dense_layer)
-    output_layer = Dense(2, activation="softmax")(dropout_layer)#output the decision: 1,0 model, 0,1 human
+    output_layer = Dense(2, activation="softmax")(dropout_layer)#output the decision: 1,0 (0) model, 0,1 human (1)
 
     model = Model(inputs=[image_input, prediction_input], outputs=output_layer)
 
@@ -46,8 +46,8 @@ def RL_model(number_classes):
 
 def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
     y = 0.95
-    eps = 0.4
-    decay_factor = 0.999
+    eps = 0.7
+    decay_factor = 0.99
     for i in range(num_episodes):
         #exploration to explotation
         eps *= decay_factor
