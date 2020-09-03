@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import tensorflow as tf
+import collections
 
 from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
 from .Testing import tester, experiment
@@ -19,8 +20,12 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    #Xtrain, ytrain = fetch_data('train')
-    #Xtrain, ytrain = Xtrain[:300], ytrain[:300]
+    Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = Xtrain[:300], ytrain[:300]
+    class_distribution = collections.Counter(np.where(ytrain == 1)[1])
+    print(class_distribution)
+
+    sys.exit()
     #RandomForest_fn()
 
     #model = fine_tune(Xtrain,ytrain,epochs,batch_size)[0]
@@ -34,7 +39,7 @@ def __main__():
 
     #RandomForestRegressor_pretraining(Xtrain, ytrain,model,25)
 
-    #sys.exit()
+
     method_list = [RandomForest_fn,margin_sampling_fn,diversity_method,RandomForest_method,metric_method]
     print(experiment(model,epochs_retrain,retrain_batch,batch_size,method_list))
 
