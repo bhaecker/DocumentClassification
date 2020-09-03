@@ -66,6 +66,13 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     df = pd.DataFrame([[number_samples]+[base_performance]*len(list_methods)], columns = ['number of samples'] + [str(method.__name__) for method in list_methods])
 
     Xunseen_orig, yunseen_orig = fetch_data('unseen')
+
+    #suffle the unseen data
+    rng_state = np.random.get_state()
+    np.random.shuffle(Xunseen_orig)
+    np.random.set_state(rng_state)
+    np.random.shuffle(yunseen_orig)
+
     print(np.shape(Xunseen_orig))
     print(np.shape(Xtrain))
     #Xunseen_orig, yunseen_orig = Xunseen_orig[:10], yunseen_orig[:10]

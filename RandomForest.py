@@ -112,7 +112,6 @@ def RandomForest_fn(annotation_vector):
     '''
     we use a RF regressor to predict the improvment of annotation_vector if used for retraining a base model
     '''
-
     #todo better way then always unpickle RF
     with open('RF', 'rb') as f:
         RF = pickle.load(f)

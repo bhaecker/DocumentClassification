@@ -6,9 +6,10 @@ import numpy as np
 import pandas as pd
 import collections
 
+
 import tensorflow as tf
 
-from keras.models import model_from_json
+from tensorflow.keras.models import model_from_json
 
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
@@ -19,6 +20,7 @@ from ActiveLearning import seperation
 from baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
 from MetricsMethod import metric_method, mutural_info_method,diversity_method
 from RandomForest import RandomForest_method
+
 
 model = loadmodel('model_40epochs')
 
