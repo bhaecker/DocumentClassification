@@ -14,7 +14,7 @@ from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
 epochs = 100
 epochs_retrain = 2
 batch_size = 128
-retrain_batch = 100
+retrain_batch = 150
 
 #number_games = 100
 
