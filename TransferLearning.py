@@ -29,7 +29,7 @@ def loadmodel(name):
     model = tf.keras.models.model_from_json(loaded_model_json)
     model.load_weights(str(name)+'.h5')
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
-    print('model loaded')
+    print(str(name)+' loaded')
     return(model)
 
 

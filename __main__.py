@@ -4,19 +4,19 @@ import tensorflow as tf
 import collections
 
 from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
-#from .Testing import tester, experiment
-#from .ActiveLearning import seperation
-#from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
-#from .MetricsMethod import metric_method, mutural_info_method, diversity_method
-#from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
-from .Qlearning import RL_model, train_RL_model
+from .Testing import tester, experiment
+from .ActiveLearning import seperation
+from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
+from .MetricsMethod import metric_method, mutural_info_method, diversity_method
+from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
+from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
 
 epochs = 100
-epochs_retrain = 5
+epochs_retrain = 10
 batch_size = 128
-retrain_batch = 100
+retrain_batch = 250
 
-number_games = 100
+#number_games = 100
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -24,6 +24,11 @@ def __main__():
     tf.device('/device:GPU:0')
 
     CNN_model = loadmodel('model_100epochs')
+    method_list = [RL_CNN_method, RL_human_method, margin_sampling_fn]
+    print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
+
+    sys.exit()
+
 
     Xtrain, ytrain = fetch_data('test')
     Xtrain, ytrain = Xtrain[:150], ytrain[:150]
@@ -65,9 +70,6 @@ def __main__():
 
 
     #RandomForestRegressor_pretraining(Xtrain, ytrain,model,25)
-
-    method_list = [diversity_method,RandomForest_fn,margin_sampling_fn,RandomForest_method,metric_method]
-    print(experiment(model,epochs_retrain,retrain_batch,batch_size,method_list))
 
 if __name__ == "__main__":
     __main__()

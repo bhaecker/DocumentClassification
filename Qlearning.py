@@ -115,6 +115,68 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
 
     return(RL_model)
 
-#TODO try out different output layer, float between 0 and 1
+
+def RL_human_method(X, y, batch_size, CNN_model):
+    '''
+
+    '''
+    number_samples = np.shape(X)[0]
+    if number_samples <= batch_size:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+
+
+    y_pred = CNN_model.predict(X)
+    RL_model = loadmodel('Rl_model')
+
+    expected_rewards = RL_model.predict([X,y_pred])
+
+    #decisions = [np.random.choice(2, p = expected_rewards[i]) for i in range(number_samples)]
+
+    #reminder: first entry expected reward for asking CNN model, second entry for asking human
+    ##either sort for lowest expected reward for CNN model, or highest expected reward for asking human
+    sort_ind = np.argsort(expected_rewards[:,1])
+    #sort samples (and labels) in descending order from highest expected reward to lowest
+    X = X[sort_ind[::-1]]
+    y = y[sort_ind[::-1]]
+
+    Xwinner, ywinner = X[:batch_size], y[:batch_size]
+    Xloser, yloser = X[batch_size:], y[batch_size:]
+
+    return(Xwinner, ywinner, Xloser, yloser)
+
+
+def RL_CNN_method(X, y, batch_size, CNN_model):
+    '''
+
+    '''
+    number_samples = np.shape(X)[0]
+    if number_samples <= batch_size:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return (X, y, X_empty, y_empty)
+
+    y_pred = CNN_model.predict(X)
+    RL_model = loadmodel('Rl_model')
+
+    expected_rewards = RL_model.predict([X, y_pred])
+
+    # decisions = [np.random.choice(2, p = expected_rewards[i]) for i in range(number_samples)]
+
+    # reminder: first entry expected reward for asking CNN model, second entry for asking human
+    ##either sort for lowest expected reward for CNN model, or highest expected reward for asking human
+    sort_ind = np.argsort(expected_rewards[:, 0])
+    # sort samples (and labels) in descending order from highest expected reward to lowest
+    X = X[sort_ind]
+    y = y[sort_ind]
+
+    Xwinner, ywinner = X[:batch_size], y[:batch_size]
+    Xloser, yloser = X[batch_size:], y[batch_size:]
+
+    return (Xwinner, ywinner, Xloser, yloser)
+
+
+
 #more episodes
 #try only with one input type...
