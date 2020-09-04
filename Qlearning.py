@@ -108,10 +108,11 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
             idx += 1
             r_sum += r
 
+        savemodel(RL_model, 'Rl_model')
         r_avg_list.append(r_sum / 1000)
 
     print(r_avg_list)
-    savemodel(RL_model,'Rl_model')
+
     return(RL_model)
 
 #TODO try out different output layer, float between 0 and 1

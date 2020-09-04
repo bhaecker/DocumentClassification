@@ -16,7 +16,7 @@ epochs_retrain = 5
 batch_size = 128
 retrain_batch = 100
 
-number_games = 500
+number_games = 100
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -26,7 +26,7 @@ def __main__():
     CNN_model = loadmodel('model_100epochs')
 
     Xtrain, ytrain = fetch_data('test')
-    Xtrain, ytrain = Xtrain[:200], ytrain[:200]
+    Xtrain, ytrain = Xtrain[:150], ytrain[:150]
     RL_modell = RL_model(10)
 
     trained_RL_model = train_RL_model(Xtrain, ytrain, RL_modell, CNN_model, number_games)
