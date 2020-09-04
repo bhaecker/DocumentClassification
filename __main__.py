@@ -4,17 +4,19 @@ import tensorflow as tf
 import collections
 
 from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
-from .Testing import tester, experiment
-from .ActiveLearning import seperation
-from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
-from .MetricsMethod import metric_method, mutural_info_method, diversity_method
-from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
+#from .Testing import tester, experiment
+#from .ActiveLearning import seperation
+#from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
+#from .MetricsMethod import metric_method, mutural_info_method, diversity_method
+#from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
 from .Qlearning import RL_model, train_RL_model
 
 epochs = 100
 epochs_retrain = 5
 batch_size = 128
 retrain_batch = 100
+
+number_games = 100
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -24,23 +26,24 @@ def __main__():
     CNN_model = loadmodel('model_100epochs')
 
     Xtrain, ytrain = fetch_data('test')
-    Xtrain, ytrain = Xtrain[:250], ytrain[:250]
+    Xtrain, ytrain = Xtrain[:100], ytrain[:100]
     RL_modell = RL_model(10)
 
-    trained_RL_model = train_RL_model(Xtrain, ytrain, RL_modell, CNN_model, 2)
+    trained_RL_model = train_RL_model(Xtrain, ytrain, RL_modell, CNN_model, number_games)
 
     Xunseen, yunseen = fetch_data('unseen')
-    #Xunseen, yunseen = Xunseen[:100], yunseen[:100]
+    Xunseen, yunseen = Xunseen[:100], yunseen[:100]
     yunseen_predict = CNN_model.predict(Xunseen)
 
-    decision = trained_RL_model.predict([Xunseen, yunseen_predict])
+    rewards = trained_RL_model.predict([Xunseen, yunseen_predict])
+    print(rewards)
     yunseen_flat = np.argmax(yunseen, axis=1)
     yunseen_predict_flat = np.argmax(yunseen_predict, axis=1)
-    decision_flat = np.argmax(decision, axis=1)
+    decision = np.argmax(rewards, axis=1)
 
     print(yunseen_flat)
     print(yunseen_predict_flat)
-    print(decision_flat)
+    print(decision)
 
     sys.exit()
 
