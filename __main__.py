@@ -22,8 +22,9 @@ def __main__():
     tf.device('/device:GPU:0')
 
     CNN_model = loadmodel('model_100epochs')
+
     Xtrain, ytrain = fetch_data('test')
-    Xtrain, ytrain = Xtrain[:450], ytrain[:450]
+    Xtrain, ytrain = Xtrain[:250], ytrain[:250]
     RL_modell = RL_model(10)
 
     trained_RL_model = train_RL_model(Xtrain, ytrain, RL_modell, CNN_model, 2)

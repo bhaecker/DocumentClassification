@@ -77,7 +77,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                 # CNN predicts incorrect
                 else:
                     print('CNN predicted INcorrect')
-                    r -= 5
+                    r -= 1
             #RL model decides for human prediction
             else:
                 print('please help me human')
@@ -99,6 +99,17 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                             epochs=1,
                             verbose=0)
             idx += 1
+    Xunseen, yunseen = fetch_data('unseen')
 
+    yunseen_predict = CNN_model.predict(Xunseen)
+
+    decision = RL_model.predict([Xunseen, yunseen_predict])
+
+    decision_flat = np.argmax(decision, axis=1)
+
+    print(decision_flat)
     savemodel(RL_model,'Rl_model')
     return(RL_model)
+#TODO try out different output layer, float between 0 and 1
+#more episodes
+#try only with one input type...
