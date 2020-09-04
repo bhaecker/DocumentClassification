@@ -152,7 +152,8 @@ def retrain(model,epochs,batch_size,X,y):
             #validation_split=0.2,
             batch_size=batch_size,
             epochs=epochs,
-            verbose=1)
+            verbose=1,
+            shuffle=True)
     #savemodel(model,'retrained_'+str(epochs)+'epochs')
     return(model,history)
 
