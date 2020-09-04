@@ -23,4 +23,5 @@
 /_old
 /TeachersAlgorithm.py
 /SOM.py
-
+/Rl_model.h5
+/Rl_model.json
