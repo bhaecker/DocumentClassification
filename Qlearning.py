@@ -137,6 +137,8 @@ def RL_human_method(X, y, batch_size, CNN_model):
     #reminder: first entry expected reward for asking CNN model, second entry for asking human
     ##either sort for lowest expected reward for CNN model, or highest expected reward for asking human
     sort_ind = np.argsort(expected_rewards[:,1])
+    print(sort_ind)
+    print(np.argsort(expected_rewards[:,0]))
     #sort samples (and labels) in descending order from highest expected reward to lowest
     X = X[sort_ind[::-1]]
     y = y[sort_ind[::-1]]
