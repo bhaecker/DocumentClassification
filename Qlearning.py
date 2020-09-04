@@ -80,7 +80,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                 # CNN predicts incorrect
                 else:
                     #print('CNN predicted INcorrect')
-                    r -= 1
+                    r -= 1.1
             #RL model decides for human prediction
             else:
                 #print('please help me human')
