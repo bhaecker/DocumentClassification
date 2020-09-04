@@ -12,9 +12,9 @@ from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegr
 from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
 
 epochs = 100
-epochs_retrain = 2
+epochs_retrain = 1
 batch_size = 128
-retrain_batch = 150
+retrain_batch = 133
 
 #number_games = 100
 
@@ -24,7 +24,7 @@ def __main__():
     tf.device('/device:GPU:0')
 
     CNN_model = loadmodel('model_100epochs')
-    method_list = [RL_human_method, RL_CNN_method, margin_sampling_fn]
+    method_list = [RL_CNN_method, margin_sampling_fn, RL_human_method]
     print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
 
     sys.exit()
