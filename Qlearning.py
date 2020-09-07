@@ -175,6 +175,11 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
     X = X[sort_ind]
     y = y[sort_ind]
 
+    #just for testing
+    y_pred = y_pred[sort_ind]
+    print(RL_model.predict([X, y_pred]))
+
+
     Xwinner, ywinner = X[:batch_size], y[:batch_size]
     Xloser, yloser = X[batch_size:], y[batch_size:]
 

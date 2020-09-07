@@ -23,12 +23,10 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    Xtrain, ytrain = fetch_data('unseen')
-    Xtrain, ytrain = Xtrain[:200], ytrain[:200]
-    RL_modell = RL_model(10)
+    #Xtrain, ytrain = fetch_data('unseen')
+    #Xtrain, ytrain = Xtrain[:200], ytrain[:200]
+    #RL_modell = RL_model(10)
     CNN_model = loadmodel('model_100epochs')
-
-    print(train_RL_model(Xtrain, ytrain, RL_modell, CNN_model, number_games))
 
     method_list = [RL_CNN_method, margin_sampling_fn, RL_human_method]
     print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
