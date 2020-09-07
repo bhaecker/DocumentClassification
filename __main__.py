@@ -23,17 +23,8 @@ def __main__():
     tf.config.experimental.list_physical_devices('GPU')
     tf.device('/device:GPU:0')
 
-    #Xtrain, ytrain = fetch_data('unseen')
-    #Xtrain, ytrain = Xtrain[:200], ytrain[:200]
-    #RL_modell = RL_model(10)
     CNN_model = loadmodel('model_100epochs')
-
-    method_list = [RL_CNN_method, margin_sampling_fn, RL_human_method]
-    print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
-
-    sys.exit()
-
-
+    trained_RL_model = loadmodel('RL_model')
     Xunseen, yunseen = fetch_data('unseen')
     Xunseen, yunseen = Xunseen[:200], yunseen[:200]
     yunseen_predict = CNN_model.predict(Xunseen)
@@ -49,6 +40,14 @@ def __main__():
     print(decision)
 
     sys.exit()
+
+    #Xtrain, ytrain = fetch_data('unseen')
+    #Xtrain, ytrain = Xtrain[:200], ytrain[:200]
+    #RL_modell = RL_model(10)
+
+
+    method_list = [RL_CNN_method, margin_sampling_fn, RL_human_method]
+    print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
 
 
     #Xtrain, ytrain = fetch_data('train')

@@ -145,6 +145,10 @@ def RL_human_method(X, y, batch_size, CNN_model):
     X = X[sort_ind[::-1]]
     y = y[sort_ind[::-1]]
 
+    # just for testing
+    y_pred = y_pred[sort_ind[::-1]]
+    print(RL_model.predict([X, y_pred]))
+
     Xwinner, ywinner = X[:batch_size], y[:batch_size]
     Xloser, yloser = X[batch_size:], y[batch_size:]
 
