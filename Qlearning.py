@@ -16,26 +16,30 @@ def RL_model(number_classes):
 
     #CNN for image processing
     image_input = Input((244, 244, 3)) #same size as in CNN Model or numpy array of images
-    conv_layer = Conv2D(16, (7, 7))(image_input)
-    pool_layer = MaxPooling2D(pool_size=(2, 2))(conv_layer)
-    conv_layer = Conv2D(32, (5, 5))(pool_layer)
-    pool_layer = MaxPooling2D(pool_size=(3, 3))(conv_layer)
-    conv_layer = Conv2D(64, (3, 3))(pool_layer)
+    conv_layer = Conv2D(32, (5, 5))(image_input)
     pool_layer = MaxPooling2D(pool_size=(5, 5))(conv_layer)
-    conv_layer = Conv2D(64, (3, 3))(pool_layer)
+    dropout_layer = Dropout(0.5)(pool_layer)
+    conv_layer = Conv2D(64, (5, 5))(dropout_layer)
+    pool_layer = MaxPooling2D(pool_size=(3, 3))(conv_layer)
+    dropout_layer = Dropout(0.5)(pool_layer)
+    conv_layer = Conv2D(128, (3, 3))(dropout_layer)
+    pool_layer = MaxPooling2D(pool_size=(2, 2))(conv_layer)
+    dropout_layer = Dropout(0.5)(pool_layer)
+    conv_layer = Conv2D(256, (3, 3))(dropout_layer)
+
     flat_layer = Flatten()(conv_layer)
 
     #predictions from classification model
     prediction_input = Input((number_classes,))
 
     concat_layer = Concatenate()([prediction_input, flat_layer])
-    dense_layer = Dense(256, activation="relu")(concat_layer)
+    dense_layer = Dense(256, activation="relu",kernel_initializer=tf.keras.initializers.Zeros())(concat_layer)
+    dropout_layer = Dropout(0.5)(dense_layer)
+    dense_layer = Dense(128, activation="relu",kernel_initializer=tf.keras.initializers.Zeros())(dropout_layer)
+    dropout_layer = Dropout(0.4)(dense_layer)
+    dense_layer = Dense(64, activation="relu",kernel_initializer=tf.keras.initializers.Zeros())(dropout_layer)
     dropout_layer = Dropout(0.3)(dense_layer)
-    dense_layer = Dense(256, activation="relu")(dropout_layer)
-    #dropout_layer = Dropout(0.3)(dense_layer)
-    #dense_layer = Dense(256, activation="relu")(dropout_layer)
-    dropout_layer = Dropout(0.3)(dense_layer)
-    output_layer = Dense(2, activation="linear")(dropout_layer)#output the expected reward for decision "ask model" first node and "ask human" second node
+    output_layer = Dense(2, activation="linear",kernel_initializer=tf.keras.initializers.Zeros())(dropout_layer)#output the expected reward for decision "ask model" in first node and "ask human" in second node
 
     model = Model(inputs=[image_input, prediction_input], outputs=output_layer)
 
@@ -176,7 +180,13 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
 
     return (Xwinner, ywinner, Xloser, yloser)
 
-
+#CNN_model = loadmodel('model_40epochs')
+#RL_model = RL_model(10)
+#print(RL_model.summary())
+#Xtest,_ = fetch_data('test')
+#Xtest =Xtest[:100]
+#ypred = CNN_model.predict(Xtest)
+#print(RL_model.predict([Xtest,ypred]))
 
 #more episodes
 #try only with one input type...
