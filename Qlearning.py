@@ -33,13 +33,13 @@ def RL_model(number_classes):
     prediction_input = Input((number_classes,))
 
     concat_layer = Concatenate()([prediction_input, flat_layer])
-    dense_layer = Dense(256, activation="relu",kernel_initializer=tf.keras.initializers.Zeros())(concat_layer)
+    dense_layer = Dense(256, activation="relu",kernel_initializer=tf.keras.initializers.Ones())(concat_layer)
     dropout_layer = Dropout(0.5)(dense_layer)
-    dense_layer = Dense(128, activation="relu",kernel_initializer=tf.keras.initializers.Zeros())(dropout_layer)
+    dense_layer = Dense(128, activation="relu",kernel_initializer=tf.keras.initializers.Ones())(dropout_layer)
     dropout_layer = Dropout(0.4)(dense_layer)
-    dense_layer = Dense(64, activation="relu",kernel_initializer=tf.keras.initializers.Zeros())(dropout_layer)
+    dense_layer = Dense(64, activation="relu",kernel_initializer=tf.keras.initializers.Ones())(dropout_layer)
     dropout_layer = Dropout(0.3)(dense_layer)
-    output_layer = Dense(2, activation="linear",kernel_initializer=tf.keras.initializers.Zeros())(dropout_layer)#output the expected reward for decision "ask model" in first node and "ask human" in second node
+    output_layer = Dense(2, activation="linear",kernel_initializer=tf.keras.initializers.Ones())(dropout_layer)#output the expected reward for decision "ask model" in first node and "ask human" in second node
 
     model = Model(inputs=[image_input, prediction_input], outputs=output_layer)
 
@@ -80,14 +80,14 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                 #CNN predicts correct
                 if np.argmax(target_class, axis=1) == np.argmax(predicted_class, axis=1):
                     r += 1
-                    #print('CNN predicted correct')
+                    print('CNN predicted correct')
                 # CNN predicts incorrect
                 else:
-                    #print('CNN predicted INcorrect')
+                    print('CNN predicted INcorrect')
                     r -= 1.1
             #RL model decides for human prediction
             else:
-                #print('please help me human')
+                print('please help me human')
                 r -= 0.05
             #next step in environment
             #sample_new = Xtrain[idx+1]
