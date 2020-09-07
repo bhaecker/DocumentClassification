@@ -80,15 +80,15 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
                 #CNN predicts correct
                 if np.argmax(target_class, axis=1) == np.argmax(predicted_class, axis=1):
                     r += 1
-                    print('CNN predicted correct')
+                    #print('CNN predicted correct')
                 # CNN predicts incorrect
                 else:
-                    print('CNN predicted INcorrect')
-                    r -= 1.1
+                    #print('CNN predicted INcorrect')
+                    r -= 1
             #RL model decides for human prediction
             else:
-                print('please help me human')
-                r -= 0.05
+                #print('please help me human')
+                r -= 0.1
             #next step in environment
             #sample_new = Xtrain[idx+1]
             #sample_new = np.expand_dims(sample_new, axis=0)
