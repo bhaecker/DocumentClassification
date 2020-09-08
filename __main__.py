@@ -12,9 +12,9 @@ from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegr
 from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
 
 #epochs = 100
-epochs_retrain = 1
+epochs_retrain = 10
 batch_size = 128
-retrain_batch = 200
+retrain_batch = 133
 
 number_games = 200
 
@@ -24,10 +24,16 @@ def __main__():
     tf.device('/device:GPU:0')
 
     CNN_model = loadmodel('model_100epochs')
+    method_list = [RL_human_method,RL_CNN_method, margin_sampling_fn, metric_method]
+    print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
+
+    sys.exit()
+
     trained_RL_model = loadmodel('Rl_model')
     Xunseen, yunseen = fetch_data('test')
     Xunseen, yunseen = Xunseen[:200], yunseen[:200]
     yunseen_predict = CNN_model.predict(Xunseen)
+
 
     rewards = trained_RL_model.predict([Xunseen, yunseen_predict])
     print(rewards)
@@ -39,7 +45,7 @@ def __main__():
     print(yunseen_predict_flat)
     print(decision)
 
-    sys.exit()
+
 
     Xtrain, ytrain = fetch_data('unseen')
 
@@ -53,8 +59,7 @@ def __main__():
 
 
 
-    method_list = [RL_CNN_method, margin_sampling_fn, RL_human_method]
-    print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
+
 
 
     #Xtrain, ytrain = fetch_data('train')

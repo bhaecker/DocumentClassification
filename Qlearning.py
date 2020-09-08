@@ -33,13 +33,13 @@ def RL_model(number_classes):
     prediction_input = Input((number_classes,))
 
     concat_layer = Concatenate()([prediction_input, flat_layer])
-    dense_layer = Dense(256, activation="relu",kernel_initializer=tf.keras.initializers.Ones())(concat_layer)
+    dense_layer = Dense(256, activation="relu")(concat_layer)
     dropout_layer = Dropout(0.5)(dense_layer)
-    dense_layer = Dense(128, activation="relu",kernel_initializer=tf.keras.initializers.Ones())(dropout_layer)
+    dense_layer = Dense(128, activation="relu")(dropout_layer)
     dropout_layer = Dropout(0.4)(dense_layer)
-    dense_layer = Dense(64, activation="relu",kernel_initializer=tf.keras.initializers.Ones())(dropout_layer)
+    dense_layer = Dense(64, activation="relu")(dropout_layer)
     dropout_layer = Dropout(0.3)(dense_layer)
-    output_layer = Dense(2, activation="linear",kernel_initializer=tf.keras.initializers.Ones())(dropout_layer)#output the expected reward for decision "ask model" in first node and "ask human" in second node
+    output_layer = Dense(2, activation="linear")(dropout_layer)#output the expected reward for decision "ask model" in first node and "ask human" in second node
 
     model = Model(inputs=[image_input, prediction_input], outputs=output_layer)
 
@@ -132,7 +132,7 @@ def RL_human_method(X, y, batch_size, CNN_model):
 
 
     y_pred = CNN_model.predict(X)
-    RL_model = loadmodel('Rl_model')
+    RL_model = loadmodel('Rl_model_old')
 
     expected_rewards = RL_model.predict([X,y_pred])
 
@@ -166,7 +166,7 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
         return (X, y, X_empty, y_empty)
 
     y_pred = CNN_model.predict(X)
-    RL_model = loadmodel('Rl_model')
+    RL_model = loadmodel('Rl_model_old')
 
     expected_rewards = RL_model.predict([X, y_pred])
 
