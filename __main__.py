@@ -20,8 +20,8 @@ retrain_batch = 133
 
 def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
-    tf.config.experimental.list_physical_devices('GPU')
-    tf.device('/device:GPU:0')
+    #tf.config.experimental.list_physical_devices('GPU')
+    #tf.device('/device:GPU:0')
 
     CNN_model = loadmodel('model_100epochs')
     method_list = [diversity_images_method,RL_CNN_method, margin_sampling_fn, metric_method]

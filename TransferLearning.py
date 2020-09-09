@@ -22,13 +22,12 @@ def savemodel(model,name):
     print('model saved')
 
 def loadmodel(name):
-
     json_file = open(str(name)+'.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     model = tf.keras.models.model_from_json(loaded_model_json)
     model.load_weights(str(name)+'.h5')
-    model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy')#TODO:CHECK OPTIMIZER!!!
     print(str(name)+' loaded')
     return(model)
 
