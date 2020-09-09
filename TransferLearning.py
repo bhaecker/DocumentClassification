@@ -27,7 +27,7 @@ def loadmodel(name):
     json_file.close()
     model = tf.keras.models.model_from_json(loaded_model_json)
     model.load_weights(str(name)+'.h5')
-    model.compile(optimizer='rmsprop', loss='categorical_crossentropy')#TODO:CHECK OPTIMIZER!!!
+    model.compile(optimizer='Adam', loss='categorical_crossentropy',metrics=['accuracy'])#TODO:CHECK OPTIMIZER!!!
     print(str(name)+' loaded')
     return(model)
 

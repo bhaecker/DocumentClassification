@@ -142,8 +142,9 @@ def diversity_images_method(X,y,number_samples,model):
     mask[n_farest] = False
     Xloser = X[mask, :, :]
     yloser = y[mask]
+    del distance_list,n_farest,index_list,mask,model
 
-    return (Xwinner, ywinner, Xloser, yloser)
+    return(Xwinner, ywinner, Xloser, yloser)
 
 
 

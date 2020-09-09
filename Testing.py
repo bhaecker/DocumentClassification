@@ -73,7 +73,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     np.random.set_state(rng_state)
     np.random.shuffle(yunseen_orig)
 
-    Xunseen_orig, yunseen_orig = Xunseen_orig[:100], yunseen_orig[:100]
+    Xunseen_orig, yunseen_orig = Xunseen_orig[:200], yunseen_orig[:200]
 
     for method in list_methods:
         print('start',method.__name__)
@@ -89,7 +89,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         index = 1
         #while number_samples <= np.shape(Xunseen_orig)[0]:
         while np.shape(Xwinner)[0] > 0:
-            print(method.__name__,np.shape(Xwinner)[0])
+            print(method.__name__,str((np.shape(Xtrain_new)[0] - np.shape(Xtrain)[0])/np.shape(Xunseen_orig)[0])+'%')
             model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
             del model_old
 
@@ -112,6 +112,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             #df.loc[len(df)] = [number_samples] + accuracy_list
             #number_samples = number_samples + retrain_size
             model_old = model_new
+
             print(df)
 
     df.to_csv('RESULTS.csv', index = False)
