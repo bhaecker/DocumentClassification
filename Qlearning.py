@@ -175,7 +175,7 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
     # reminder: first entry expected reward for asking CNN model, second entry for asking human
     ##either sort for lowest expected reward for CNN model, or highest expected reward for asking human
     sort_ind = np.argsort(expected_rewards[:, 0])
-    # sort samples (and labels) in descending order from highest expected reward to lowest
+    # sort samples (and labels) in ascending order from lowest expected reward to highest
     X = X[sort_ind]
     y = y[sort_ind]
 

@@ -1,7 +1,9 @@
+import sys
 import math
 import random
 import numpy as np
 from numpy import linalg as LA
+from skimage.metrics import structural_similarity as ssim
 from sklearn.metrics import mutual_info_score,normalized_mutual_info_score
 
 from .TransferLearning import fetch_data, loadmodel
@@ -21,7 +23,7 @@ def metric_method(X,y,number_samples,model):
     #matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
     distance_list = []
     for row, ypred_a in enumerate(Ypred):
-        #print(row)
+        # TODO: Start from current row since matrix is semetric
         for column, ypred_b in enumerate(Ypred):
             #matrix[row][column] = LA.norm(ypred_a-ypred_b)
             #fill index_list
@@ -95,6 +97,65 @@ def diversity_method(X,y,number_samples,model):
     yloser = y[mask]
 
     return (Xwinner, ywinner, Xloser, yloser)
+
+
+#TODO: Idea: select samples which are farest away for EACH class (predicted by current CNN_model?)
+
+def diversity_images_method(X,y,number_samples,model):
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return (X, y, X_empty, y_empty)
+    if type(model) == str:
+        model = loadmodel(model)
+    #make predictions
+    Ypred = model.predict(X)
+
+    #calculate the similarities between all images
+    distance_list = []
+    for label in range(10):#number of labels
+        print(label)
+        for row,(X_row, y_pred_row)  in enumerate(zip(X,Ypred)):
+            #since similarity is semteric, only compare from current image on
+            for col, (X_col, y_pred_col)  in enumerate(zip(X[row+1:],Ypred[row+1:])):
+                if np.argmax(y_pred_col) == label == np.argmax(y_pred_row):
+                    if (X_col == X_row).all():
+                        sys.exit('ERROR')
+                    current_distance = ssim(X_row[:,:,0],X_col[:,:,0])
+                    distance_list.append((current_distance, (row, col+row+1, label)))
+    #sort list from smallest values on (the higher the value, the more similar the images)
+    distance_list = sorted(distance_list, key=lambda x: x[0], reverse=False)
+    # get the indices corresponding to the distances in the right order
+    index_list = [index[1][i] for index in distance_list for i in range(0, 2)]
+    #remove duplicates and shorten the list to desired length
+    n_farest = []
+    i = 0
+    while len(n_farest) + 1 <= number_samples:
+        if index_list[i] not in n_farest:
+            n_farest = n_farest + [index_list[i]]
+        i += 1
+    # seperate unseen data in winner and looser data set by the indices
+    Xwinner = X[n_farest, :, :]
+    ywinner = y[n_farest]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[n_farest] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+
+    return (Xwinner, ywinner, Xloser, yloser)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
