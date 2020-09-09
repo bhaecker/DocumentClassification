@@ -58,7 +58,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         model_base = loadmodel(model_base)
 
     Xtest, ytest = fetch_data('test')
-    #Xtest, ytest = Xtest[:10], ytest[:10]
+
     Xtrain, ytrain = fetch_data('train')
 
     base_performance = tester(Xtest, ytest, model_base)[0]
@@ -73,9 +73,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     np.random.set_state(rng_state)
     np.random.shuffle(yunseen_orig)
 
-    print(np.shape(Xunseen_orig))
-    print(np.shape(Xtrain))
-    #Xunseen_orig, yunseen_orig = Xunseen_orig[:10], yunseen_orig[:10]
+    Xunseen_orig, yunseen_orig = Xunseen_orig[:100], yunseen_orig[:100]
 
     for method in list_methods:
         print('start',method.__name__)
