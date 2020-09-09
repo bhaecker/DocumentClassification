@@ -14,7 +14,7 @@ from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
 #epochs = 100
 epochs_retrain = 10
 batch_size = 128
-retrain_batch = 20
+retrain_batch = 40
 
 #number_games = 200
 
@@ -24,7 +24,7 @@ def __main__():
     #tf.device('/device:GPU:0')
 
     CNN_model = loadmodel('model_100epochs')
-    method_list = [diversity_images_method,RL_CNN_method, margin_sampling_fn, metric_method]
+    method_list = [RL_CNN_method,margin_sampling_fn,diversity_images_method, metric_method]
     print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
 
     sys.exit()
