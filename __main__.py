@@ -12,7 +12,7 @@ from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegr
 from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
 
 #epochs = 100
-epochs_retrain = 10
+epochs_retrain = 5
 batch_size = 128
 retrain_batch = 40
 

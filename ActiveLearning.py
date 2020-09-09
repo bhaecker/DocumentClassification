@@ -44,7 +44,7 @@ def seperation(X,y,model,batch_size,method):
     #todo check everytime, if we need the highest or lowest values for ALL functions
     #get the indices of the batch_sized highest scores
     n_highest = np.argpartition(scores, -batch_size)[-batch_size:]
-    print(n_highest)
+    #print(n_highest)
     #seperate unseen data in winner and looser data set by the indices
     Xwinner = X[n_highest,:,:]
     ywinner = y[n_highest]

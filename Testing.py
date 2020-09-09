@@ -31,7 +31,7 @@ def tester(Xtest,ytest,model):
         model = loadmodel(model)
 
     loss = model.evaluate(Xtest, ytest, verbose=0)
-    print('loss :'+ str(loss))
+    print('loss :'+ str(loss[0]))
 
     ypred = model.predict(Xtest)
 
@@ -89,7 +89,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         index = 1
         #while number_samples <= np.shape(Xunseen_orig)[0]:
         while np.shape(Xwinner)[0] > 0:
-            print(method.__name__,str((np.shape(Xtrain_new)[0] - np.shape(Xtrain)[0])/np.shape(Xunseen_orig)[0])+'%')
+            print(method.__name__,'at '+str(100*(np.shape(Xtrain_new)[0] - np.shape(Xtrain)[0])/np.shape(Xunseen_orig)[0])+' %')
             model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
             del model_old
 
