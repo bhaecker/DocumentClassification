@@ -10,12 +10,12 @@ from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random
 from .MetricsMethod import metric_method, mutural_info_method, diversity_method, diversity_images_method, diversity_images_balanced_method
 from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
 from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
-from .ContextualBandits import ContextualAdaptiveGreedy
+from .ContextualBandits import ContextualAdaptiveGreedy_method
 
 #epochs = 100
-#epochs_retrain = 5
-#batch_size = 128
-#retrain_batch = 40
+epochs_retrain = 5
+batch_size = 128
+retrain_batch = 40
 
 #number_games = 200
 
@@ -25,18 +25,12 @@ def __main__():
     #tf.device('/device:GPU:0')
 
     CNN_model = loadmodel('model_100epochs')
-    Xunseen, yunseen = fetch_data('unseen')
-    print(np.shape(Xunseen))
+    #Xunseen, yunseen = fetch_data('unseen')
 
-    print(ContextualAdaptiveGreedy(Xunseen, yunseen, 5, CNN_model, 'oracle trained inside'))
+    method_list = [ContextualAdaptiveGreedy_method,metric_method,margin_sampling_fn]
+    print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
 
-    #sys.exit()
-
-
-    #method_list = [diversity_images_balanced_method,diversity_images_method,margin_sampling_fn,metric_method]
-    #print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
-
-    #sys.exit()
+    sys.exit()
 
     #trained_RL_model = loadmodel('Rl_model')
     #Xunseen, yunseen = fetch_data('test')
