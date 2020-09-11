@@ -83,8 +83,10 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
 
         print('expected_reward:')
         print(expected_reward)
-        print(len(expected_reward))
-
+        try:
+            print(len(expected_reward))
+        except:
+            print(type(expected_reward))
         #if there is a reward which is higher then the threshold, chose the corresponding sample, if not choose random
         if np.max(expected_reward) > threshold:
             winner_idx = np.argmax(expected_reward)
