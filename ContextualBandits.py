@@ -95,7 +95,7 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward = [new_acc - base_acc]
         #make it binary
-        if reward[0] >= 0:
+        if reward[0] >= -0.33:
             reward = [1]
         else:
             reward = [0]
