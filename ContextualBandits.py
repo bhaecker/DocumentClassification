@@ -55,7 +55,9 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
     base_acc = CNN_model.evaluate(Xtest, ytest, verbose=0)[1]
 
     number_samples = np.shape(Xunseen)[0]
+    print(number_samples)
     if number_samples <= batch_size:
+        print('just give em back')
         X_empty = np.empty([0, np.shape(Xunseen)[1], np.shape(Xunseen)[2], np.shape(Xunseen)[3]])
         y_empty = np.empty([0, np.shape(yunseen)[1]])
         return (Xunseen, Xunseen, X_empty, y_empty)
