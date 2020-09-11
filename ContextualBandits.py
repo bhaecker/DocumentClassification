@@ -63,7 +63,7 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
 
     #this is our context
     print(np.shape(Xunseen))
-    ypred_unseen = CNN_model(Xunseen)
+    ypred_unseen = CNN_model.predict(Xunseen)
     ypred_unseen = np.array(ypred_unseen)
 
     #print(ypred_unseen)
