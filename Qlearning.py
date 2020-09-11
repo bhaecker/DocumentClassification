@@ -47,8 +47,14 @@ def RL_model(number_classes):
 
     return(model)
 
+##TODO: reinforcemnt learning with explore then exploit and Softmaxexplorer
 
 def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
+    '''
+    a correct prediction is
+
+    '''
+
     #y = 0.95
     eps = 0.5
     decay_factor = 0.99
