@@ -42,8 +42,8 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
     '''
     threshold = 0.5
     decay_rate = 0.99
-    number_rounds = 2
-    offline_batchsize = 2
+    number_rounds = 5
+    offline_batchsize = 10
 
     #oracle = pretrain_oracle(CNN_model) most likely unnecessary
     #oracle = LogisticRegression() this is a classifier
