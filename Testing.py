@@ -81,8 +81,8 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base, retrain_size, method)
 
         #new trainings batch consists of old training samples plus the new unseen ones
-        Xtrain_new, ytrain_new = np.concatenate((Xtrain, Xwinner), axis=0), np.concatenate((ytrain, ywinner),axis=0)
-
+        Xtrain_new = np.concatenate((Xtrain, Xwinner), axis=0)
+        ytrain_new = np.concatenate((ytrain, ywinner),axis=0)
         ##number_samples = retrain_size
 
         model_old = model_base
@@ -98,7 +98,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             df.at[index, str(method.__name__)] = accuracy
 
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
-            print(np.shape(Xwinner))
+
             #get the class distribution
             #class_distribution = collections.Counter(np.where(ywinner == 1)[1])
             #print(np.shape(Xtrain_new))
