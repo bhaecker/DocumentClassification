@@ -22,7 +22,7 @@ def pretrain_oracle(CNN_model):
     sample_size = np.shape(Xtrain)[0]
     reward = np.empty(sample_size)
     base_acc = CNN_model.evaluate(Xtest, ytest, verbose=0)[1]
-    print('baseacc' + str(base_acc))
+    print('baseacc ' + str(base_acc))
     for idx in range(sample_size):
         print(idx / sample_size)
         #maybe retrain plus training samples?
@@ -34,6 +34,7 @@ def pretrain_oracle(CNN_model):
     ypred_train = CNN_model.predict(Xtrain)  # feed that into oracle
     oracle = RandomForestRegressor(n_estimators=100, random_state=8)
     oracle.fit(ypred_train, reward)
+    del Xtest, ytest, Xtrain, ytrain, ypred_train, reward
 
     return(oracle)
 
@@ -51,9 +52,11 @@ def ContextualAdaptiveGreedy(X, y, batch_size, CNN_model, oracle):
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:10], ytest[:10]
     base_acc = CNN_model.evaluate(Xtest, ytest, verbose=0)[1]
+
     # with open('RF', 'rb') as f:
     #   oracle = pickle.load(f)
-    print('baseacc'+str(base_acc))
+    print('baseacc '+str(base_acc))
+
     number_samples = np.shape(X)[0]
     if number_samples <= batch_size:
         X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
