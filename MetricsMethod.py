@@ -203,17 +203,6 @@ def diversity_images_method(X,y,number_samples,model):
 
     return(Xwinner, ywinner, Xloser, yloser)
 
-X,y = fetch_data('unseen')
-X,y = X[:20],y[:20]
-diversity_images_method(X,y,10,'model')
-
-
-
-
-
-
-
-
 
 
 ####################################################################################

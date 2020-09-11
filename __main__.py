@@ -13,9 +13,9 @@ from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
 from .ContextualBandits import ContextualAdaptiveGreedy
 
 #epochs = 100
-epochs_retrain = 5
-batch_size = 128
-retrain_batch = 40
+#epochs_retrain = 5
+#batch_size = 128
+#retrain_batch = 40
 
 #number_games = 200
 
@@ -29,40 +29,40 @@ def __main__():
 
     print(ContextualAdaptiveGreedy(X, y, 5, CNN_model, 'oracle trained inside'))
 
-    sys.exit()
+    #sys.exit()
 
 
-    method_list = [diversity_images_balanced_method,diversity_images_method,margin_sampling_fn,metric_method]
-    print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
+    #method_list = [diversity_images_balanced_method,diversity_images_method,margin_sampling_fn,metric_method]
+    #print(experiment(CNN_model, epochs_retrain, retrain_batch, batch_size, method_list))
 
-    sys.exit()
+    #sys.exit()
 
-    trained_RL_model = loadmodel('Rl_model')
-    Xunseen, yunseen = fetch_data('test')
-    Xunseen, yunseen = Xunseen[:200], yunseen[:200]
-    yunseen_predict = CNN_model.predict(Xunseen)
-
-
-    rewards = trained_RL_model.predict([Xunseen, yunseen_predict])
-    print(rewards)
-    yunseen_flat = np.argmax(yunseen, axis=1)
-    yunseen_predict_flat = np.argmax(yunseen_predict, axis=1)
-    decision = np.argmax(rewards, axis=1)
-
-    print(yunseen_flat)
-    print(yunseen_predict_flat)
-    print(decision)
+    #trained_RL_model = loadmodel('Rl_model')
+    #Xunseen, yunseen = fetch_data('test')
+    #Xunseen, yunseen = Xunseen[:200], yunseen[:200]
+    #yunseen_predict = CNN_model.predict(Xunseen)
 
 
+    #rewards = trained_RL_model.predict([Xunseen, yunseen_predict])
+    #print(rewards)
+    #yunseen_flat = np.argmax(yunseen, axis=1)
+    #yunseen_predict_flat = np.argmax(yunseen_predict, axis=1)
+    #decision = np.argmax(rewards, axis=1)
 
-    Xtrain, ytrain = fetch_data('unseen')
+    #print(yunseen_flat)
+    #print(yunseen_predict_flat)
+    #print(decision)
 
-    RL_modell = RL_model(10)
-    CNN_model = loadmodel('model_100epochs')
 
-    train_RL_model(Xtrain, ytrain,RL_modell,CNN_model,200)
 
-    sys.exit()
+    #Xtrain, ytrain = fetch_data('unseen')
+
+    #RL_modell = RL_model(10)
+    #CNN_model = loadmodel('model_100epochs')
+
+    #train_RL_model(Xtrain, ytrain,RL_modell,CNN_model,200)
+
+    #sys.exit()
 
 
 

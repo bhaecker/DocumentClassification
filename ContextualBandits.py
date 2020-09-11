@@ -1,10 +1,7 @@
-import numpy as np
-from sklearn.linear_model import LogisticRegression
-#from contextualbandits.online import BootstrappedTS
-#from copy import deepcopy
-import pickle
 import sys
 import random
+import numpy as np
+import pickle
 #from xgboost import XGBClassifier as XGB
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
@@ -37,9 +34,6 @@ def pretrain_oracle(CNN_model):
     del Xtest, ytest, Xtrain, ytrain, ypred_train, reward
 
     return(oracle)
-
-CNN_model = loadmodel('model_40epochs')
-
 
 
 def ContextualAdaptiveGreedy(X, y, batch_size, CNN_model, oracle):
