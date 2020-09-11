@@ -46,7 +46,8 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
     number_rounds = 500
 
     #oracle = pretrain_oracle(CNN_model)
-    oracle = LogisticRegression()
+    #oracle = LogisticRegression()
+    oracle = RandomForestClassifier()
 
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:10], ytest[:10]
@@ -101,7 +102,8 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
             reward = [0]
         print(reward)
         #retrain the oracle with the choosen sample and the real reward
-        oracle.fit(ypred_unseen[winner_idx:winner_idx + 1], reward)
+
+    oracle.fit(ypred_unseen[winner_idx:winner_idx + 1], reward)
 
     return('done')
 
