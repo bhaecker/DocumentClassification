@@ -64,7 +64,6 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
         CNN_model = loadmodel(CNN_model)
 
     #this is our context
-
     ypred_unseen = CNN_model.predict(Xunseen)
     ypred_unseen = np.array(ypred_unseen)
 
@@ -110,8 +109,8 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
 
     mask = np.ones(ind_max.shape[0], dtype=bool)
     mask[ind_max] = False
-    Xloser = Xunseen[ind_max, :, :]
-    yloser = yunseen[ind_max]
+    Xloser = Xunseen[mask, :, :]
+    yloser = yunseen[mask]
 
     return(Xwinner, ywinner, Xloser, yloser)
 
