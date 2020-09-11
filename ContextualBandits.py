@@ -71,7 +71,10 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
     #print(ypred_unseen)
     for i in range(number_rounds):
         #ler the oracle predict the reward for each element of the context
-        expected_reward = oracle.predict(ypred_unseen)
+        try:
+            expected_reward = oracle.predict(ypred_unseen)
+        except:
+            expected_reward = 0
         print(expected_reward)
         #if there is a reward which is higher then the threshold, chose the corresponding sample, if not choose random
         if np.max(expected_reward) > threshold:
