@@ -42,7 +42,8 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
     #decay_rate = 0.1#change later
     number_rounds = 100
 
-    oracle = pretrain_oracle(CNN_model)
+    #oracle = pretrain_oracle(CNN_model)
+    oracle = LogisticRegression()
 
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:10], ytest[:10]
@@ -84,7 +85,7 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
         #threshold = threshold - decay_rate#change later
         print(threshold)
         #reveal the real reward for the choosen context, aka. label the sample, retrain the CNN model and calculate delta accuracy
-        CNN_model_retrained = retrain(CNN_model, 100, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
+        CNN_model_retrained = retrain(CNN_model, 10, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward = [new_acc - base_acc]
         print(reward)
