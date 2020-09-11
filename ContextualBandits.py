@@ -105,8 +105,9 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
             new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
             reward = new_acc - base_acc
             rewards.append(reward)
-
             print('reward: ' + str(reward))
+            print(rewards)
+            print(winner_idx_list)
         #retrain the oracle with the choosen sample and the real reward
 
         #TODO:lets do it in offline fashion
