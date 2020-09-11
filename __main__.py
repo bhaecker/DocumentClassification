@@ -15,7 +15,7 @@ from .ContextualBandits import ContextualAdaptiveGreedy_method
 #epochs = 100
 epochs_retrain = 5
 batch_size = 128
-retrain_batch = 40
+retrain_batch = 100
 
 #number_games = 200
 
