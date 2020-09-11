@@ -42,8 +42,8 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
     '''
     threshold = 0.5
     decay_rate = 0.99
-    number_rounds = 5
-    offline_batchsize = 20
+    number_rounds = 2
+    offline_batchsize = 2
 
     #oracle = pretrain_oracle(CNN_model) most likely unnecessary
     #oracle = LogisticRegression() this is a classifier
@@ -102,13 +102,14 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
 
     #use oracle to predict rewards aka. improvment of training process
     expected_reward = oracle.predict(ypred_unseen)
-    ind_max =  np.argpartition(expected_reward, -batch_size)[-batch_size:]
-    # seperate unseen data in winner and looser data set by the indices
-    Xwinner = Xunseen[ind_max, :, :]
-    ywinner = yunseen[ind_max]
+    n_farest =  np.argpartition(expected_reward, -batch_size)[-batch_size:]
 
-    mask = np.ones(ind_max.shape[0], dtype=bool)
-    mask[ind_max] = False
+    #seperate unseen data in winner and looser data set by the indices
+    Xwinner = Xunseen[n_farest, :, :]
+    ywinner = yunseen[n_farest]
+
+    mask = np.ones(Xunseen.shape[0], dtype=bool)
+    mask[n_farest] = False
     Xloser = Xunseen[mask, :, :]
     yloser = yunseen[mask]
 
