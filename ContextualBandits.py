@@ -103,7 +103,7 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
         print(reward)
         #retrain the oracle with the choosen sample and the real reward
 
-    oracle.fit(ypred_unseen[winner_idx:winner_idx + 1], reward)
+        oracle.fit(ypred_unseen[winner_idx:winner_idx + 1], reward)
 
     return('done')
 
