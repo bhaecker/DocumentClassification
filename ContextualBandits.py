@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.linear_model import LogisticRegression
-from contextualbandits.online import BootstrappedTS
-from copy import deepcopy
+#from contextualbandits.online import BootstrappedTS
+#from copy import deepcopy
 import pickle
 import sys
 import random
@@ -9,7 +9,7 @@ import random
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
-from TransferLearning import fetch_data,loadmodel,retrain
+from .TransferLearning import fetch_data,loadmodel,retrain
 
 def pretrain_oracle(CNN_model):
     if type(CNN_model) == str:
