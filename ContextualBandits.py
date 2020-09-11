@@ -48,7 +48,7 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
     #oracle = pretrain_oracle(CNN_model)
     #oracle = LogisticRegression() this is a classifier
     #oracle = RandomForestClassifier() classifier doesnt work since we have the continous reward threshold
-    oracle = RandomForestRegressor(n_estimators=300, random_state=8)
+    oracle = RandomForestRegressor(n_estimators=321, random_state=8)
 
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:10], ytest[:10]
@@ -83,6 +83,7 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
 
         print('expected_reward:')
         print(expected_reward)
+        print(len(expected_reward))
 
         #if there is a reward which is higher then the threshold, chose the corresponding sample, if not choose random
         if np.max(expected_reward) > threshold:
