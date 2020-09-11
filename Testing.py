@@ -98,7 +98,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             df.at[index, str(method.__name__)] = accuracy
 
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
-
+            print(np.shape(Xwinner))
             #get the class distribution
             #class_distribution = collections.Counter(np.where(ywinner == 1)[1])
             #print(np.shape(Xtrain_new))
