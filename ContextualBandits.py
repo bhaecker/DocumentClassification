@@ -37,10 +37,13 @@ def pretrain_oracle(CNN_model):
 
 
 def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
+    '''
+
+    '''
     threshold = 0.5
-    decay_rate = 0.9
+    decay_rate = 0.9997
     #decay_rate = 0.1#change later
-    number_rounds = 100
+    number_rounds = 500
 
     #oracle = pretrain_oracle(CNN_model)
     oracle = LogisticRegression()
@@ -91,6 +94,11 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
         CNN_model_retrained = retrain(CNN_model, 10, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward = [new_acc - base_acc]
+        #make it binary
+        if reward[0] >= 0:
+            reward = [1]
+        else:
+            reward = [0]
         print(reward)
         #retrain the oracle with the choosen sample and the real reward
         oracle.fit(ypred_unseen[winner_idx:winner_idx + 1], reward)
