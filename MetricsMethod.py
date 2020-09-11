@@ -23,7 +23,7 @@ def metric_method(X,y,number_samples,model):
     #matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
     distance_list = []
     for row, ypred_a in enumerate(Ypred):
-        # TODO: Start from current row since matrix is semetric
+        # TODO: Start from current row since matrix is semetric! check where is the mistake
         for column, ypred_b in enumerate(Ypred):
             #matrix[row][column] = LA.norm(ypred_a-ypred_b)
             #fill index_list
