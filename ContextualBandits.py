@@ -41,13 +41,14 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
 
     '''
     threshold = 0.5
-    decay_rate = 0.9997
+    decay_rate = 0.99
     #decay_rate = 0.1#change later
     number_rounds = 500
 
     #oracle = pretrain_oracle(CNN_model)
-    #oracle = LogisticRegression()
-    oracle = RandomForestClassifier()
+    #oracle = LogisticRegression() this is a classifier
+    #oracle = RandomForestClassifier() classifier doesnt work since we have the continous reward threshold
+    oracle = RandomForestRegressor(n_estimators=300, random_state=8)
 
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:10], ytest[:10]
@@ -74,12 +75,15 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
 
     #print(ypred_unseen)
     for i in range(number_rounds):
-        #ler the oracle predict the reward for each element of the context
+        #let the oracle predict the reward for each element of the context
         try:
             expected_reward = oracle.predict(ypred_unseen)
         except:
             expected_reward = 0
+
+        print('expected_reward:')
         print(expected_reward)
+
         #if there is a reward which is higher then the threshold, chose the corresponding sample, if not choose random
         if np.max(expected_reward) > threshold:
             winner_idx = np.argmax(expected_reward)
@@ -95,14 +99,13 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
         CNN_model_retrained = retrain(CNN_model, 10, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward = [new_acc - base_acc]
-        #make it binary
-        if reward[0] >= -0.33:
-            reward = [1]
-        else:
-            reward = [0]
-        print(reward)
+        #make it NOT binary
+        #if reward[0] >= -0.5:
+         #   reward = [1]
+        #else:
+         #   reward = [0]
+        print('reward: ' + str(reward))
         #retrain the oracle with the choosen sample and the real reward
-
         oracle.fit(ypred_unseen[winner_idx:winner_idx + 1], reward)
 
     return('done')
