@@ -25,9 +25,10 @@ def __main__():
     #tf.device('/device:GPU:0')
 
     CNN_model = loadmodel('model_100epochs')
-    X, y = fetch_data('unseen')
+    Xunseen, yunseen = fetch_data('unseen')
+    print(np.shape(Xunseen))
 
-    print(ContextualAdaptiveGreedy(X, y, 5, CNN_model, 'oracle trained inside'))
+    print(ContextualAdaptiveGreedy(Xunseen, yunseen, 5, CNN_model, 'oracle trained inside'))
 
     #sys.exit()
 

@@ -36,11 +36,12 @@ def pretrain_oracle(CNN_model):
     return(oracle)
 
 
-def ContextualAdaptiveGreedy(X, y, batch_size, CNN_model, oracle):
+def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
     threshold = 0.5
     decay_rate = 0.9997
     decay_rate = 0.1#change later
     number_rounds = 100
+
     oracle = pretrain_oracle(CNN_model)
 
     Xtest, ytest = fetch_data('test')
@@ -51,17 +52,18 @@ def ContextualAdaptiveGreedy(X, y, batch_size, CNN_model, oracle):
     #   oracle = pickle.load(f)
     print('baseacc '+str(base_acc))
 
-    number_samples = np.shape(X)[0]
+    number_samples = np.shape(Xunseen)[0]
     if number_samples <= batch_size:
-        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
-        y_empty = np.empty([0, np.shape(y)[1]])
-        return (X, y, X_empty, y_empty)
+        X_empty = np.empty([0, np.shape(Xunseen)[1], np.shape(Xunseen)[2], np.shape(Xunseen)[3]])
+        y_empty = np.empty([0, np.shape(yunseen)[1]])
+        return (Xunseen, Xunseen, X_empty, y_empty)
 
     if type(CNN_model) == str:
         CNN_model = loadmodel(CNN_model)
 
     #this is our context
-    ypred_unseen = CNN_model(X)
+    print(np.shape(Xunseen))
+    ypred_unseen = CNN_model(Xunseen)
     ypred_unseen = np.array(ypred_unseen)
 
     #print(ypred_unseen)
@@ -81,7 +83,7 @@ def ContextualAdaptiveGreedy(X, y, batch_size, CNN_model, oracle):
         threshold = threshold - decay_rate#change later
         print(threshold)
         #reveal the real reward for the choosen context, aka. label the sample, retrain the CNN model and calculate delta accuracy
-        CNN_model_retrained = retrain(CNN_model, 1, 1, X[winner_idx:winner_idx + 1], y[winner_idx:winner_idx + 1])[0]
+        CNN_model_retrained = retrain(CNN_model, 1, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward = [new_acc - base_acc]
         print(reward)
