@@ -23,7 +23,7 @@ def pretrain_oracle(CNN_model):
     for idx in range(sample_size):
         print(idx / sample_size)
         #maybe retrain plus training samples?
-        CNN_model_retrained = retrain(CNN_model,1,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
+        CNN_model_retrained = retrain(CNN_model,100,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward[idx] = new_acc - base_acc
     print(reward)
@@ -38,8 +38,8 @@ def pretrain_oracle(CNN_model):
 
 def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
     threshold = 0.5
-    decay_rate = 0.9997
-    decay_rate = 0.1#change later
+    decay_rate = 0.9
+    #decay_rate = 0.1#change later
     number_rounds = 100
 
     oracle = pretrain_oracle(CNN_model)
@@ -65,6 +65,7 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
     print(np.shape(Xunseen))
     ypred_unseen = CNN_model.predict(Xunseen)
     ypred_unseen = np.array(ypred_unseen)
+    print(ypred_unseen)
 
     #print(ypred_unseen)
     for i in range(number_rounds):
@@ -79,11 +80,11 @@ def ContextualAdaptiveGreedy(Xunseen, yunseen, batch_size, CNN_model, oracle):
             winner_idx = random.sample(range(number_samples),1)[0]
             print('random ' + str(winner_idx))
         #decrease threshold
-        #threshold = threshold*decay_rate
-        threshold = threshold - decay_rate#change later
+        threshold = threshold*decay_rate
+        #threshold = threshold - decay_rate#change later
         print(threshold)
         #reveal the real reward for the choosen context, aka. label the sample, retrain the CNN model and calculate delta accuracy
-        CNN_model_retrained = retrain(CNN_model, 1, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
+        CNN_model_retrained = retrain(CNN_model, 100, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward = [new_acc - base_acc]
         print(reward)
