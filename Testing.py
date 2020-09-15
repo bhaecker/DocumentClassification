@@ -77,7 +77,6 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
     for method in list_methods:
         print('start',method.__name__)
-        #Xtrain_new, ytrain_new = Xtrain, ytrain
         Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base, retrain_size, method)
 
         #new trainings batch consists of old training samples plus the new unseen ones
@@ -85,13 +84,15 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         ytrain_new = np.concatenate((ytrain, ywinner),axis=0)
         ##number_samples = retrain_size
 
-        model_old = model_base
+        #model_old = model_base
         index = 1
         #while number_samples <= np.shape(Xunseen_orig)[0]:
         while np.shape(Xwinner)[0] > 0:
             print(method.__name__,'at '+str(100*(np.shape(Xtrain_new)[0] - np.shape(Xtrain)[0])/np.shape(Xunseen_orig)[0])+' %')
-            model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
-            del model_old
+            #model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
+            model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
+
+            #del model_old
 
             accuracy = tester(Xtest,ytest, model_new)[0]
             df.at[index, 'number of samples'] = np.shape(Xtrain_new)[0]-np.shape(Xtrain)[0]#number_samples
@@ -102,7 +103,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             Xtrain_new, ytrain_new = np.concatenate((Xtrain_new, Xwinner), axis=0), np.concatenate((ytrain_new, ywinner), axis=0)
             index = index + 1
 
-            model_old = model_new
+            #model_old = model_new
 
             print(df)
 

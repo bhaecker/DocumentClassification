@@ -31,7 +31,7 @@ def __main__():
     #Xtrain, ytrain = fetch_data('train')
 
     CNN_model = load_model('model_100_epochs.h5')
-    list_methods = [metric_method, diversity_method,diversity_images_method,diff_uniform_fn,margin_sampling_fn]
+    list_methods = [metric_method, diversity_method,diversity_images_balanced_method,diff_uniform_fn,margin_sampling_fn]
 
     experiment(CNN_model,epochs_retrain,retrain_batch,batch_size,list_methods)
 

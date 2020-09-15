@@ -157,7 +157,7 @@ def diversity_images_balanced_method(X,y,number_samples,model):
     return(Xwinner, ywinner, Xloser, yloser)
 
 
-def diversity_images_method(X,y,number_samples,model):
+def diversity_images_method(X,y,number_samples,model):#IMPORTANT TOO SLOW
     '''
     return samples, which are the most unsimilar (with respect to structural similarity)
     '''
