@@ -36,7 +36,7 @@ def __main__():
     del CNN_model,CNN_model_retrained
 
     print('resume training with reloaded model')
-    CNN_model_retrained = retrain('model_10_epochs.h5', epochs_retrain, batch_size, Xunseen, yunseen)[0]
+    CNN_model_retrained = retrain('model_5_epochs.h5', epochs_retrain, batch_size, Xunseen, yunseen)[0]
     tester(Xtest, ytest, CNN_model_retrained)
 
 if __name__ == "__main__":

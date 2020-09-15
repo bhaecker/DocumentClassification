@@ -100,7 +100,7 @@ def fine_tune(X,y,epochs,batch_size):
 
     #print('training for class '+label)
     history_topDense = model.fit(X, y,
-            validation_split=0.2,
+            #validation_split=0.2,
             batch_size=batch_size,
             epochs=epochs,
             verbose=1)
@@ -129,7 +129,7 @@ def fine_tune(X,y,epochs,batch_size):
     # we train our model again (this time fine-tuning the top 2 inception blocks
     # alongside the top Dense layers
     history_all = model.fit(X, y,
-        validation_split = 0.1,
+        #validation_split = 0.1,
         batch_size=batch_size,
         epochs=epochs,
         verbose=1)
