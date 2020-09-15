@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.models import Model, Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D, InputLayer, Input, Concatenate, Conv2D, Flatten, Dense
 
 from tensorflow.keras.utils import plot_model
@@ -54,6 +54,9 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
     a correct prediction is
 
     '''
+
+    #just for testing:
+    Xtest,ytest = fetch_data('test')
 
     #y = 0.95
     eps = 0.5
@@ -118,8 +121,11 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
             idx += 1
             r_sum += r
 
-        savemodel(RL_model, 'Rl_model')
+        RL_model.save('RL_model.h5')
         r_avg_list.append(r_sum / 1000)
+
+        #just for testing
+        print(RL_human_method(Xtest,ytest, 100, CNN_model))
 
     print(r_avg_list)
 
@@ -138,9 +144,11 @@ def RL_human_method(X, y, batch_size, CNN_model):
 
 
     y_pred = CNN_model.predict(X)
-    RL_model = loadmodel('Rl_model_old')
+
+    RL_model = load_model('Rl_model.h5')
 
     expected_rewards = RL_model.predict([X,y_pred])
+    return(expected_rewards)
 
     #decisions = [np.random.choice(2, p = expected_rewards[i]) for i in range(number_samples)]
 
@@ -172,7 +180,7 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
         return (X, y, X_empty, y_empty)
 
     y_pred = CNN_model.predict(X)
-    RL_model = loadmodel('Rl_model_old')
+    RL_model = load_model('Rl_model_old')
 
     expected_rewards = RL_model.predict([X, y_pred])
 
@@ -195,13 +203,5 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
 
     return (Xwinner, ywinner, Xloser, yloser)
 
-#CNN_model = loadmodel('model_40epochs')
-#RL_model = RL_model(10)
-#print(RL_model.summary())
-#Xtest,_ = fetch_data('test')
-#Xtest =Xtest[:100]
-#ypred = CNN_model.predict(Xtest)
-#print(RL_model.predict([Xtest,ypred]))
 
-#more episodes
-#try only with one input type...
+
