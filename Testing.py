@@ -7,13 +7,14 @@ import pandas as pd
 import collections
 
 import tensorflow as tf
+from tensorflow.keras.models import load_model
 #from tensorflow import keras as K
 #from keras.models import model_from_json
 
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
-from .TransferLearning import fetch_data, fine_tune, retrain, savemodel, loadmodel
+from .TransferLearning import fetch_data, fine_tune, retrain#, savemodel, loadmodel
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 from .ActiveLearning import seperation
 from .RandomForest import RandomForestRegressor_pretraining
@@ -22,13 +23,12 @@ from .RandomForest import RandomForestRegressor_pretraining
 DATA_DIRECTORY = 'Data'
 
 
-
 def tester(Xtest,ytest,model):
     print('start evaluating')
     if type(model) == str:
         #K.clear_session()
-        #model = tf.keras.models.load_model(model)
-        model = loadmodel(model)
+        model = load_model(model)
+        #model = loadmodel(model)
 
     loss = model.evaluate(Xtest, ytest, verbose=0)
     print('loss :'+ str(loss[0]))
@@ -55,10 +55,10 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     '''
 
     if type(model_base) == str:
-        model_base = loadmodel(model_base)
+        #model_base = loadmodel(model_base)
+        model_base = load_model(model_base)
 
     Xtest, ytest = fetch_data('test')
-
     Xtrain, ytrain = fetch_data('train')
 
     base_performance = tester(Xtest, ytest, model_base)[0]
@@ -67,7 +67,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
     Xunseen_orig, yunseen_orig = fetch_data('unseen')
 
-    #suffle the unseen data
+    #shuffle the unseen data
     rng_state = np.random.get_state()
     np.random.shuffle(Xunseen_orig)
     np.random.set_state(rng_state)
@@ -99,18 +99,9 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
 
-            #get the class distribution
-            #class_distribution = collections.Counter(np.where(ywinner == 1)[1])
-            #print(np.shape(Xtrain_new))
-            #print(np.shape(Xwinner))
-
-            #print(np.shape(ytrain_new))
-            #print(np.shape(ywinner))
-
             Xtrain_new, ytrain_new = np.concatenate((Xtrain_new, Xwinner), axis=0), np.concatenate((ytrain_new, ywinner), axis=0)
             index = index + 1
-            #df.loc[len(df)] = [number_samples] + accuracy_list
-            #number_samples = number_samples + retrain_size
+
             model_old = model_new
 
             print(df)

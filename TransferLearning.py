@@ -7,29 +7,29 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.models import Model
+from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D
 
 DATA_DIRECTORY = 'DocumentClassification/Data/'
 #DATA_DIRECTORY = 'Data/' #TODO comment out when using server
 
-def savemodel(model,name):
-    model.save_weights(str(name)+'.h5')
-    model_json = model.to_json()
-    with open(str(name)+'.json', "w") as json_file:
-        json_file.write(model_json)
-    json_file.close()
-    print('model saved')
+#def savemodel(model,name):
+ #   model.save_weights(str(name)+'.h5')
+  #  model_json = model.to_json()
+   # with open(str(name)+'.json', "w") as json_file:
+    #    json_file.write(model_json)
+    #json_file.close()
+    #print('model saved')
 
-def loadmodel(name):
-    json_file = open(str(name)+'.json', 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    model = tf.keras.models.model_from_json(loaded_model_json)
-    model.load_weights(str(name)+'.h5')
-    model.compile(optimizer='Adam', loss='categorical_crossentropy',metrics=['accuracy'])#TODO:CHECK OPTIMIZER!!!
-    print(str(name)+' loaded')
-    return(model)
+#def loadmodel(name):
+#    json_file = open(str(name)+'.json', 'r')
+#    loaded_model_json = json_file.read()
+#    json_file.close()
+#    model = tf.keras.models.model_from_json(loaded_model_json)
+#    model.load_weights(str(name)+'.h5')
+#    model.compile(optimizer='Adam', loss='categorical_crossentropy',metrics=['accuracy'])#TODO:CHECK OPTIMIZER!!!
+#    print(str(name)+' loaded')
+#    return(model)
 
 
 def fetch_data(string):
@@ -134,8 +134,8 @@ def fine_tune(X,y,epochs,batch_size):
         epochs=epochs,
         verbose=1)
 
-    #model.save('model_'+str(epochs)+'epochs.h5')
-    savemodel(model,'model_'+str(epochs)+'epochs')
+    model.save('model_'+str(epochs)+'_epochs.h5')
+    #savemodel(model,'model_'+str(epochs)+'epochs')
 
     return(model,history_topDense,history_all)
 
@@ -145,7 +145,8 @@ def retrain(model,epochs,batch_size,X,y):
     retrain model
     '''
     if type(model) == str:
-        model = loadmodel(model)
+        #model = loadmodel(model)
+        model = load_model(model)
     print('start retraining')
     history = model.fit(X,y,
             #validation_split=0.2,

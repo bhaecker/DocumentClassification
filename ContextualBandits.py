@@ -45,6 +45,8 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
     number_rounds = 2
     offline_batchsize = 2
 
+    #todo: pickle the oracle and reuse it every time, maybe use a NN as oracle
+
     #oracle = pretrain_oracle(CNN_model) most likely unnecessary
     #oracle = LogisticRegression() this is a classifier
     #oracle = RandomForestClassifier() classifier dont work since we have the continous reward threshold

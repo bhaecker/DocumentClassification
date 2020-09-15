@@ -3,8 +3,9 @@ import numpy as np
 import pickle
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.metrics import accuracy_score
+from tensorflow.keras.models import load_model
 
-from .TransferLearning import fetch_data, loadmodel, retrain
+from .TransferLearning import fetch_data, retrain
 
 
 def RandomForest_method(X,y,number_samples,model):
@@ -18,7 +19,7 @@ def RandomForest_method(X,y,number_samples,model):
         return(X,y,X_empty,y_empty)
 
     if type(model) == str:
-        model = loadmodel(model)
+        model = load_model(model)
 
     #train a Random Forest classifier on predictions and their correctness of the training set
     Xtrain,ytrain = fetch_data('train')
@@ -78,7 +79,7 @@ def RandomForestRegressor_pretraining(Xtrain,ytrain,basemodel,epochs_retrain_sam
     '''
 
     if type(basemodel) == str:
-        basemodel = loadmodel(basemodel)
+        basemodel = load_model(basemodel)
 
     Xtest, ytest = fetch_data('test')
 
