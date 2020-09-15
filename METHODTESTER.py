@@ -79,11 +79,17 @@ def create_model(number_features,number_classes):
 #train in one session
 model = create_model(number_features,number_classes)
 model.fit(Xtrain,ytrain,epochs=epochs,verbose=0)
+model.save('throwawaymodel.h5')
+#score = model.evaluate(Xtest,ytest,verbose=0)
+#print('Test loss:', score[0])
+#print('Test accuracy:', score[1])
+del model
+model = load_model('throwawaymodel.h5')
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 score = model.evaluate(Xtest,ytest,verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
-del model
-
+sys.exit()
 #train in different sessions
 model = create_model(number_features,number_classes)
 #save model after each epoch, load the model and retrain one epoch
