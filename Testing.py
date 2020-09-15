@@ -73,7 +73,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     np.random.set_state(rng_state)
     np.random.shuffle(yunseen_orig)
 
-    Xunseen_orig, yunseen_orig = Xunseen_orig[:200], yunseen_orig[:200]
+    #Xunseen_orig, yunseen_orig = Xunseen_orig[:200], yunseen_orig[:200]
 
     for method in list_methods:
         print('start',method.__name__)
