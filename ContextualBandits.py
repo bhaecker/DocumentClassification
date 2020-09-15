@@ -5,12 +5,12 @@ import pickle
 #from xgboost import XGBClassifier as XGB
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-
-from .TransferLearning import fetch_data,loadmodel,retrain
+from tensorflow.keras.models import load_model
+from .TransferLearning import fetch_data,retrain
 
 def pretrain_oracle(CNN_model):
     if type(CNN_model) == str:
-        CNN_model = loadmodel(CNN_model)
+        CNN_model = load_model(CNN_model)
 
     Xtrain, ytrain = fetch_data('train')
     Xtrain, ytrain = Xtrain[:50], ytrain[:50]
@@ -64,7 +64,7 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
         return(Xunseen, yunseen, X_empty, y_empty)
 
     if type(CNN_model) == str:
-        CNN_model = loadmodel(CNN_model)
+        CNN_model = load_model(CNN_model)
 
     #this is our context
     ypred_unseen = CNN_model.predict(Xunseen)

@@ -5,12 +5,12 @@ import collections
 
 from .TransferLearning import fetch_data, fine_tune, retrain#, savemodel, loadmodel
 from .Testing import tester, experiment
-from .ActiveLearning import seperation
-from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
-from .MetricsMethod import metric_method, mutural_info_method, diversity_method, diversity_images_method, diversity_images_balanced_method
-from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
-from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
-from .ContextualBandits import ContextualAdaptiveGreedy_method
+#from .ActiveLearning import seperation
+#from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
+#from .MetricsMethod import metric_method, mutural_info_method, diversity_method, diversity_images_method, diversity_images_balanced_method
+#from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
+#from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
+#from .ContextualBandits import ContextualAdaptiveGreedy_method
 
 epochs = 5
 epochs_retrain = 10

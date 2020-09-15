@@ -5,8 +5,9 @@ import numpy as np
 from numpy import linalg as LA
 from skimage.metrics import structural_similarity as ssim
 from sklearn.metrics import mutual_info_score,normalized_mutual_info_score
+from tensorflow.keras.models import load_model
 
-from .TransferLearning import fetch_data, loadmodel
+from .TransferLearning import fetch_data
 
 def metric_method(X,y,number_samples,model):
     '''
@@ -17,7 +18,7 @@ def metric_method(X,y,number_samples,model):
         y_empty = np.empty([0, np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
     if type(model) == str:
-        model = loadmodel(model)
+        model = load_model(model)
     Ypred = model.predict(X)
 
     #matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
@@ -215,7 +216,7 @@ def mutural_info_method(X,y,number_samples,model):
     if np.shape(X)[0] <= number_samples:
         return(X,y,X,y)
     if type(model) == str:
-        model = loadmodel(model)
+        model = load_model(model)
     Ypred = model.predict(X)
 
     #matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
