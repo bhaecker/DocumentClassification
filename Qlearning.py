@@ -182,7 +182,7 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
         return (X, y, X_empty, y_empty)
 
     y_pred = CNN_model.predict(X)
-    RL_model = load_model('Rl_model_old')
+    RL_model = load_model('Rl_model.h5')
 
     expected_rewards = RL_model.predict([X, y_pred])
 
