@@ -125,7 +125,10 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
         r_avg_list.append(r_sum / 1000)
 
         #just for testing
-        print(RL_human_method(Xtest,ytest, 100, CNN_model))
+        y_pred_test = CNN_model.predict(Xtest)
+        expected_rewards = RL_model.predict([Xtest, y_pred_test])
+        print(expected_rewards)
+
 
     print(r_avg_list)
 
@@ -148,7 +151,6 @@ def RL_human_method(X, y, batch_size, CNN_model):
     RL_model = load_model('Rl_model.h5')
 
     expected_rewards = RL_model.predict([X,y_pred])
-    return(expected_rewards)
 
     #decisions = [np.random.choice(2, p = expected_rewards[i]) for i in range(number_samples)]
 
