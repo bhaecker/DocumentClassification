@@ -43,14 +43,20 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
     threshold = 0.5
     decay_rate = 0.99
     number_rounds = 2
-    offline_batchsize = 2
+    offline_batchsize = 100
 
     #todo: pickle the oracle and reuse it every time, maybe use a NN as oracle
 
     #oracle = pretrain_oracle(CNN_model) most likely unnecessary
     #oracle = LogisticRegression() this is a classifier
     #oracle = RandomForestClassifier() classifier dont work since we have the continous reward threshold
-    oracle = RandomForestRegressor(n_estimators=500, random_state=8)
+
+    try:
+        pkl_filename = "contextual_oracle.pkl"
+        with open(pkl_filename, 'rb') as file:
+            oracle = pickle.load(file)
+    except:
+        oracle = RandomForestRegressor(n_estimators=500, random_state=8)
 
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:10], ytest[:10]
@@ -78,7 +84,7 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
             #let the oracle predict the reward for each element of the context
             try:
                 expected_reward = oracle.predict(ypred_unseen)
-                print('tried successful')
+                #print('tried successful')
             except:
                 expected_reward = 0
 
@@ -95,7 +101,7 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
             #threshold = threshold - decay_rate#change later
 
             #reveal the real reward for the choosen context, aka. label the sample, retrain the CNN model and calculate delta accuracy
-            CNN_model_retrained = retrain(CNN_model, 5, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
+            CNN_model_retrained = retrain(CNN_model, 1, 1, Xunseen[winner_idx:winner_idx + 1], yunseen[winner_idx:winner_idx + 1])[0]
             new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
             reward = new_acc - base_acc
             rewards.append(reward)
@@ -103,6 +109,10 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
         #retrain the oracle with the choosen sample and the real reward
 
         oracle.fit(ypred_unseen[winner_idx_list], rewards)
+
+    pkl_filename = "contextual_oracle.pkl"
+    with open(pkl_filename, 'wb') as file:
+        pickle.dump(oracle, file)
 
     #use oracle to predict rewards aka. improvment of training process
     expected_reward = oracle.predict(ypred_unseen)
