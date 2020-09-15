@@ -9,7 +9,7 @@ from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2
 
 from tensorflow.keras.utils import plot_model
 
-from .TransferLearning import fetch_data, loadmodel, savemodel
+from .TransferLearning import fetch_data#, loadmodel, savemodel
 
 
 def RL_model(number_classes):

@@ -66,7 +66,7 @@ def diversity_method(X,y,number_samples,model):
         y_empty = np.empty([0, np.shape(y)[1]])
         return (X, y, X_empty, y_empty)
     if type(model) == str:
-        model = loadmodel(model)
+        model = load_model(model)
     Ypred = model.predict(X)
 
     number_classes = np.shape(Ypred)[1]
@@ -113,7 +113,7 @@ def diversity_images_balanced_method(X,y,number_samples,model):
         y_empty = np.empty([0, np.shape(y)[1]])
         return (X, y, X_empty, y_empty)
     if type(model) == str:
-        model = loadmodel(model)
+        model = load_model(model)
     #make predictions
     Ypred = model.predict(X)
 
