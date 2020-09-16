@@ -181,7 +181,7 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
     threshold = 0.5
     decay_rate = 0.99
     number_rounds = 2
-    offline_batchsize = 100
+    offline_batchsize = 10
 
     number_samples = np.shape(Xunseen)[0]
     print(number_samples)
@@ -235,7 +235,6 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
 
         #retrain the oracle with the choosen sample and the real reward
 
-        oracle.fit(ypred_unseen[winner_idx_list], rewards)
         oracle.fit(x=[Xunseen[winner_idx_list], ypred_unseen[winner_idx_list]], y=reward,
                    validation_split=0,
                    batch_size=1,
