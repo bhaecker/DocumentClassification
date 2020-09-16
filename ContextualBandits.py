@@ -184,7 +184,6 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
     offline_batchsize = 10
 
     number_samples = np.shape(Xunseen)[0]
-    print(number_samples)
     if number_samples <= batch_size:
         X_empty = np.empty([0, np.shape(Xunseen)[1], np.shape(Xunseen)[2], np.shape(Xunseen)[3]])
         y_empty = np.empty([0, np.shape(yunseen)[1]])
@@ -246,6 +245,8 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
 
     #use oracle to predict rewards aka. improvement of training process
     expected_reward = oracle.predict([Xunseen,ypred_unseen])
+    print(expected_reward)
+    print(len(expected_reward))
     n_farest =  np.argpartition(expected_reward, -batch_size)[-batch_size:]
 
     #seperate unseen data in winner and looser data set by the indices
