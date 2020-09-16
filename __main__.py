@@ -24,6 +24,8 @@ retrain_batch = 200
 
 #number_games = 200
 
+#ededededededededede
+
 def __main__():
 
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
