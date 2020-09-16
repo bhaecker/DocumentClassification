@@ -28,13 +28,13 @@ def __main__():
 
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
-    #Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = fetch_data('train')
 
     CNN_model = load_model('model_100_epochs.h5')
-    #Rel_model = RL_model(10)
+    Rel_model = load_model('RL_model.h5')
     #print(Rel_model.summary())
 
-    #train_RL_model(Xtrain, ytrain, Rel_model, CNN_model, 100)
+    train_RL_model(Xtrain, ytrain, Rel_model, CNN_model, 2)
 
     list_methods = [RL_CNN_method,RL_human_method,margin_sampling_fn]
     experiment(CNN_model,epochs_retrain,retrain_batch,batch_size,list_methods)
