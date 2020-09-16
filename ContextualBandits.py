@@ -247,7 +247,7 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
     expected_rewards = oracle.predict([Xunseen,ypred_unseen])
 
     print(expected_rewards)
-    expected_rewards = [expected_reward for expected_reward in expected_rewards]
+    expected_rewards = [expected_reward[0] for expected_reward in expected_rewards]
     print(expected_rewards)
     n_farest =  np.argpartition(expected_rewards, -batch_size)[-batch_size:]
 
