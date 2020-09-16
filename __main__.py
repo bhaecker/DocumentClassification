@@ -18,7 +18,7 @@ from .ContextualBandits import ContextualAdaptiveGreedy_method
 np.random.seed(42)
 tf.random.set_seed(42)
 #epochs = 100
-epochs_retrain = 5
+epochs_retrain = 10
 batch_size = 128
 retrain_batch = 100
 
