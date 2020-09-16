@@ -161,6 +161,9 @@ def RL_human_method(X, y, batch_size, CNN_model):
     #sort samples (and labels) in descending order from highest expected reward to lowest
     X = X[sort_ind[::-1]]
     y = y[sort_ind[::-1]]
+    #TODO:change
+    X = X[sort_ind]
+    y = y[sort_ind]
 
     # just for testing
     #y_pred = y_pred[sort_ind[::-1]]
@@ -195,6 +198,9 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
     # sort samples (and labels) in ascending order from lowest expected reward to highest
     X = X[sort_ind]
     y = y[sort_ind]
+    # TODO:change
+    X = X[sort_ind[::-1]]
+    y = y[sort_ind[::-1]]
 
     #just for testing
     #y_pred = y_pred[sort_ind]
