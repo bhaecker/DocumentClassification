@@ -29,7 +29,6 @@ retrain_batch = 200
 def __main__():
 
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
-
     #Xtrain, ytrain = fetch_data('train')
     CNN_model = load_model('model_100_epochs.h5')
     #Rel_model = load_model('RL_model.h5')
