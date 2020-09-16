@@ -35,10 +35,10 @@ def __main__():
     #print(Rel_model.summary())
     Rel_model = RL_model(10)
 
-    train_RL_model(Xtrain, ytrain, Rel_model, CNN_model, 100)
+    #train_RL_model(Xtrain, ytrain, Rel_model, CNN_model, 100)
 
-    #list_methods = [RL_CNN_method,RL_human_method,margin_sampling_fn]
-    #experiment(CNN_model,epochs_retrain,retrain_batch,batch_size,list_methods)
+    list_methods = [RL_CNN_method,RL_human_method,margin_sampling_fn]
+    experiment(CNN_model,epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
     __main__()
