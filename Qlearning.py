@@ -12,7 +12,7 @@ from tensorflow.keras.utils import plot_model
 from .TransferLearning import fetch_data#, loadmodel, savemodel
 
 
-def RL_model(number_classes):
+def RL_model(number_classes,output_dimension):
 
     #CNN for image processing
     image_input = Input((244, 244, 3)) #same size as in CNN Model or numpy array of images
@@ -39,7 +39,7 @@ def RL_model(number_classes):
     dropout_layer = Dropout(0.5)(dense_layer)
     dense_layer = Dense(64, activation="relu")(dropout_layer)
     dropout_layer = Dropout(0.5)(dense_layer)
-    output_layer = Dense(2, activation="linear")(dropout_layer)#output the expected reward for decision "ask model" in first node and "ask human" in second node
+    output_layer = Dense(output_dimension, activation="linear")(dropout_layer)#output the expected reward for decision "ask model" in first node and "ask human" in second node
 
     model = Model(inputs=[image_input, prediction_input], outputs=output_layer)
 
@@ -161,9 +161,6 @@ def RL_human_method(X, y, batch_size, CNN_model):
     #sort samples (and labels) in descending order from highest expected reward to lowest
     X = X[sort_ind[::-1]]
     y = y[sort_ind[::-1]]
-    #TODO:change
-    X = X[sort_ind]
-    y = y[sort_ind]
 
     # just for testing
     #y_pred = y_pred[sort_ind[::-1]]
@@ -198,9 +195,7 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
     # sort samples (and labels) in ascending order from lowest expected reward to highest
     X = X[sort_ind]
     y = y[sort_ind]
-    # TODO:change
-    X = X[sort_ind[::-1]]
-    y = y[sort_ind[::-1]]
+
 
     #just for testing
     #y_pred = y_pred[sort_ind]

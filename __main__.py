@@ -11,7 +11,7 @@ from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random
 from .MetricsMethod import metric_method, diversity_method, diversity_images_method, diversity_images_balanced_method #mutural_info_method too slow
 from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
 from .Qlearning import RL_model, train_RL_model, RL_CNN_method, RL_human_method
-from .ContextualBandits import ContextualAdaptiveGreedy_method
+from .ContextualBandits import ContextualAdaptiveGreedy_method, ContextualAdaptiveGreedy_RLmodel_method, pretrain_oracle, pretrain_RLmodel_oracle
 
 
 #set seeds for reproducability
@@ -32,9 +32,9 @@ def __main__():
     #Xtrain, ytrain = fetch_data('train')
     CNN_model = load_model('model_100_epochs.h5')
     #Rel_model = load_model('RL_model.h5')
-    #print(Rel_model.summary())
-    Rel_model = RL_model(10)
+    pretrain_RLmodel_oracle(CNN_model,100)
 
+    sys.exit()
     #train_RL_model(Xtrain, ytrain, Rel_model, CNN_model, 100)
 
     list_methods = [RL_CNN_method,RL_human_method,margin_sampling_fn]
