@@ -36,9 +36,9 @@ def RL_model(number_classes):
     dense_layer = Dense(256, activation="relu")(concat_layer)
     dropout_layer = Dropout(0.5)(dense_layer)
     dense_layer = Dense(128, activation="relu")(dropout_layer)
-    dropout_layer = Dropout(0.4)(dense_layer)
+    dropout_layer = Dropout(0.5)(dense_layer)
     dense_layer = Dense(64, activation="relu")(dropout_layer)
-    dropout_layer = Dropout(0.3)(dense_layer)
+    dropout_layer = Dropout(0.5)(dense_layer)
     output_layer = Dense(2, activation="linear")(dropout_layer)#output the expected reward for decision "ask model" in first node and "ask human" in second node
 
     model = Model(inputs=[image_input, prediction_input], outputs=output_layer)
@@ -57,6 +57,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
 
     #just for testing:
     Xtest,ytest = fetch_data('test')
+    y_pred_test = CNN_model.predict(Xtest)
 
     #y = 0.95
     eps = 0.5
@@ -121,11 +122,11 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
             idx += 1
             r_sum += r
 
-        RL_model.save('RL_model.h5')
+        RL_model.save('RL_model_'+str(i)+'.h5')
         r_avg_list.append(r_sum / 1000)
 
         #just for testing
-        y_pred_test = CNN_model.predict(Xtest)
+
         expected_rewards = RL_model.predict([Xtest, y_pred_test])
         print(expected_rewards)
 
