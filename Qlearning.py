@@ -60,7 +60,7 @@ def train_RL_model(Xtrain,ytrain,RL_model,CNN_model,num_episodes):
 
     #y = 0.95
     eps = 0.5
-    decay_factor = 0.99
+    decay_factor = 0.999
     r_avg_list = []
     for i in range(num_episodes):
         print('episode:',i)
@@ -203,6 +203,8 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
     Xwinner, ywinner = X[:batch_size], y[:batch_size]
     Xloser, yloser = X[batch_size:], y[batch_size:]
 
+    print(np.shape(Xwinner))
+    print(np.shape(Xloser))
     return (Xwinner, ywinner, Xloser, yloser)
 
 
