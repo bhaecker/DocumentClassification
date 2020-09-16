@@ -34,10 +34,9 @@ def __main__():
     #Rel_model = load_model('RL_model.h5')
     pretrain_RLmodel_oracle(CNN_model,100)
 
-    sys.exit()
     #train_RL_model(Xtrain, ytrain, Rel_model, CNN_model, 100)
 
-    list_methods = [RL_CNN_method,RL_human_method,margin_sampling_fn]
+    list_methods = [ContextualAdaptiveGreedy_RLmodel_method,margin_sampling_fn]
     experiment(CNN_model,epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":

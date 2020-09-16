@@ -143,7 +143,7 @@ def pretrain_RLmodel_oracle(CNN_model,epochs):
         CNN_model = load_model(CNN_model)
 
     Xtrain, ytrain = fetch_data('train')
-    #Xtrain, ytrain = Xtrain[:50], ytrain[:50]
+    Xtrain, ytrain = Xtrain[:50], ytrain[:50]
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:50], ytest[:50]
     sample_size = np.shape(Xtrain)[0]
@@ -154,7 +154,7 @@ def pretrain_RLmodel_oracle(CNN_model,epochs):
     for idx in range(sample_size):
         print(idx / sample_size)
         #maybe retrain plus training samples?
-        CNN_model_retrained = retrain(CNN_model,100,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
+        CNN_model_retrained = retrain(CNN_model,10,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward[idx] = new_acc - base_acc
     print(reward)
