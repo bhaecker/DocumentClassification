@@ -143,7 +143,7 @@ def pretrain_RLmodel_oracle(CNN_model,epochs):
         CNN_model = load_model(CNN_model)
 
     Xtrain, ytrain = fetch_data('train')
-    Xtrain, ytrain = Xtrain[:50], ytrain[:50]
+    #Xtrain, ytrain = Xtrain[:50], ytrain[:50]
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:50], ytest[:50]
     sample_size = np.shape(Xtrain)[0]
@@ -163,7 +163,7 @@ def pretrain_RLmodel_oracle(CNN_model,epochs):
     ypred_train = CNN_model.predict(Xtrain)  # feed that into oracle
     oracle = RL_model(10,1)
     oracle.fit(x=[Xtrain,ypred_train],y=reward,
-                            validation_split=0.2,
+                            validation_split=0,
                             batch_size=128,
                             epochs=epochs,
                             verbose=1)
@@ -191,8 +191,14 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
 
     if type(CNN_model) == str:
         CNN_model = load_model(CNN_model)
-
-    oracle = load_model('RL_model_oracle_pretrained.h5')
+    m = 100
+    for i in range(m):
+        try:
+            rounds_so_far = m - i
+            oracle = load_model('RL_model_oracle_'+str(rounds_so_far)+'.h5')
+        except:
+            oracle = load_model('RL_model_oracle_pretrained.h5')
+            rounds_so_far = 0
 
     Xtest, ytest = fetch_data('test')
     # Xtest, ytest = Xtest[:10], ytest[:10]
@@ -202,7 +208,7 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
     ypred_unseen = CNN_model.predict(Xunseen)
     ypred_unseen = np.array(ypred_unseen)
 
-    for round in range(number_rounds):
+    for round in range(1,number_rounds):
         print('round number: '+str(round))
         winner_idx_list = []
         rewards = []
@@ -241,7 +247,7 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
                    verbose=0)
 
 
-    oracle.save('RL_model_oracle_'+str(round)+'.h5')
+    oracle.save('RL_model_oracle_'+str(rounds_so_far + round)+'.h5')
 
     #use oracle to predict rewards aka. improvement of training process
     expected_rewards = oracle.predict([Xunseen,ypred_unseen])

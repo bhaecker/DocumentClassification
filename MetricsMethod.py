@@ -156,6 +156,7 @@ def diversity_images_balanced_method(X,y,number_samples,model):
 
     return(Xwinner, ywinner, Xloser, yloser)
 
+####################################################################################
 
 def diversity_images_method(X,y,number_samples,model):#IMPORTANT TOO SLOW
     '''
@@ -206,7 +207,7 @@ def diversity_images_method(X,y,number_samples,model):#IMPORTANT TOO SLOW
 
 
 
-####################################################################################
+
 
 def mutural_info_method(X,y,number_samples,model):
     #IMPORTANT: Too slow

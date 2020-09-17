@@ -29,10 +29,11 @@ retrain_batch = 100
 def __main__():
 
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
+    #TODO: TRAIN pretrain_RLmodel_oracle ON ALL TRAINING DATA
     #Xtrain, ytrain = fetch_data('train')
     CNN_model = load_model('model_100_epochs.h5')
     #Rel_model = load_model('RL_model.h5')
-    #pretrain_RLmodel_oracle(CNN_model,100)
+    pretrain_RLmodel_oracle(CNN_model,100)
 
     #train_RL_model(Xtrain, ytrain, Rel_model, CNN_model, 100)
 
