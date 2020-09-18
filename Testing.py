@@ -58,6 +58,8 @@ def experiment(model_base_str,epochs_retrain,retrain_size,mini_batch_size,list_m
     #if type(model_base) == str:
         #model_base = loadmodel(model_base)
      #   model_base = load_model(model_base)
+    if type(model_base_str) != str:
+        exit('please provide name of model as string')
 
 
     Xtest, ytest = fetch_data('test')
