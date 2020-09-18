@@ -28,7 +28,7 @@ def seperation(X,y,model,batch_size,method):
         y_empty = np.empty([0,np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
 
-    if str(method.__name__).endswith('method'):
+    if str(method.__name__).endswith('method') or str(method.__name__).endswith('algo'):
         Xwinner,ywinner,Xloser,yloser = method(X, y, batch_size, model)
         # get the class distribution
         class_distribution = collections.Counter(np.where(ywinner == 1)[1])

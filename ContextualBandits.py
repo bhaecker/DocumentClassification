@@ -7,40 +7,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from tensorflow.keras.models import load_model
 from .TransferLearning import fetch_data,retrain
-from .Qlearning import RL_model
+
+from .Backbone import RL_model_mono, RL_model_dual, pretrain_dual_oracle, pretrain_mono_oracle
 
 
-def pretrain_oracle(CNN_model):
-    if type(CNN_model) == str:
-        CNN_model = load_model(CNN_model)
-
-    Xtrain, ytrain = fetch_data('train')
-    Xtrain, ytrain = Xtrain[:50], ytrain[:50]
-    Xtest, ytest = fetch_data('test')
-    #Xtest, ytest = Xtest[:50], ytest[:50]
-    sample_size = np.shape(Xtrain)[0]
-    reward = np.empty(sample_size)
-    base_acc = CNN_model.evaluate(Xtest, ytest, verbose=0)[1]
-    print('baseacc ' + str(base_acc))
-    for idx in range(sample_size):
-        print(idx / sample_size)
-        #maybe retrain plus training samples?
-        CNN_model_retrained = retrain(CNN_model,100,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
-        new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
-        reward[idx] = new_acc - base_acc
-    print(reward)
-
-    ypred_train = CNN_model.predict(Xtrain)  # feed that into oracle
-    oracle = RandomForestRegressor(n_estimators=100, random_state=8)
-    oracle.fit(ypred_train, reward)
-    del Xtest, ytest, Xtrain, ytrain, ypred_train, reward
-
-    return(oracle)
-
-
-def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
+def ContextualAdaptiveGreedy_mono_algo(Xunseen, yunseen, batch_size, CNN_model):
     '''
-    uses an oracle to predict the improvement of the CNN model
+    uses an oracle (which ONLY sees predictions) to predict the improvement of the CNN model
     the oracle sees the predictions of the CNN model
     when it chooses a sample, the true improvement is revealed to the oracle
     '''
@@ -48,19 +21,21 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
     decay_rate = 0.99
     number_rounds = 2
     offline_batchsize = 100
+    epochs = 10
 
-    #todo:maybe use a NN as oracle
 
     #oracle = pretrain_oracle(CNN_model) most likely unnecessary
     #oracle = LogisticRegression() this is a classifier
     #oracle = RandomForestClassifier() classifier dont work since we have the continous reward threshold
 
-    try:
-        pkl_filename = "contextual_oracle.pkl"
-        with open(pkl_filename, 'rb') as file:
-            oracle = pickle.load(file)
-    except:
-        oracle = RandomForestRegressor(n_estimators=500, random_state=8)
+    #try:
+     #   pkl_filename = "contextual_oracle.pkl"
+      #  with open(pkl_filename, 'rb') as file:
+       #     oracle = pickle.load(file)
+    #except:
+     #   oracle = RandomForestRegressor(n_estimators=500, random_state=8)
+
+    oracle = load_model('RL_model_mono_100_epochs.h5')
 
     Xtest, ytest = fetch_data('test')
     #Xtest, ytest = Xtest[:10], ytest[:10]
@@ -111,12 +86,14 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
             rewards.append(reward)
 
         #retrain the oracle with the choosen sample and the real reward
-
-        oracle.fit(ypred_unseen[winner_idx_list], rewards)
-
-    pkl_filename = "contextual_oracle.pkl"
-    with open(pkl_filename, 'wb') as file:
-        pickle.dump(oracle, file)
+        try:
+            oracle.fit(x=ypred_unseen[winner_idx_list], y=np.array(rewards),
+                       validation_split=0,
+                       batch_size=1,
+                       epochs=epochs,
+                       verbose=0)
+        except:
+            oracle.fit(ypred_unseen[winner_idx_list], rewards)
 
     #use oracle to predict rewards aka. improvement of training process
     expected_reward = oracle.predict(ypred_unseen)
@@ -134,47 +111,10 @@ def ContextualAdaptiveGreedy_method(Xunseen, yunseen, batch_size, CNN_model):
     return(Xwinner, ywinner, Xloser, yloser)
 
 
-################
-#use RL_model as oracle
 
-
-def pretrain_RLmodel_oracle(CNN_model,epochs):
-    if type(CNN_model) == str:
-        CNN_model = load_model(CNN_model)
-
-    Xtrain, ytrain = fetch_data('train')
-    #Xtrain, ytrain = Xtrain[:50], ytrain[:50]
-    Xtest, ytest = fetch_data('test')
-    #Xtest, ytest = Xtest[:50], ytest[:50]
-    sample_size = np.shape(Xtrain)[0]
-    reward = np.empty(sample_size)
-    base_acc = CNN_model.evaluate(Xtest, ytest, verbose=0)[1]
-    print('baseacc ' + str(base_acc))
-    #get the rewards aka. improvements for all training data
-    for idx in range(sample_size):
-        print(idx / sample_size)
-        #maybe retrain plus training samples?
-        CNN_model_retrained = retrain(CNN_model,10,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
-        new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
-        reward[idx] = new_acc - base_acc
-    print(reward)
-
-    # feed that into oracle
-    ypred_train = CNN_model.predict(Xtrain)  # feed that into oracle
-    oracle = RL_model(10,1)
-    oracle.fit(x=[Xtrain,ypred_train],y=reward,
-                            validation_split=0,
-                            batch_size=128,
-                            epochs=epochs,
-                            verbose=1)
-    del Xtest, ytest, Xtrain, ytrain, ypred_train, reward
-    oracle.save('RL_model_oracle_pretrained.h5')
-    return(oracle)
-
-
-def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_model):
+def ContextualAdaptiveGreedy_dual_algo(Xunseen, yunseen, batch_size, CNN_model):
     '''
-    uses an oracle to predict the improvement of the CNN model
+    uses an oracle (which sees images AND predictions) to predict the improvement of the CNN model
     the oracle sees the predictions of the CNN model
     when it chooses a sample, the true improvement is revealed to the oracle
     '''
@@ -182,6 +122,7 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
     decay_rate = 0.99
     number_rounds = 2
     offline_batchsize = 10
+    epochs = 10
 
     number_samples = np.shape(Xunseen)[0]
     if number_samples <= batch_size:
@@ -191,14 +132,8 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
 
     if type(CNN_model) == str:
         CNN_model = load_model(CNN_model)
-    m = 100
-    for i in range(m):
-        try:
-            rounds_so_far = m - i
-            oracle = load_model('RL_model_oracle_'+str(rounds_so_far)+'.h5')
-        except:
-            oracle = load_model('RL_model_oracle_pretrained.h5')
-            rounds_so_far = 0
+
+    oracle = load_model('RL_model_dual_100_epochs.h5')
 
     Xtest, ytest = fetch_data('test')
     # Xtest, ytest = Xtest[:10], ytest[:10]
@@ -239,15 +174,14 @@ def ContextualAdaptiveGreedy_RLmodel_method(Xunseen, yunseen, batch_size, CNN_mo
             rewards.append(reward)
 
         #retrain the oracle with the choosen sample and the real reward
-
-        oracle.fit(x=[Xunseen[winner_idx_list], ypred_unseen[winner_idx_list]], y=np.array(rewards),
-                   validation_split=0,
-                   batch_size=1,
-                   epochs=1,
-                   verbose=0)
-
-
-    oracle.save('RL_model_oracle_'+str(rounds_so_far + round)+'.h5')
+        try:
+            oracle.fit(x=[Xunseen[winner_idx_list], ypred_unseen[winner_idx_list]], y=np.array(rewards),
+                        validation_split=0,
+                        batch_size=1,
+                        epochs=epochs,
+                        verbose=0)
+        except:
+            oracle.fit(x=[Xunseen[winner_idx_list], ypred_unseen[winner_idx_list]], y=np.array(rewards))
 
     #use oracle to predict rewards aka. improvement of training process
     expected_rewards = oracle.predict([Xunseen,ypred_unseen])
