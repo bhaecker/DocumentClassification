@@ -55,9 +55,9 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     :return two dimensional array over methods and retrain cycles with performance measures
     '''
 
-    if type(model_base) == str:
+    #if type(model_base) == str:
         #model_base = loadmodel(model_base)
-        model_base = load_model(model_base)
+     #   model_base = load_model(model_base)
 
 
     Xtest, ytest = fetch_data('test')
