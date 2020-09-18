@@ -5,6 +5,7 @@ import os
 import numpy as np
 import pandas as pd
 import collections
+import copy
 
 import tensorflow as tf
 
@@ -83,11 +84,14 @@ model.save('throwawaymodel.h5')
 del model
 
 base_model = load_model('throwawaymodel.h5')
+ground_model = copy.deepcopy(base_model)
+
 new_model = retrain_model(base_model,10)
 score = new_model.evaluate(Xtest,ytest,verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
+base_model = ground_model
 new_model2 = retrain_model(base_model,10)
 score = new_model2.evaluate(Xtest,ytest,verbose=0)
 print('Test loss:', score[0])

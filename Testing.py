@@ -5,6 +5,7 @@ import os
 import numpy as np
 import pandas as pd
 import collections
+import copy
 
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -58,6 +59,8 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         #model_base = loadmodel(model_base)
         model_base = load_model(model_base)
 
+    ground_model = copy.deepcopy(model_base)
+
     Xtest, ytest = fetch_data('test')
     Xtrain, ytrain = fetch_data('train')
 
@@ -93,6 +96,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             #if index == 1:
              #   model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
               #  print(tester(Xtest,ytest, model_new)[0])
+            model_base = ground_model
             model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
 
             #del model_old
