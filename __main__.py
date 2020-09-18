@@ -31,7 +31,7 @@ def __main__():
     #Xtrain, ytrain = fetch_data('train')
     #CNN_model = load_model('model_100_epochs.h5')
 
-    list_methods = [ContextualAdaptiveGreedy_dual_algo,margin_sampling_fn]
+    list_methods = [metric_method,margin_sampling_fn]
     experiment('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":

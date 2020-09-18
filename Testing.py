@@ -44,7 +44,7 @@ def tester(Xtest,ytest,model):
 
     return(accuracy,ypred)
 
-def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_methods):
+def experiment(model_base_str,epochs_retrain,retrain_size,mini_batch_size,list_methods):
 
     '''
     :param model: initial fine tuned model, which is retrained
@@ -63,7 +63,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
     Xtest, ytest = fetch_data('test')
     Xtrain, ytrain = fetch_data('train')
 
-    base_performance = tester(Xtest, ytest, model_base)[0]
+    base_performance = tester(Xtest, ytest, model_base_str)[0]
     number_samples = 0
     df = pd.DataFrame([[number_samples]+[base_performance]*len(list_methods)], columns = ['number of samples'] + [str(method.__name__) for method in list_methods])
 
@@ -79,7 +79,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
 
     for method in list_methods:
         print('start',method.__name__)
-        Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base, retrain_size, method)
+        Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base_str, retrain_size, method)
 
         #new trainings batch consists of old training samples plus the new unseen ones
         Xtrain_new = np.concatenate((Xtrain, Xwinner), axis=0)
@@ -95,7 +95,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             #if index == 1:
              #   model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
               #  print(tester(Xtest,ytest, model_new)[0])
-            model_base = load_model(model_base)
+            model_base = load_model(model_base_str)
             model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
 
             #del model_old
