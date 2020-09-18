@@ -185,10 +185,9 @@ def ContextualAdaptiveGreedy_dual_algo(Xunseen, yunseen, batch_size, CNN_model):
 
     #use oracle to predict rewards aka. improvement of training process
     expected_rewards = oracle.predict([Xunseen,ypred_unseen])
-
-    print(expected_rewards)
+    #flatten the list
     expected_rewards = [expected_reward[0] for expected_reward in expected_rewards]
-    print(expected_rewards)
+
     n_farest =  np.argpartition(expected_rewards, -batch_size)[-batch_size:]
 
     #seperate unseen data in winner and looser data set by the indices

@@ -89,7 +89,10 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         #while number_samples <= np.shape(Xunseen_orig)[0]:
         while np.shape(Xwinner)[0] > 0:
             print(method.__name__,'at '+str(100*(np.shape(Xtrain_new)[0] - np.shape(Xtrain)[0])/np.shape(Xunseen_orig)[0])+' %')
-            #model_new = retrain(model_old,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
+            #just for debugging
+            if index == 1:
+                model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
+                print(tester(Xtest,ytest, model_new)[0])
             model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
 
             #del model_old
