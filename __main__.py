@@ -18,7 +18,7 @@ tf.random.set_seed(42)
 #epochs = 100
 epochs_retrain = 10
 batch_size = 128
-retrain_batch = 100
+retrain_batch = 300
 
 #number_games = 200
 
@@ -31,7 +31,7 @@ def __main__():
     #Xtrain, ytrain = fetch_data('train')
     CNN_model = load_model('model_100_epochs.h5')
 
-    list_methods = [ContextualAdaptiveGreedy_dual_algo,margin_sampling_fn]
+    list_methods = [margin_sampling_fn,margin_sampling_fn]
     experiment(CNN_model,epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":

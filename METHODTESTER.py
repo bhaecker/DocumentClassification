@@ -27,6 +27,105 @@ from tensorflow.keras.models import load_model
 
 from tensorflow.keras.backend import manual_variable_initialization
 
+
+import math
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Dense
+from tensorflow.keras.models import load_model
+
+#set seeds for reproducability
+np.random.seed(42)
+tf.random.set_seed(42)
+
+#Set to true or false and observe different outcomes
+compile_after_loading = False
+
+#parameters for NN and data set
+number_samples = 5000
+number_features = 10
+number_classes = 2
+split_size = 0.8
+epochs = 30
+
+#random numbers as data set
+data_set = np.random.random((number_samples,number_features+1))
+
+#last column is target (binary for cases when the sum of all features is less or more then 5)
+mask  = np.sum(data_set[:,:-1],axis=1) < 5
+data_set[:,-1] = mask.astype(int)
+
+#split in training and test set
+Xtrain,ytrain = data_set[:math.floor(number_samples*split_size),:-1],data_set[:math.floor(number_samples*split_size),-1]
+Xtest,ytest = data_set[math.floor(number_samples*split_size):,:-1],data_set[math.floor(number_samples*split_size):,-1]
+
+#create a small vanilla keras model, which is always initialized with the same weights
+def create_model(number_features,number_classes):
+    input_layer = Input((number_features,))
+    initializer = tf.keras.initializers.RandomNormal(mean=0., stddev=1., seed=42)
+    x = Dense(16, activation='relu',kernel_initializer=initializer)(input_layer)
+    x = Dense(16, activation='relu',kernel_initializer=initializer)(x)
+    predictions = Dense(number_classes, activation='sigmoid',kernel_initializer=initializer)(x)
+    model = Model(inputs=input_layer,outputs=predictions)
+    model.compile(loss='sparse_categorical_crossentropy',
+                  optimizer='adam',
+                  metrics=['accuracy'])
+    return(model)
+
+def retrain_model(model,epochs):
+    model.fit(Xtrain, ytrain, epochs=epochs, verbose=0)
+    return(model)
+#
+model = create_model(number_features,number_classes)
+model.fit(Xtrain,ytrain,epochs=epochs,verbose=0)
+model.save('throwawaymodel.h5')
+del model
+
+base_model = load_model('throwawaymodel.h5')
+new_model = retrain_model(base_model,10)
+score = new_model.evaluate(Xtest,ytest,verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
+
+new_model2 = retrain_model(base_model,10)
+score = new_model2.evaluate(Xtest,ytest,verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
+
+sys.exit()
+
+del model
+model = load_model('throwawaymodel.h5')
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+score = model.evaluate(Xtest,ytest,verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
+sys.exit()
+#train in different sessions
+model = create_model(number_features,number_classes)
+#save model after each epoch, load the model and retrain one epoch
+for epoch in range(epochs):
+    model.fit(Xtrain,ytrain,epochs=1,verbose=0)
+    model.save('throwawaymodel.h5')
+    del model
+    model = load_model('throwawaymodel.h5')
+    if compile_after_loading:
+        model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+#observe how accuracy matches the accuracy of the model trained in one session
+#or drops, when compiling after each load_model
+score = model.evaluate(Xtest,ytest,verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
+
+sys.exit()
+
+
+
+
+##################
+
 '''Test how saving and loading of a trained model influences the accuracy.
 Options are: compile after loading or not.
 '''
