@@ -29,10 +29,10 @@ def __main__():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
     #Xtrain, ytrain = fetch_data('train')
-    CNN_model = load_model('model_100_epochs.h5')
+    #CNN_model = load_model('model_100_epochs.h5')
 
-    list_methods = [margin_sampling_fn,margin_sampling_fn]
-    experiment(CNN_model,epochs_retrain,retrain_batch,batch_size,list_methods)
+    list_methods = [ContextualAdaptiveGreedy_dual_algo,margin_sampling_fn]
+    experiment('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
     __main__()

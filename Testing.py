@@ -59,7 +59,6 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
         #model_base = loadmodel(model_base)
         model_base = load_model(model_base)
 
-    ground_model = copy.deepcopy(model_base)
 
     Xtest, ytest = fetch_data('test')
     Xtrain, ytrain = fetch_data('train')
@@ -96,7 +95,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             #if index == 1:
              #   model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
               #  print(tester(Xtest,ytest, model_new)[0])
-            model_base = ground_model
+            model_base = load_model(model_base)
             model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
 
             #del model_old
@@ -110,6 +109,7 @@ def experiment(model_base,epochs_retrain,retrain_size,mini_batch_size,list_metho
             Xtrain_new, ytrain_new = np.concatenate((Xtrain_new, Xwinner), axis=0), np.concatenate((ytrain_new, ywinner), axis=0)
             index = index + 1
 
+            del model_new, model_base
             #model_old = model_new
 
             print(df)

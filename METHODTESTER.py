@@ -22,7 +22,7 @@ from sklearn.metrics import accuracy_score
 #from RandomForest import RandomForest_method
 
 from tensorflow import keras
-from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.models import Model, Sequential, clone_model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D, InputLayer, Input, Concatenate, Conv2D, Flatten, Dense
 from tensorflow.keras.models import load_model
 
@@ -39,9 +39,6 @@ from tensorflow.keras.models import load_model
 #set seeds for reproducability
 np.random.seed(42)
 tf.random.set_seed(42)
-
-#Set to true or false and observe different outcomes
-compile_after_loading = False
 
 #parameters for NN and data set
 number_samples = 5000
@@ -84,14 +81,14 @@ model.save('throwawaymodel.h5')
 del model
 
 base_model = load_model('throwawaymodel.h5')
-ground_model = copy.deepcopy(base_model)
+ground_model = clone_model(base_model)
 
 new_model = retrain_model(base_model,10)
 score = new_model.evaluate(Xtest,ytest,verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-base_model = ground_model
+base_model = load_model('throwawaymodel.h5')
 new_model2 = retrain_model(base_model,10)
 score = new_model2.evaluate(Xtest,ytest,verbose=0)
 print('Test loss:', score[0])
