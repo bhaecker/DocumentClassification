@@ -32,7 +32,7 @@ def __main__():
 
     #
     list_methods = [margin_sampling_fn,diversity_method,metric_method]
-    experiment_accumulated('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
+    experiment_single('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
     __main__()
