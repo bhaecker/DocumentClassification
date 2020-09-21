@@ -15,8 +15,10 @@ from .ContextualBandits import ContextualAdaptiveGreedy_mono_algo, ContextualAda
 from .Backbone import RL_model_dual, RL_model_mono, pretrain_dual_oracle, pretrain_mono_oracle
 
 tf.random.set_seed(42)
+np.random.seed(42)
+
 #epochs = 100
-epochs_retrain = 10
+epochs_retrain = 3
 batch_size = 128
 retrain_batch = 100
 #number_games = 200
