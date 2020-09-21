@@ -30,6 +30,7 @@ def __main__():
     #Xtrain, ytrain = fetch_data('train')
     #CNN_model = load_model('model_100_epochs.h5')
 
+    #
     list_methods = [margin_sampling_fn,diversity_method,metric_method]
     experiment_accumulated('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
