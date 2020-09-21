@@ -140,9 +140,8 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
     Xtest, ytest = fetch_data('test')
     Xtrain, ytrain = fetch_data('train')
 
-    base_performance = tester(Xtest, ytest, model_base_str)[0]
-    number_samples = 0
-    df = pd.DataFrame([[number_samples]+[base_performance]*len(list_methods)], columns = ['fraction used'] + [str(method.__name__) for method in list_methods])
+    base_performance = round(tester(Xtest, ytest, model_base_str)[0],2)
+    df = pd.DataFrame([[0]+[base_performance]*len(list_methods)], columns = ['fraction used'] + [str(method.__name__) for method in list_methods])
 
     Xunseen_orig, yunseen_orig = fetch_data('unseen')
 
@@ -165,7 +164,7 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
         index = 1
         #while number_samples <= np.shape(Xunseen_orig)[0]:
         while np.shape(Xwinner)[0] > 0:
-            print(method.__name__,'at '+str(100*(np.shape(Xtrain_new)[0] - np.shape(Xtrain)[0])/np.shape(Xunseen_orig)[0])+' %')
+            #print(method.__name__,'at '+str(100*(np.shape(Xtrain_new)[0] - np.shape(Xtrain)[0])/np.shape(Xunseen_orig)[0])+' %')
             #just for debugging
             #if index == 1:
              #   model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
@@ -176,9 +175,9 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
 
 
             accuracy = tester(Xtest,ytest, model_new)[0]
-            df.at[index, 'fraction used'] = index*retrain_size/np.shape(Xunseen_orig)[0]#number_samples
+            df.at[index, 'fraction used'] = round(index*retrain_size/np.shape(Xunseen_orig)[0],2)#number_samples
             df.at[index, str(method.__name__)] = accuracy
-
+            print(df)
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
 
             Xtrain_new, ytrain_new = np.concatenate((Xtrain, Xwinner), axis=0), np.concatenate((ytrain, ywinner), axis=0)
@@ -186,7 +185,7 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
 
             del model_new, model_base
 
-            print(df)
+
 
     df.to_csv('RESULTS.csv', index = False)
     print(df)
