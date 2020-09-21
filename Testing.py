@@ -175,7 +175,7 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
 
 
             accuracy = tester(Xtest,ytest, model_new)[0]
-            df.at[index, 'fraction used'] = round(index*retrain_size/np.shape(Xunseen_orig)[0],2)#number_samples
+            df.at[index, 'fraction used'] = round(1-np.shape(Xloser)[0]/np.shape(Xunseen_orig)[0],2)#number_samples
             df.at[index, str(method.__name__)] = accuracy
             print(df)
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
