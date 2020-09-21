@@ -55,8 +55,6 @@ def metric_method(X,y,number_samples,model):
     return(Xwinner, ywinner, Xloser, yloser)
 
 
-
-
 def diversity_method(X,y,number_samples,model):
     '''
     #chosediversity

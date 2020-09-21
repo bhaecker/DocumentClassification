@@ -18,9 +18,9 @@ tf.random.set_seed(42)
 np.random.seed(42)
 
 #epochs = 100
-epochs_retrain = 3
+epochs_retrain = 10
 batch_size = 128
-retrain_batch = 100
+retrain_batch = 200
 #number_games = 200
 
 def __main__():
@@ -31,7 +31,7 @@ def __main__():
     #CNN_model = load_model('model_100_epochs.h5')
 
     list_methods = [margin_sampling_fn,diversity_method,metric_method]
-    experiment_single('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
+    experiment_accumulated('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
     __main__()
