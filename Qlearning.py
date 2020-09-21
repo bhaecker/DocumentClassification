@@ -196,10 +196,13 @@ def RL_human_method(X, y, batch_size, CNN_model):
         y_empty = np.empty([0, np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
 
+    if type(CNN_model) == str:
+        CNN_model = load_model(CNN_model)
 
     y_pred = CNN_model.predict(X)
 
     RL_model = load_model('RL_model_dual_4.h5')
+
     try:
         expected_rewards = RL_model.predict([X,y_pred])
     except:
@@ -234,7 +237,11 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
         y_empty = np.empty([0, np.shape(y)[1]])
         return (X, y, X_empty, y_empty)
 
+    if type(CNN_model) == str:
+        CNN_model = load_model(CNN_model)
+
     y_pred = CNN_model.predict(X)
+
     RL_model = load_model('RL_model_4.h5')
 
     try:
