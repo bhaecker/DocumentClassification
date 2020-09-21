@@ -36,7 +36,6 @@ def seperation(X,y,model,batch_size,method):
         return(Xwinner,ywinner,Xloser,yloser)
 
     if type(model) == str:
-        #model = loadmodel(model)
         model = load_model(model)
     ystar = model.predict(X)
 
