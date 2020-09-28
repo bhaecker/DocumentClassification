@@ -10,8 +10,10 @@ from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D
 
+
 DATA_DIRECTORY = 'DocumentClassification/Data/'
-#DATA_DIRECTORY = 'Data/' #TODO comment out when using server
+DATA_DIRECTORY = '/newstorage4/bhaecker/Data/'    #comment out when using remote
+
 
 #def savemodel(model,name):
  #   model.save_weights(str(name)+'.h5')
