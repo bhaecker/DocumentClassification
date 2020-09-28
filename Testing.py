@@ -22,6 +22,7 @@ from .RandomForest import RandomForestRegressor_pretraining
 
 
 DATA_DIRECTORY = 'Data'
+DATA_DIRECTORY = '/newstorage4/bhaecker/Data'    #comment out when using remote
 
 
 def tester(Xtest,ytest,model):

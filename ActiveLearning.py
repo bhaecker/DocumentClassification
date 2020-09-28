@@ -14,7 +14,7 @@ from tensorflow.keras.models import load_model
 
 #from .TransferLearning import loadmodel
 
-DATA_DIRECTORY = 'Data'
+#DATA_DIRECTORY = 'Data'
 
 def seperation(X,y,model,batch_size,method):
     '''
