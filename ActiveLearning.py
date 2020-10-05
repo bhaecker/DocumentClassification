@@ -6,15 +6,10 @@ import functools
 import numpy as np
 import collections
 import tensorflow as tf
-#from tensorflow import keras
+
 from tensorflow.keras.models import load_model
-#config = tf.config.experimental(device_count = {'GPU': 1 , 'CPU': 1} )
-#sess = tf.Session(config=config)
-#keras.backend.set_session(sess)
 
-#from .TransferLearning import loadmodel
 
-#DATA_DIRECTORY = 'Data'
 
 def seperation(X,y,model,batch_size,method):
     '''

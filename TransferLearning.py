@@ -10,58 +10,51 @@ from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D
 
-
-DATA_DIRECTORY = 'DocumentClassification/Data/'
-DATA_DIRECTORY = '/newstorage4/bhaecker/Data/'    #comment out when using remote
-
-
-#def savemodel(model,name):
- #   model.save_weights(str(name)+'.h5')
-  #  model_json = model.to_json()
-   # with open(str(name)+'.json', "w") as json_file:
-    #    json_file.write(model_json)
-    #json_file.close()
-    #print('model saved')
-
-#def loadmodel(name):
-#    json_file = open(str(name)+'.json', 'r')
-#    loaded_model_json = json_file.read()
-#    json_file.close()
-#    model = tf.keras.models.model_from_json(loaded_model_json)
-#    model.load_weights(str(name)+'.h5')
-#    model.compile(optimizer='Adam', loss='categorical_crossentropy',metrics=['accuracy'])#TODO:CHECK OPTIMIZER!!!
-#    print(str(name)+' loaded')
-#    return(model)
+#DATA_DIRECTORY = 'Data/'
+DATA_DIRECTORY = '/newstorage4/bhaecker/Data/'    #use for small data set
+#DATA_DIRECTORY = '/newstorage4/bhaecker/Data2/'   #use for big data set
 
 
-def fetch_data(string):
-    '''
-    collect ALL training/test or unseen numpy arrays plus labels and shuffle them
-    '''
-    file = 'Tobacco_'+string+'/'
-    labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
-    # load training data
-    X = np.load(DATA_DIRECTORY + file + labels[0] + '.npy')
-    # load labels
-    r = np.load(DATA_DIRECTORY + file + labels[0] + '_target.npy')
-    y = np.stack([r] * X.shape[0])
-    for label in labels[1:]:
+if DATA_DIRECTORY[-2] == 2:
+    def fetch_data(string):
+        '''
+        collect ALL training/test or unseen numpy arrays plus labels from big data set
+        '''
+        X = np.load(DATA_DIRECTORY + string + '/' + string+'.npy')
+        y = np.load(DATA_DIRECTORY + string + '/' + string+'_labels.npy')
+        print(string + ' data fetched')
+        return(X,y)
+
+
+else:
+    def fetch_data(string):
+        '''
+        collect ALL training/test or unseen numpy arrays plus labels from small data set and shuffle them
+        '''
+        file = 'Tobacco_'+string+'/'
+        labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
         # load training data
-        Xstar = np.load(DATA_DIRECTORY + file + label + '.npy')
-        X = np.concatenate((X,Xstar),axis=0)
+        X = np.load(DATA_DIRECTORY + file + labels[0] + '.npy')
         # load labels
-        r = np.load(DATA_DIRECTORY + file + label + '_target.npy')
-        ystar = np.stack([r] * Xstar.shape[0])
-        y = np.concatenate((y,ystar),axis=0)
+        r = np.load(DATA_DIRECTORY + file + labels[0] + '_target.npy')
+        y = np.stack([r] * X.shape[0])
+        for label in labels[1:]:
+            # load training data
+            Xstar = np.load(DATA_DIRECTORY + file + label + '.npy')
+            X = np.concatenate((X,Xstar),axis=0)
+            # load labels
+            r = np.load(DATA_DIRECTORY + file + label + '_target.npy')
+            ystar = np.stack([r] * Xstar.shape[0])
+            y = np.concatenate((y,ystar),axis=0)
 
 
-    s = np.arange(X.shape[0])
-    np.random.shuffle(s)
-    X = X[s]
-    y = y[s]
-    print(string+' data fetched')
+        s = np.arange(X.shape[0])
+        np.random.shuffle(s)
+        X = X[s]
+        y = y[s]
+        print(string+' data fetched')
 
-    return(X,y)
+        return(X,y)
 
 
 def fine_tune(X,y,epochs,batch_size):
@@ -158,5 +151,4 @@ def retrain(model,epochs,batch_size,X,y):
             shuffle=True)
     #savemodel(model,'retrained_'+str(epochs)+'epochs')
     return(model,history)
-
 

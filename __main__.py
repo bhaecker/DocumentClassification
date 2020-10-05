@@ -13,6 +13,7 @@ from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegr
 from .Qlearning import epsgreedy_dual_oracle, epsgreedy_mono_oracle, RL_CNN_method, RL_human_method
 from .ContextualBandits import ContextualAdaptiveGreedy_mono_algo, ContextualAdaptiveGreedy_dual_algo
 from .Backbone import RL_model_dual, RL_model_mono, pretrain_dual_oracle, pretrain_mono_oracle
+from .ContextualDiversity import random_contextual_diversity_method
 
 tf.random.set_seed(42)
 np.random.seed(42)
@@ -24,21 +25,15 @@ retrain_batch = 200
 #number_games = 200
 
 def __main__():
-
+    #TODO:IMPLEMENT CONTEXTUAL DIVERSITY from new paper
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
     #Xtrain, ytrain = fetch_data('train')
     #CNN_model = load_model('model_100_epochs.h5')
 
     #
-    list_methods = [RL_CNN_method,RL_human_method,metric_method]
+    list_methods = [random_contextual_diversity_method,margin_sampling_fn,metric_method]
     experiment_single('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
     __main__()
-
-
-
-
-
-
