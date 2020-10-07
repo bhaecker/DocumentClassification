@@ -4,8 +4,8 @@ import glob
 import os
 import numpy as np
 import pandas as pd
-import collections
-import copy
+#import collections
+#import copy
 
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -16,9 +16,9 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
 from .TransferLearning import fetch_data, fine_tune, retrain, concate#, savemodel, loadmodel
-from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
+#from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 from .ActiveLearning import seperation
-from .RandomForest import RandomForestRegressor_pretraining
+#from .RandomForest import RandomForestRegressor_pretraining
 
 
 def tester(Xtest,ytest,model):
@@ -137,6 +137,7 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
 
     Xtest, ytest = fetch_data('test')
     Xtrain, ytrain = fetch_data('train')
+    print('right data fetched')
 
     base_performance = round(tester(Xtest, ytest, model_base_str)[0],2)
     df = pd.DataFrame([[0]+[base_performance]*len(list_methods)], columns = ['fraction used'] + [str(method.__name__) for method in list_methods])
