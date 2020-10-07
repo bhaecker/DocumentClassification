@@ -63,7 +63,12 @@ def diversity(yunseen_pred):
 
 
 def random_contextual_diversity_method(X,y,number_samples,model):
-    number_trials = 20
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+
+    number_trials = 50
     if type(model) == str:
         model = load_model(model)
     ypred = model.predict(X)
@@ -77,7 +82,7 @@ def random_contextual_diversity_method(X,y,number_samples,model):
         idx_new = np.random.randint(pool_size, size=number_samples)
         ypred_new = ypred[idx_new]
         diversity_new = diversity(ypred_new)
-        if diversity_new > diversity_old:
+        if diversity_new > diversity_old and diversity_new != float("inf"):
             diversity_old = diversity_new
             idx_old = idx_new
     print(diversity_old)
