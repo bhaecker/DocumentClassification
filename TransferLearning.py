@@ -16,17 +16,6 @@ DATA_DIRECTORY = '/newstorage4/bhaecker/Data/'    #use for small data set
 
 
 
-#if DATA_DIRECTORY[-2] == 2:
-    #def fetch_data(string):
-        #'''
-        #collect ALL training/test or unseen numpy arrays plus labels from big data set
-        #'''
-        #X = np.load(DATA_DIRECTORY + string + '/' + string+'.npy')
-        #y = np.load(DATA_DIRECTORY + string + '/' + string+'_labels.npy')
-        #return(X,y)
-
-
-#else:
 def fetch_data(string):
     '''
     collect ALL training/test or unseen numpy arrays plus labels from small data set and shuffle them
@@ -151,9 +140,6 @@ def retrain(model,epochs,batch_size,X,y):
             shuffle=True)
     #savemodel(model,'retrained_'+str(epochs)+'epochs')
     return(model,history)
-
-W,w = fetch_data('train')
-V,v = fetch_data('train')
 
 def concate(W,V):
     W_dim = np.shape(W)
