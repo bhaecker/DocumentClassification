@@ -5,13 +5,19 @@ from scipy.special import binom
 from tensorflow.keras.models import load_model
 
 
-def w(P_r,epsilon=0.001):
+def w(P_r):
     '''
     w_r Shannon entropy in paper
+    not needed since (1) in paper is not needed
 
     '''
 
-    return(entropy(P_r) + epsilon)
+    #P_r = P_rr + epsilon
+    epsilon = 0.001
+    P_r[P_r <= 0] = epsilon
+
+    shannon_entropy = -np.sum(P_r*np.log2(P_r))
+    return(shannon_entropy)
 
 def P_c(yunseen_pred,label):
     '''
@@ -43,13 +49,15 @@ def diversity_pairwise(yunseen_pred1,yunseen_pred2):
     d_[I_1,I_2] in paper
 
     '''
-
+    epsilon = 0.001
     if np.argmax(yunseen_pred1) == np.argmax(yunseen_pred2):
         P_c_1 = P_c(np.array([yunseen_pred1]), np.argmax(yunseen_pred1))
         P_c_2 = P_c(np.array([yunseen_pred2]), np.argmax(yunseen_pred1))
-        #print(P_c_1)
-        #print(P_c_2)
+        P_c_1[P_c_1 <= 0] = epsilon
+        P_c_2[P_c_2 <= 0] = epsilon
         pairwise_diversity = 0.5*entropy(P_c_1,P_c_2)+0.5*entropy(P_c_2,P_c_1)
+        #if pairwise_diversity == float("inf"):
+            #print(P_c_1,P_c_2)
         return(pairwise_diversity)
     else:
         return(0)
@@ -59,6 +67,7 @@ def diversity(yunseen_pred):
     for yunssen_vec1 in yunseen_pred:
         for yunssen_vec2 in yunseen_pred:
             aggregate_diversity += diversity_pairwise(yunssen_vec1,yunssen_vec2)
+
     return(aggregate_diversity)
 
 
