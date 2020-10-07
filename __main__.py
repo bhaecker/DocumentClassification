@@ -32,6 +32,12 @@ def __main__():
     #CNN_model = load_model('model_100_epochs.h5')
 
     #
+    Xunseen, _ = fetch_data('unseen')
+    model = load_model('model_100_epochs.h5')
+    ypred = model.predict(Xunseen)
+    ypred = np.array(ypred)
+    np.save('ypred',ypred)
+    sys.exit()
     list_methods = [margin_sampling_fn,random_contextual_diversity_method,metric_method]
     experiment_single('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 

@@ -158,4 +158,3 @@ def concate(W,V):
     del Z_dim,W_dim,V_dim
     return(Z)
 
-
