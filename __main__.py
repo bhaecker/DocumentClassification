@@ -32,7 +32,7 @@ def __main__():
     #CNN_model = load_model('model_100_epochs.h5')
 
     #
-    list_methods = [random_contextual_diversity_method,margin_sampling_fn,metric_method]
+    list_methods = [margin_sampling_fn,random_contextual_diversity_method,metric_method]
     experiment_single('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
