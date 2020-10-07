@@ -77,7 +77,7 @@ def random_contextual_diversity_method(X,y,number_samples,model):
         y_empty = np.empty([0, np.shape(y)[1]])
         return(X,y,X_empty,y_empty)
 
-    number_trials = 50
+    number_trials = 200
     if type(model) == str:
         model = load_model(model)
     ypred = model.predict(X)
