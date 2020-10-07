@@ -159,6 +159,7 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
         ytrain_new = np.concatenate((ytrain, ywinner),axis=0)
 
         index = 1
+        print('training data concatenated')
         #while number_samples <= np.shape(Xunseen_orig)[0]:
         while np.shape(Xwinner)[0] > 0:
             #print(method.__name__,'at '+str(100*(np.shape(Xtrain_new)[0] - np.shape(Xtrain)[0])/np.shape(Xunseen_orig)[0])+' %')
@@ -167,6 +168,7 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
              #   model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
               #  print(tester(Xtest,ytest, model_new)[0])
             model_base = load_model(model_base_str)
+            print('model loaded')
             model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
 
 
