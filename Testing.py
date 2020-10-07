@@ -15,7 +15,7 @@ from tensorflow.keras.models import load_model
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
-from .TransferLearning import fetch_data, fine_tune, retrain#, savemodel, loadmodel
+from .TransferLearning import fetch_data, fine_tune, retrain, concate#, savemodel, loadmodel
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn
 from .ActiveLearning import seperation
 from .RandomForest import RandomForestRegressor_pretraining
@@ -39,7 +39,8 @@ def tester(Xtest,ytest,model):
 
     return(accuracy,ypred)
 
-#TODO: retrain only with choosen batch plus training not accumalted samples ---> experiment 2
+#TODO: retrain only with choosen batch plus training not accumalted samples ---> experiment_single
+
 
 def experiment_accumulated(model_base_str,epochs_retrain,retrain_size,mini_batch_size,list_methods):
 
@@ -155,8 +156,12 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
         Xwinner, ywinner, Xloser, yloser = seperation(Xunseen_orig, yunseen_orig, model_base_str, retrain_size, method)
 
         #new trainings batch consists of old training samples plus the new unseen ones
-        Xtrain_new = np.concatenate((Xtrain, Xwinner), axis=0)
-        ytrain_new = np.concatenate((ytrain, ywinner),axis=0)
+        #Xtrain_new = np.concatenate((Xtrain, Xwinner), axis=0)
+        #ytrain_new = np.concatenate((ytrain, ywinner),axis=0)
+
+        Xtrain_new = concate(Xtrain, Xwinner)
+        ytrain_new = concate(ytrain, ywinner)
+
 
         index = 1
         print('training data concatenated')
@@ -171,15 +176,15 @@ def experiment_single(model_base_str,epochs_retrain,retrain_size,mini_batch_size
             print('model loaded')
             model_new = retrain(model_base,epochs_retrain,mini_batch_size,Xtrain_new, ytrain_new)[0]
 
-
-
             accuracy = tester(Xtest,ytest, model_new)[0]
             df.at[index, 'fraction used'] = round(1-np.shape(Xloser)[0]/np.shape(Xunseen_orig)[0],2)#number_samples
             df.at[index, str(method.__name__)] = accuracy
             print(df)
             Xwinner, ywinner, Xloser, yloser = seperation(Xloser, yloser, model_new, retrain_size, method)
 
-            Xtrain_new, ytrain_new = np.concatenate((Xtrain, Xwinner), axis=0), np.concatenate((ytrain, ywinner), axis=0)
+            #Xtrain_new, ytrain_new = np.concatenate((Xtrain, Xwinner), axis=0), np.concatenate((ytrain, ywinner), axis=0)
+            Xtrain_new, ytrain_new = concate(Xtrain, Xwinner), concate(ytrain, ywinner)
+
             index = index + 1
 
             del model_new, model_base
