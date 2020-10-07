@@ -72,7 +72,7 @@ def random_contextual_diversity_method(X,y,number_samples,model):
     ypred_old = ypred[idx_old]
     diversity_old = diversity(ypred_old)
     print(diversity_old)
-    for trial in number_trials:
+    for trial in range(number_trials):
         print('trail: '+str(trial))
         idx_new = np.random.randint(pool_size, size=number_samples)
         ypred_new = ypred[idx_new]
