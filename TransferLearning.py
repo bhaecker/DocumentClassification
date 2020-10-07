@@ -16,46 +16,45 @@ DATA_DIRECTORY = '/newstorage4/bhaecker/Data/'    #use for small data set
 
 
 
-if DATA_DIRECTORY[-2] == 2:
-    def fetch_data(string):
-        '''
-        collect ALL training/test or unseen numpy arrays plus labels from big data set
-        '''
-        X = np.load(DATA_DIRECTORY + string + '/' + string+'.npy')
-        y = np.load(DATA_DIRECTORY + string + '/' + string+'_labels.npy')
-        print(string + ' data fetched')
-        return(X,y)
+#if DATA_DIRECTORY[-2] == 2:
+    #def fetch_data(string):
+        #'''
+        #collect ALL training/test or unseen numpy arrays plus labels from big data set
+        #'''
+        #X = np.load(DATA_DIRECTORY + string + '/' + string+'.npy')
+        #y = np.load(DATA_DIRECTORY + string + '/' + string+'_labels.npy')
+        #return(X,y)
 
 
-else:
-    def fetch_data(string):
-        '''
-        collect ALL training/test or unseen numpy arrays plus labels from small data set and shuffle them
-        '''
-        file = 'Tobacco_'+string+'/'
-        labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
+#else:
+def fetch_data(string):
+    '''
+    collect ALL training/test or unseen numpy arrays plus labels from small data set and shuffle them
+    '''
+    file = 'Tobacco_'+string+'/'
+    labels = ['ADVE', 'Email', 'Form', 'Letter', 'Memo', 'News', 'Note', 'Report', 'Resume', 'Scientific']
+    # load training data
+    X = np.load(DATA_DIRECTORY + file + labels[0] + '.npy')
+    # load labels
+    r = np.load(DATA_DIRECTORY + file + labels[0] + '_target.npy')
+    y = np.stack([r] * X.shape[0])
+    for label in labels[1:]:
         # load training data
-        X = np.load(DATA_DIRECTORY + file + labels[0] + '.npy')
+        Xstar = np.load(DATA_DIRECTORY + file + label + '.npy')
+        X = np.concatenate((X,Xstar),axis=0)
         # load labels
-        r = np.load(DATA_DIRECTORY + file + labels[0] + '_target.npy')
-        y = np.stack([r] * X.shape[0])
-        for label in labels[1:]:
-            # load training data
-            Xstar = np.load(DATA_DIRECTORY + file + label + '.npy')
-            X = np.concatenate((X,Xstar),axis=0)
-            # load labels
-            r = np.load(DATA_DIRECTORY + file + label + '_target.npy')
-            ystar = np.stack([r] * Xstar.shape[0])
-            y = np.concatenate((y,ystar),axis=0)
+        r = np.load(DATA_DIRECTORY + file + label + '_target.npy')
+        ystar = np.stack([r] * Xstar.shape[0])
+        y = np.concatenate((y,ystar),axis=0)
 
 
-        s = np.arange(X.shape[0])
-        np.random.shuffle(s)
-        X = X[s]
-        y = y[s]
-        print(string+' data fetched')
+    s = np.arange(X.shape[0])
+    np.random.shuffle(s)
+    X = X[s]
+    y = y[s]
+    print(string+' data fetched')
 
-        return(X,y)
+    return(X,y)
 
 
 def fine_tune(X,y,epochs,batch_size):
