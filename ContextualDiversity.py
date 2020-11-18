@@ -334,6 +334,7 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
     diversity_fin = diversity(ypred[indx_list_winner])
     # seperate unseen data in winner and looser data set by the indices
     print(diversity_fin)
+    print(indx_list_winner)
     Xwinner = X[winner_idx, :, :]
     ywinner = y[winner_idx]
 
