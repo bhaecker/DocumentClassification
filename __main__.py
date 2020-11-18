@@ -19,9 +19,9 @@ tf.random.set_seed(42)
 np.random.seed(42)
 
 #epochs = 100
-epochs_retrain = 30
+epochs_retrain = 10
 batch_size = 128
-retrain_batch = 11
+retrain_batch = 100
 #number_games = 200
 
 def __main__():
@@ -42,7 +42,7 @@ def __main__():
 
     #random_contextual_diversity_method(X, y, retrain_batch, model)
     #bob_contextual_diversity_method(X, y, retrain_batch, model)
-    setsize_list = [30,50,70]
+    setsize_list = [5,10,20]
     experiment_CD('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,setsize_list)
 
 if __name__ == "__main__":
