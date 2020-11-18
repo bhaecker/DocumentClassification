@@ -338,13 +338,13 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
     # seperate unseen data in winner and looser data set by the indices
     print(diversity_fin)
     print(indx_list_winner)
-    Xwinner = X[winner_idx, :, :]
-    ywinner = y[winner_idx]
+    Xwinner = X[winner_idx, :, :].copy()
+    ywinner = y[winner_idx].copy()
 
     mask = np.ones(X.shape[0], dtype=bool)
     mask[winner_idx] = False
-    Xloser = X[mask, :, :]
-    yloser = y[mask]
+    Xloser = X[mask, :, :].copy()
+    yloser = y[mask].copy()
     print(Xwinner.shape,ywinner.shape,Xloser.shape,yloser.shape)
     return(Xwinner, ywinner, Xloser, yloser, diversity_fin)
 
