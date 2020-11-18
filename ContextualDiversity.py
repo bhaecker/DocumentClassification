@@ -331,7 +331,7 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
     print('final len: ',len(indx_list_winner))
     diversity_fin = diversity(ypred[indx_list_winner])
     # seperate unseen data in winner and looser data set by the indices
-
+    print(diversity_fin)
     Xwinner = X[winner_idx, :, :]
     ywinner = y[winner_idx]
 
@@ -368,7 +368,7 @@ def experiment_CD(model_base_str, epochs_retrain, retrain_size, mini_batch_size,
     # Xunseen_orig, yunseen_orig = Xunseen_orig[:200], yunseen_orig[:200]
 
     for idx, number_random_trial in enumerate(setsize_list):
-        Xwinner, ywinner, _, _, diversity = bob_contextual_diversity_method(Xunseen_orig, yunseen_orig,retrain_size,model_base_str,setsize_list)
+        Xwinner, ywinner, _, _, diversity = bob_contextual_diversity_method_setoption(Xunseen_orig, yunseen_orig,retrain_size,model_base_str,setsize_list)
 
         # new trainings batch consists of old training samples plus the new unseen ones
         # Xtrain_new = np.concatenate((Xtrain, Xwinner), axis=0)
