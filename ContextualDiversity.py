@@ -367,8 +367,8 @@ def experiment_CD(model_base_str, epochs_retrain, retrain_size, mini_batch_size,
 
     # Xunseen_orig, yunseen_orig = Xunseen_orig[:200], yunseen_orig[:200]
 
-    for idx, number_random_trial in enumerate(setsize_list):
-        Xwinner, ywinner, _, _, diversity = bob_contextual_diversity_method_setoption(Xunseen_orig, yunseen_orig,retrain_size,model_base_str,setsize_list)
+    for idx, set_size in enumerate(setsize_list):
+        Xwinner, ywinner, _, _, diversity = bob_contextual_diversity_method_setoption(Xunseen_orig, yunseen_orig,retrain_size,model_base_str,set_size)
 
         # new trainings batch consists of old training samples plus the new unseen ones
         # Xtrain_new = np.concatenate((Xtrain, Xwinner), axis=0)
@@ -384,7 +384,7 @@ def experiment_CD(model_base_str, epochs_retrain, retrain_size, mini_batch_size,
         model_new = retrain(model_base, epochs_retrain, mini_batch_size, Xtrain_new, ytrain_new)[0]
         accuracy = tester(Xtest, ytest, model_new)[0]
 
-        df.at[idx, 'CD score'] =  diversity
+        df.at[idx, 'CD score'] = diversity
         df.at[idx, 'accuracy'] = accuracy
         print(df)
 
