@@ -1,0 +1,46 @@
+{
+	"segmentation-tool":{"path":"http://segmentation-tool.krex.svc:8080/", "document_annotation":"extraction_boxes/", "get_document":"get_boxes/"},
+	"document_id_file": {"path":"/publicdoc/Document_Overview.csv", "encoding":"utf-8", "delimiter":","}, 
+	"necessary_types":[
+        "document_label", 
+        "document_type", 
+        "document_contains",
+        "segment_label",
+        "segment_type",
+        "is_occluded"
+	],
+	"statistics": {
+		"expected": 250
+	},
+	"debug": {
+		"DEBUG_extend_annotation_vectors":false,
+		"DEBUG_prediction":false,
+		"DEBUG_evalutation":false,
+		"DEBUG_evalutation_annotation_types":false,
+		"DEBUG_switch_to_partial_after_X_documents": 5000
+	},
+	"evaluation": {
+		"active_learning_ratios": [0.14, 0.29, 0.57],
+		"min_finetune_documents": 80,
+		"min_test_documents": 20,
+		"min_al_documents": 20
+	},
+	"collections": {
+		"other": {"path":"/data/other"}, 
+		"priority": {"path":"/data/priority"}, 
+		"partial": {"previous":["other", "priority"],"path":"/data/partial"},
+		"complete": {"previous":["partial"],"path":"/data/complete"},
+		"total_annotation": {"previous":["partial", "complete"],"path":"/data/total_annotation"},
+		"2nd_annotation": {"previous":["complete"],"path":"/data/2nd_annotation"},
+		"3rd_annotation": {"previous":["2nd_annotation"],"path":"/data/3rd_annotation"},
+        "ml_out": {"path":"/data/ml_out"},
+        "al_entropy": {"path":"/data/al_entropy"},
+        "al_random": {"path":"/data/al_random"},
+        "testing": {"path":"/data/testing"}
+	}, 
+	"database": {"url": "mongodb://document-database:27017/"},
+	"data": {"path": "/data"},
+	"max_batch_size": 5000,
+	"pause_secs_after_failed_request": 60
+
+}

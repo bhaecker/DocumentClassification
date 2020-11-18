@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+    document-database:
+        image: mongo:latest
+        environment:
+            MONGO_INITDB_DATABASE: database
+        ports:
+            - 27017:27017
+    backend:
+        image: rest_al:latest
+        environment:
+            MONGODB_URI: mongodb://document-database:27017/database
+        ports:
+            - 5000:5000  
+        volumes:
+            # - path-to-local-folder:path-in-docker-container
+            - ./mongodb:/data

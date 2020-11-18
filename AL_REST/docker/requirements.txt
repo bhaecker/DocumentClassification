@@ -1,0 +1,9 @@
+#
+####### requirements.txt for AL_REST #######
+flask
+pandas
+flask-cors
+scipy
+pymongo
+python-dotenv
+

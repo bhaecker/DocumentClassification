@@ -1,0 +1,2529 @@
+{
+    "_id": "468b5e1020eb2f05825fcedc1ec7380a_ml",
+    "annotated_by": {
+        "annotators_complete": [
+            "anonymous_dZTZc"
+        ],
+        "annotators_partial": [
+            "anonymous_dZTZc"
+        ],
+        "document_contains": [],
+        "document_label": [
+            {
+                "name": "anonymous_dZTZc",
+                "timestamp": "2020-09-03T12:29:37.503Z"
+            }
+        ],
+        "document_type": [
+            {
+                "name": "anonymous_dZTZc",
+                "timestamp": "2020-09-03T12:29:37.503Z"
+            }
+        ],
+        "document_type_pca": [],
+        "is_occluded": [],
+        "is_truncated": [],
+        "segment_boundary": [
+            {
+                "name": "anonymous_dZTZc",
+                "timestamp": "2020-09-03T12:29:37.503Z"
+            }
+        ],
+        "segment_label": [
+            {
+                "name": "anonymous_dZTZc",
+                "timestamp": "2020-09-03T12:29:37.503Z"
+            }
+        ],
+        "segment_label_pca": [],
+        "segment_type": [
+            {
+                "name": "anonymous_dZTZc",
+                "timestamp": "2020-09-03T12:29:37.503Z"
+            }
+        ]
+    },
+    "document_contains": {
+        "annotation_type": "document_contains",
+        "annotations": [],
+        "group_id": "2",
+        "importance_score": 0
+    },
+    "document_id": "468b5e1020eb2f05825fcedc1ec7380a_ml",
+    "document_label": {
+        "annotation_type": "document_label",
+        "annotations": [
+            {
+                "annotation_id": "0",
+                "annotation_vector": [
+                    0.9979907274246216,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0.0015139487804844975,
+                    0,
+                    5.519661954167532e-06,
+                    6.375399834723794e-07,
+                    6.115456926636398e-06,
+                    2.720237229913991e-13,
+                    1.0954403478535824e-05,
+                    1.0085517490598939e-11,
+                    3.2246396525215104e-11,
+                    2.6096158762811683e-05,
+                    0.00021858216496184468,
+                    7.8989904894744e-12,
+                    0.00022736818937119097,
+                    0
+                ],
+                "annotation_version": 0,
+                "annotator_id": "segment_visual_model",
+                "annotator_type": "model_base",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "1",
+                "annotation_vector": [
+                    0.925406,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0.01315,
+                    0,
+                    0.005788,
+                    0.007329,
+                    0.007158,
+                    0.003094,
+                    0.004104,
+                    0.009955,
+                    0.004253,
+                    0.008549,
+                    0.003911,
+                    0.003412,
+                    0.003891,
+                    0
+                ],
+                "annotation_version": 0,
+                "annotator_id": "segment_text_model",
+                "annotator_type": "model_base",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "test_version_0",
+                "annotation_vector": [
+                    0.997677,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0.000256,
+                    0,
+                    0.000374,
+                    0.000189,
+                    9.9e-05,
+                    0.00012,
+                    0.000183,
+                    0.000172,
+                    0.000218,
+                    9.2e-05,
+                    0.000128,
+                    0.000122,
+                    0.000369,
+                    0
+                ],
+                "annotation_version": 0,
+                "annotator_id": "segment_multimodal_model",
+                "annotator_type": "model_base",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "test_version_1",
+                "annotation_vector": [
+                    0.997677,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0.000256,
+                    0,
+                    0.000374,
+                    0.000189,
+                    9.9e-05,
+                    0.00012,
+                    0.000183,
+                    0.000172,
+                    0.000218,
+                    9.2e-05,
+                    0.000128,
+                    0.000122,
+                    0.000369,
+                    0
+                ],
+                "annotation_version": 1,
+                "annotator_id": "segment_multimodal_model",
+                "annotator_type": "model_finetuned",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "test_version_2",
+                "annotation_vector": [
+                    0.997677,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0.000256,
+                    0,
+                    0.000374,
+                    0.000189,
+                    9.9e-05,
+                    0.00012,
+                    0.000183,
+                    0.000172,
+                    0.000218,
+                    9.2e-05,
+                    0.000128,
+                    0.000122,
+                    0.000369,
+                    0
+                ],
+                "annotation_version": 2,
+                "annotator_id": "segment_multimodal_model",
+                "annotator_type": "model_finetuned",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "1sSuxi1v",
+                "annotation_vector": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "annotation_version": 0,
+                "annotator_id": "anonymous_dZTZc",
+                "annotator_type": "human",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "1sSuxi1v",
+                "annotation_vector": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "annotation_version": 1,
+                "annotator_id": "anonymous_dZTZc",
+                "annotator_type": "human",
+                "is_other": ""
+            }
+        ],
+        "group_id": "0",
+        "importance_score": 0
+    },
+    "document_type": {
+        "annotation_type": "document_type",
+        "annotations": [
+            {
+                "annotation_id": "0",
+                "annotation_vector": [
+                    0.9151030778884888,
+                    0.07979243993759155,
+                    0.005104438401758671
+                ],
+                "annotation_version": 0,
+                "annotator_id": "segment_visual_model",
+                "annotator_type": "model",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "1",
+                "annotation_vector": [
+                    0.908357,
+                    0.091643,
+                    0
+                ],
+                "annotation_version": 0,
+                "annotator_id": "segment_text_model",
+                "annotator_type": "model",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "2",
+                "annotation_vector": [
+                    0.907135,
+                    0.08776,
+                    0.005104
+                ],
+                "annotation_version": 0,
+                "annotator_id": "segment_multimodal_model",
+                "annotator_type": "model",
+                "is_other": ""
+            },
+            {
+                "annotation_id": "58rzctxI",
+                "annotation_vector": [
+                    1,
+                    0,
+                    0
+                ],
+                "annotation_version": 0,
+                "annotator_id": "anonymous_dZTZc",
+                "annotator_type": "human",
+                "is_other": ""
+            }
+        ],
+        "group_id": "1",
+        "importance_score": 0
+    },
+    "importance_score": 0.4989122519233221,
+    "initial_importance": 1,
+    "origin": "SynthetischerFall",
+    "pages": [
+        {
+            "page_number": 0,
+            "segments": [
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1197,
+                                        0.2493,
+                                        0.2703,
+                                        0.3112
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.3592245578765869,
+                                        0.0694938451051712,
+                                        0.0002136152470484376,
+                                        0.0009532583062537014,
+                                        0.007081910036504269,
+                                        0.002129439264535904,
+                                        6.117564771557227e-05,
+                                        0.0015017430996522307,
+                                        0.0030076985713094473,
+                                        0.5563327670097351
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.208187,
+                                        0.070249,
+                                        0.124046,
+                                        0.040908,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.09027,
+                                        0.466339
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.534024,
+                                        0.052126,
+                                        0.03303,
+                                        0.01964,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.016454,
+                                        0.344725
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9999709372937531,
+                                        1.0897681989235114e-05,
+                                        9.46088552606717e-06,
+                                        8.704138731584438e-06
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9999709372937531,
+                                        1.0897681989235114e-05,
+                                        9.46088552606717e-06,
+                                        8.704138731584438e-06
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r0"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1119,
+                                        0.9295,
+                                        0.8755,
+                                        0.956
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        4.540150985121727e-05,
+                                        6.6177253756904975e-06,
+                                        5.296606832416728e-05,
+                                        1.4208132597559597e-05,
+                                        4.125054601900047e-06,
+                                        5.795533297714428e-07,
+                                        2.670959702300024e-07,
+                                        2.26947250325793e-07,
+                                        4.387772423797287e-05,
+                                        0.9998316764831543
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.000748,
+                                        0.000183,
+                                        0.000208,
+                                        0.928085,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        7.7e-05,
+                                        0.070699
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.013428,
+                                        0.030013,
+                                        0.016486,
+                                        0.802561,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.015052,
+                                        0.12246
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9997551384984901,
+                                        5.5899091143675006e-05,
+                                        0.00016826029005681756,
+                                        2.070212030947028e-05
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9997551384984901,
+                                        5.5899091143675006e-05,
+                                        0.00016826029005681756,
+                                        2.070212030947028e-05
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r1"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1288,
+                                        0.3878,
+                                        0.8519,
+                                        0.5263
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.5602495670318604,
+                                        0.012471145950257778,
+                                        0.4177829623222351,
+                                        0.001594881759956479,
+                                        3.362678398843855e-05,
+                                        0.0005926883313804865,
+                                        1.9644150597741827e-05,
+                                        7.218831160571426e-05,
+                                        0.0006987611996009946,
+                                        0.006484549026936293
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.246662,
+                                        0.090587,
+                                        0.427473,
+                                        0.070604,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.055322,
+                                        0.109352
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.169398,
+                                        0.113522,
+                                        0.384037,
+                                        0.130998,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.076429,
+                                        0.125616
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9787568061116089,
+                                        2.294286065504996e-05,
+                                        0.02107773108766818,
+                                        0.00014251994006784916
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9787568061116089,
+                                        2.294286065504996e-05,
+                                        0.02107773108766818,
+                                        0.00014251994006784916
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r2"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1191,
+                                        0.3578,
+                                        0.3567,
+                                        0.3715
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.3786829710006714,
+                                        0.035016417503356934,
+                                        0.0061465175822377205,
+                                        0.000272304198006168,
+                                        0.06469393521547318,
+                                        0.0056795384734869,
+                                        0.0028357950504869223,
+                                        0.00912883784621954,
+                                        0.004454831127077341,
+                                        0.49308890104293823
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.173468,
+                                        0.111653,
+                                        0.087585,
+                                        0.168912,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.205261,
+                                        0.25312
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.418009,
+                                        0.088537,
+                                        0.057173,
+                                        0.050115,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.037245,
+                                        0.348921
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9996722213669981,
+                                        0.00020345307010530248,
+                                        0.00011440755092741564,
+                                        9.91801196915812e-06
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9996722213669981,
+                                        0.00020345307010530248,
+                                        0.00011440755092741564,
+                                        9.91801196915812e-06
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r3"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.39,
+                                        0.5156,
+                                        0.4674,
+                                        0.5237
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        4.829375654935575e-08,
+                                        1.468825328032608e-08,
+                                        1.5068371550519544e-10,
+                                        6.366968618998214e-10,
+                                        6.032873329786526e-07,
+                                        1.99596001948521e-07,
+                                        1.4087826460951192e-09,
+                                        9.090122432553471e-08,
+                                        0.9999990463256836,
+                                        3.265848480538125e-09
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.150882,
+                                        0.129244,
+                                        0.141997,
+                                        0.09081,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.255495,
+                                        0.231572
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.07328,
+                                        0.09209,
+                                        0.052276,
+                                        0.033997,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.580779,
+                                        0.167578
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9878942232962665,
+                                        0.0002892640131108139,
+                                        0.009361827904561703,
+                                        0.0024546847860609723
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9878942232962665,
+                                        0.0002892640131108139,
+                                        0.009361827904561703,
+                                        0.0024546847860609723
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r4"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1203,
+                                        0.6011,
+                                        0.7134,
+                                        0.6118
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.028653930872678757,
+                                        0.0012332107871770859,
+                                        3.8862730434630066e-05,
+                                        4.401289334055036e-05,
+                                        2.6192021323367953e-05,
+                                        7.77269360696664e-06,
+                                        7.707242730248254e-06,
+                                        1.6139891840794007e-06,
+                                        0.01621406152844429,
+                                        0.9537725448608398
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.214044,
+                                        0.167525,
+                                        0.098696,
+                                        0.060927,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.186594,
+                                        0.272214
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.101151,
+                                        0.062811,
+                                        0.052934,
+                                        0.173759,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.028059,
+                                        0.581285
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9987178905192576,
+                                        0.0007008459712630232,
+                                        0.00034507852804584134,
+                                        0.00023618498143349802
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9987178905192576,
+                                        0.0007008459712630232,
+                                        0.00034507852804584134,
+                                        0.00023618498143349802
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r5"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1203,
+                                        0.6011,
+                                        0.7134,
+                                        0.6118
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.028653930872678757,
+                                        0.0012332107871770859,
+                                        3.8862730434630066e-05,
+                                        4.401289334055036e-05,
+                                        2.6192021323367953e-05,
+                                        7.77269360696664e-06,
+                                        7.707242730248254e-06,
+                                        1.6139891840794007e-06,
+                                        0.01621406152844429,
+                                        0.9537725448608398
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.214044,
+                                        0.167525,
+                                        0.098696,
+                                        0.060927,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.186594,
+                                        0.272214
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.101151,
+                                        0.062811,
+                                        0.052934,
+                                        0.173759,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.028059,
+                                        0.581285
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9944795043427288,
+                                        0.002149775407021107,
+                                        0.0018753527132792272,
+                                        0.001495367536970839
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9944795043427288,
+                                        0.002149775407021107,
+                                        0.0018753527132792272,
+                                        0.001495367536970839
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r6"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.3912,
+                                        0.3882,
+                                        0.7134,
+                                        0.3972
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.16499938070774078,
+                                        0.009627161547541618,
+                                        1.7612537703826092e-05,
+                                        1.6147490896400996e-05,
+                                        1.7502847185824066e-05,
+                                        4.845679541176651e-06,
+                                        1.1330439519952051e-05,
+                                        2.5311710487585515e-06,
+                                        0.36667102575302124,
+                                        0.45863261818885803
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.150882,
+                                        0.129244,
+                                        0.141997,
+                                        0.09081,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.255495,
+                                        0.231572
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.126647,
+                                        0.086288,
+                                        0.098287,
+                                        0.079135,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.139881,
+                                        0.469762
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9916956652570479,
+                                        0.0028097447404909523,
+                                        0.0030543432690408193,
+                                        0.002440246733420372
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9916956652570479,
+                                        0.0028097447404909523,
+                                        0.0030543432690408193,
+                                        0.002440246733420372
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r7"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1203,
+                                        0.8153,
+                                        0.6941,
+                                        0.8264
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.009414123371243477,
+                                        0.04938851296901703,
+                                        4.9635465984465554e-05,
+                                        7.36708243493922e-05,
+                                        6.934694101801142e-05,
+                                        7.334897964028642e-05,
+                                        2.047498128376901e-05,
+                                        8.874315426510293e-06,
+                                        0.09345312416553497,
+                                        0.8474489450454712
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.150882,
+                                        0.129244,
+                                        0.141997,
+                                        0.09081,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.255495,
+                                        0.231572
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.071491,
+                                        0.096432,
+                                        0.042617,
+                                        0.298602,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.051657,
+                                        0.439202
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9946270777576875,
+                                        0.0040273618667110095,
+                                        0.0007121357448843174,
+                                        0.0006334246307171756
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9946270777576875,
+                                        0.0040273618667110095,
+                                        0.0007121357448843174,
+                                        0.0006334246307171756
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r8"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.2799,
+                                        0.0898,
+                                        0.705,
+                                        0.2039
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        1.8415603486587884e-09,
+                                        2.5835826811260176e-09,
+                                        0.0005459903040900826,
+                                        1.003663996357318e-08,
+                                        0.9994538426399231,
+                                        1.5529190022789408e-07,
+                                        4.142254539374335e-09,
+                                        8.796626538298824e-09,
+                                        1.415870887200299e-08,
+                                        3.738471576753e-08
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        1.8415603486587884e-09,
+                                        2.5835826811260176e-09,
+                                        0.0005459903040900826,
+                                        1.003663996357318e-08,
+                                        0.9994538426399231,
+                                        1.5529190022789408e-07,
+                                        4.142254539374335e-09,
+                                        8.796626538298824e-09,
+                                        1.415870887200299e-08,
+                                        3.738471576753e-08
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.0001083362085402454,
+                                        0.9998596676238196,
+                                        1.3440273933136591e-05,
+                                        1.855589370699959e-05
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.0001083362085402454,
+                                        0.9998596676238196,
+                                        1.3440273933136591e-05,
+                                        1.855589370699959e-05
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r9"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1185,
+                                        0.6276,
+                                        0.8791,
+                                        0.7118
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.0012936305720359087,
+                                        2.009414129133802e-05,
+                                        0.00011225293565075845,
+                                        8.495158544974402e-05,
+                                        2.716092467380804e-06,
+                                        3.0682317628816236e-06,
+                                        3.702300332975028e-08,
+                                        4.165270581779623e-07,
+                                        1.6295273326250026e-06,
+                                        0.9984813332557678
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.170576,
+                                        0.187495,
+                                        0.118556,
+                                        0.138446,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.169821,
+                                        0.215105
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.05689,
+                                        0.058503,
+                                        0.059079,
+                                        0.304084,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.027733,
+                                        0.493713
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        1.855698892452994e-06,
+                                        1.412424559970385e-07,
+                                        0.9999973663302828,
+                                        6.367283687769885e-07
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        1.855698892452994e-06,
+                                        1.412424559970385e-07,
+                                        0.9999973663302828,
+                                        6.367283687769885e-07
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r10"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.1197,
+                                        0.8824,
+                                        0.3241,
+                                        0.8935
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.6695803999900818,
+                                        6.477360875578597e-05,
+                                        3.4300805964448955e-06,
+                                        1.2853373618781916e-06,
+                                        4.2381134335300885e-06,
+                                        7.348920462391106e-06,
+                                        4.449390416993992e-06,
+                                        1.546203662883272e-07,
+                                        0.007031853310763836,
+                                        0.32330211997032166
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.042862,
+                                        0.839006,
+                                        0.025263,
+                                        0.017219,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.035865,
+                                        0.039785
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.263313,
+                                        0.326831,
+                                        0.036373,
+                                        0.162249,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.090053,
+                                        0.121182
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9999999998525642,
+                                        8.832484742290547e-11,
+                                        2.4759760367371864e-16,
+                                        5.911070243519467e-11
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9999999998525642,
+                                        8.832484742290547e-11,
+                                        2.4759760367371864e-16,
+                                        5.911070243519467e-11
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r11"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.6554,
+                                        0.3031,
+                                        0.7956,
+                                        0.3125
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_detection_model",
+                                    "annotator_type": "model"
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 1
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.10724784433841705,
+                                        0.0004809770325664431,
+                                        2.471671177772805e-05,
+                                        1.0987719178956468e-05,
+                                        0.0006288873846642673,
+                                        0.0007507032132707536,
+                                        0.0001761908788466826,
+                                        0.0004859820182900876,
+                                        0.8864354491233826,
+                                        0.0037582803051918745
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0.151906,
+                                        0.105017,
+                                        0.124239,
+                                        0.09154,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.20374,
+                                        0.323559
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.065043,
+                                        0.06631,
+                                        0.091157,
+                                        0.030358,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0.506456,
+                                        0.240677
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 1
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0",
+                                    "annotation_vector": [
+                                        0.9999998142998019,
+                                        3.576983564736229e-09,
+                                        7.348744916981248e-11,
+                                        1.8204972712048258e-07
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_visual_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                },
+                                {
+                                    "annotation_id": "1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_text_model",
+                                    "annotator_type": "model",
+                                    "is_other": "is_other"
+                                },
+                                {
+                                    "annotation_id": "2",
+                                    "annotation_vector": [
+                                        0.9999998142998019,
+                                        3.576983564736229e-09,
+                                        7.348744916981248e-11,
+                                        1.8204972712048258e-07
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "segment_multimodal_model",
+                                    "annotator_type": "model",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "4",
+                            "importance_score": 1
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "p0r12"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "fXnow76B",
+                                    "annotation_vector": [
+                                        0.1197,
+                                        0.2493,
+                                        0.2703,
+                                        0.3112
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 0
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "sG1oDDlP",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        1
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 0
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "IUPKHo7O",
+                                    "annotation_vector": [
+                                        1,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "2",
+                            "importance_score": 0
+                        }
+                    },
+                    
+                    "child_segments": [],
+                    "segment_id": "iRDLXQwa"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "Y8SHUBr3",
+                                    "annotation_vector": [
+                                        0.1119,
+                                        0.9295,
+                                        0.8755,
+                                        0.956
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 0
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "RHdtN7Ky",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        1,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 0
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "rShBijhn",
+                                    "annotation_vector": [
+                                        1,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "2",
+                            "importance_score": 0
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "NbfyxCDs"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "0BWindVM",
+                                    "annotation_vector": [
+                                        0.1288,
+                                        0.3878,
+                                        0.8519,
+                                        0.5263
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 0
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "g0UgbzLj",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": "Auflistung"
+                                },                                {
+                                "annotation_id": "test_version_1-segment",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 1,
+                                    "annotator_id": "anonymous_abc",
+                                    "annotator_type": "human",
+                                    "is_other": "Auflistung"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 0
+                        },
+                        
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "Ot70rMoq",
+                                    "annotation_vector": [
+                                        1,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "2",
+                            "importance_score": 0
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "0n5V3VVr"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "jhGkZQFN",
+                                    "annotation_vector": [
+                                        0.1191,
+                                        0.3578,
+                                        0.3567,
+                                        0.3715
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 0
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "EQaw5QM1",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": "Überschrift"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 0
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "QHJdmIti",
+                                    "annotation_vector": [
+                                        1,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "2",
+                            "importance_score": 0
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "jt2IsthI"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "9YVn7NwZ",
+                                    "annotation_vector": [
+                                        0.2799,
+                                        0.0898,
+                                        0.705,
+                                        0.2039
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 0
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "sfCzXrez",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        1,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 0
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "Z1eYAnKT",
+                                    "annotation_vector": [
+                                        0,
+                                        1,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "2",
+                            "importance_score": 0
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "UDSl0uvo"
+                },
+                {
+                    "annotation_groups": {
+                        "segment_boundary": {
+                            "annotation_type": "segment_boundary",
+                            "annotations": [
+                                {
+                                    "annotation_id": "aUHyP8WX",
+                                    "annotation_vector": [
+                                        0.1185,
+                                        0.6276,
+                                        0.8791,
+                                        0.7118
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "0",
+                            "importance_score": 0
+                        },
+                        "segment_label": {
+                            "annotation_type": "segment_label",
+                            "annotations": [
+                                {
+                                    "annotation_id": "sDBCvE6X",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": "Kalkulation"
+                                }
+                            ],
+                            "group_id": "1",
+                            "importance_score": 0
+                        },
+                        "segment_type": {
+                            "annotation_type": "segment_type",
+                            "annotations": [
+                                {
+                                    "annotation_id": "DOWOR7gC",
+                                    "annotation_vector": [
+                                        0,
+                                        0,
+                                        1,
+                                        0
+                                    ],
+                                    "annotation_version": 0,
+                                    "annotator_id": "anonymous_dZTZc",
+                                    "annotator_type": "human",
+                                    "is_other": ""
+                                }
+                            ],
+                            "group_id": "2",
+                            "importance_score": 0
+                        }
+                    },
+                    "child_segments": [],
+                    "segment_id": "ZCLYgk4a"
+                }
+            ]
+        }
+    ],
+    "target_collection": "has_complete_human_annotation"
+}
