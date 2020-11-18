@@ -21,7 +21,7 @@ np.random.seed(42)
 #epochs = 100
 epochs_retrain = 30
 batch_size = 128
-retrain_batch = 200
+retrain_batch = 11
 #number_games = 200
 
 def __main__():

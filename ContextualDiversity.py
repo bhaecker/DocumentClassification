@@ -316,13 +316,14 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
                 diversity_new = 0
                 for indx_winner in indx_list_winner_new:
                     diversity_new += diversity_pairwise(y[indx],y[indx_winner])
+                    print(diversity_new)
                 if diversity_new > diversity_old:
                     winner_idx = indx
                     diversity_old = diversity_new
             indx_list_winner_new = indx_list_winner_new + [winner_idx]
             indx_list.remove(winner_idx)
             if len(indx_list_winner_new) + len(indx_list_winner) == number_samples:
-                indx_list_winner = indx_list_winner + indx_list_winner_new
+                indx_list_winner = indx_list_winner + indx_list_winner_new[1:]
                 done = True
                 break
         if done == True:
