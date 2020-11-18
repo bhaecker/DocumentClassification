@@ -5,6 +5,12 @@ from scipy.stats import entropy
 from scipy.special import binom
 from tensorflow.keras.models import load_model
 
+
+##test out Contextual Diversity:
+import pandas as pd
+from .TransferLearning import fetch_data, fine_tune, retrain, concate#, savemodel, loadmodel
+from .Testing import tester
+
 #todo: just take the short formula my guy
 #todo: experiment with low and high CD and see if performance improves
 #todo: if its just chose the subset not randomly but by looking at the vector
@@ -242,9 +248,7 @@ def bob_contextual_diversity_method(X,y,number_samples,model):
 
 
 ##test out Contextual Diversity:
-import pandas as pd
-from .TransferLearning import fetch_data, fine_tune, retrain, concate#, savemodel, loadmodel
-from .Testing import tester
+###############
 
 
 def random_contextual_diversity_method_numberoption(X,y,number_samples,model, number_trials):
@@ -284,7 +288,62 @@ def random_contextual_diversity_method_numberoption(X,y,number_samples,model, nu
 
     return(Xwinner, ywinner, Xloser, yloser, diversity_old)
 
-def experiment_CD(model_base_str, epochs_retrain, retrain_size, mini_batch_size, list_random_trials):
+def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+
+    if type(model) == str:
+        model = load_model(model)
+
+    ypred = model.predict(X)
+
+    pool_size = np.shape(ypred)[0]
+    indx_list = list(range(pool_size))
+    indx_list_winner = list(sample(indx_list, 1))
+    done = False
+    while len(indx_list_winner) < number_samples:
+        indx_list_winner_new = [indx_list_winner[-1]]
+        for step in range(setsize):
+            print('step: ',step)
+            #preloop
+            diversity_old = 0
+            for indx_winner in indx_list_winner_new:
+                winner_idx = indx_list[0]
+                diversity_old += diversity_pairwise(y[winner_idx], y[indx_winner])
+            for indx in indx_list[1:]:
+                diversity_new = 0
+                for indx_winner in indx_list_winner_new:
+                    diversity_new += diversity_pairwise(y[indx],y[indx_winner])
+                if diversity_new > diversity_old:
+                    winner_idx = indx
+                    diversity_old = diversity_new
+            indx_list_winner_new = indx_list_winner_new + [winner_idx]
+            indx_list.remove(winner_idx)
+            if len(indx_list_winner_new) + len(indx_list_winner) == number_samples:
+                indx_list_winner = indx_list_winner + indx_list_winner_new
+                done = True
+                break
+        if done == True:
+            break
+        indx_list_winner = indx_list_winner + indx_list_winner_new
+    print('final len: ',len(indx_list_winner))
+    diversity_fin = diversity(ypred[indx_list_winner])
+    # seperate unseen data in winner and looser data set by the indices
+
+    Xwinner = X[winner_idx, :, :]
+    ywinner = y[winner_idx]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[winner_idx] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+
+    return(Xwinner, ywinner, Xloser, yloser, diversity_fin)
+
+
+def experiment_CD(model_base_str, epochs_retrain, retrain_size, mini_batch_size, setsize_list):
     '''
     '''
 
@@ -308,8 +367,8 @@ def experiment_CD(model_base_str, epochs_retrain, retrain_size, mini_batch_size,
 
     # Xunseen_orig, yunseen_orig = Xunseen_orig[:200], yunseen_orig[:200]
 
-    for idx, number_random_trial in enumerate(list_random_trials):
-        Xwinner, ywinner, Xloser, yloser, diversity = random_contextual_diversity_method_numberoption(Xunseen_orig, yunseen_orig,retrain_size,model_base_str,number_random_trial)
+    for idx, number_random_trial in enumerate(setsize_list):
+        Xwinner, ywinner, _, _, diversity = bob_contextual_diversity_method(Xunseen_orig, yunseen_orig,retrain_size,model_base_str,setsize_list)
 
         # new trainings batch consists of old training samples plus the new unseen ones
         # Xtrain_new = np.concatenate((Xtrain, Xwinner), axis=0)
