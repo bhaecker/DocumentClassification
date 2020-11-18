@@ -375,7 +375,7 @@ def experiment_CD(model_base_str, epochs_retrain, retrain_size, mini_batch_size,
         # new trainings batch consists of old training samples plus the new unseen ones
         # Xtrain_new = np.concatenate((Xtrain, Xwinner), axis=0)
         # ytrain_new = np.concatenate((ytrain, ywinner),axis=0)
-
+        print(Xtrain.shape,Xwinner.shape,ytrain.shape,ywinner.shape)
         Xtrain_new = concate(Xtrain, Xwinner)
         ytrain_new = concate(ytrain, ywinner)
 
