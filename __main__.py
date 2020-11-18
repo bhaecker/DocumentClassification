@@ -42,7 +42,7 @@ def __main__():
 
     #random_contextual_diversity_method(X, y, retrain_batch, model)
     #bob_contextual_diversity_method(X, y, retrain_batch, model)
-    setsize_list = [5,10,20]
+    setsize_list = [20,30,40]
     experiment_CD('model_100_epochs.h5',epochs_retrain,retrain_batch,batch_size,setsize_list)
 
 if __name__ == "__main__":

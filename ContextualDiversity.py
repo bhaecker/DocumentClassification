@@ -305,7 +305,8 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
     pool_size = np.shape(ypred)[0]
     indx_list = list(range(pool_size))
     indx_list_winner = list(sample(indx_list, 1))
-    done = False
+    indx_list.remove(indx_list_winner)
+    #done = False
     while len(indx_list_winner) < number_samples:
         indx_list_winner_new = [indx_list_winner[-1]]
         for step in range(setsize):
@@ -328,7 +329,7 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
             indx_list.remove(winner_idx)
             print(diversity_new)
 
-        indx_list_winner = indx_list_winner + indx_list_winner_new
+        indx_list_winner = indx_list_winner + indx_list_winner_new[1:]
 
 
             #if len(indx_list_winner_new) + len(indx_list_winner) == number_samples:
