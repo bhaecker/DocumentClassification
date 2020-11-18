@@ -10,7 +10,7 @@ from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D
 
-#DATA_DIRECTORY = 'Data/'
+#DATA_DIRECTORY = './DocumentClassification/Data/'  #use for local
 DATA_DIRECTORY = '/newstorage4/bhaecker/Data/'    #use for small data set
 #DATA_DIRECTORY = '/newstorage4/bhaecker/Data2/'   #use for big data set
 
