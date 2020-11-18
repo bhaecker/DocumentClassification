@@ -60,11 +60,11 @@ def diversity_pairwise(yunseen_pred1,yunseen_pred2):
 
     '''
     epsilon = 0.001
-    if np.argmax(yunseen_pred1) == np.argmax(yunseen_pred2):# or True:
-        P_c_1 = P_c(np.array([yunseen_pred1]), np.argmax(yunseen_pred1))
-        P_c_2 = P_c(np.array([yunseen_pred2]), np.argmax(yunseen_pred1))
-        #P_c_1 = yunseen_pred1
-        #P_c_2 = yunseen_pred2
+    if np.argmax(yunseen_pred1) == np.argmax(yunseen_pred2) or True:
+        #P_c_1 = P_c(np.array([yunseen_pred1]), np.argmax(yunseen_pred1))
+        #P_c_2 = P_c(np.array([yunseen_pred2]), np.argmax(yunseen_pred1))
+        P_c_1 = yunseen_pred1
+        P_c_2 = yunseen_pred2
     
         P_c_1[P_c_1 <= 0] = epsilon
         P_c_2[P_c_2 <= 0] = epsilon
@@ -326,7 +326,10 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
                         diversity_old = diversity_new
 
             indx_list_winner_new = indx_list_winner_new + [winner_idx] #todo:if not in it already
-            indx_list.remove(winner_idx)
+            try:
+                indx_list.remove(winner_idx)
+            except:
+                continue
             print(diversity_new)
 
         indx_list_winner = indx_list_winner + indx_list_winner_new[1:]
