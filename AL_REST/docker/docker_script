@@ -1,4 +1,0 @@
-#!/bin/bash
-
-docker build --tag="rest_al:latest" .
-docker-compose -f docker-compose.yml up

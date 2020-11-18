@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# in docker folder:
-python -m efficient_annotation.testing

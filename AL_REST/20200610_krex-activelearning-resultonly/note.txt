@@ -1,3 +1,0 @@
-added folders: 
-priority, other (took files from partial)
-testing

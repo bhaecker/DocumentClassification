@@ -1,2 +1,0 @@
-from efficient_annotation.datastores.json_datastore import JSONDatastore
-from efficient_annotation.datastores.mongodb import MongoDB
