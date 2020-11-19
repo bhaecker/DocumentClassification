@@ -316,9 +316,10 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
             #for indx_winner in indx_list_winner_new:
              #   winner_idx = indx_list[0]
               #  diversity_old += diversity_pairwise(y[winner_idx], y[indx_winner])
-            diversity_old = 0
+
             for indx in indx_list:
                 diversity_new = 0
+                diversity_old = 0
                 for indx_winner in indx_list_winner_new:
                     diversity_new += diversity_pairwise(ypred[indx],ypred[indx_winner])
                     if diversity_new > diversity_old:
