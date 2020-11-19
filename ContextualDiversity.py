@@ -60,11 +60,11 @@ def diversity_pairwise(yunseen_pred1,yunseen_pred2):
 
     '''
     epsilon = 0.001
-    if np.argmax(yunseen_pred1) == np.argmax(yunseen_pred2) or True:
-        #P_c_1 = P_c(np.array([yunseen_pred1]), np.argmax(yunseen_pred1))
-        #P_c_2 = P_c(np.array([yunseen_pred2]), np.argmax(yunseen_pred1))
-        P_c_1 = yunseen_pred1
-        P_c_2 = yunseen_pred2
+    if np.argmax(yunseen_pred1) == np.argmax(yunseen_pred2):# or True:
+        P_c_1 = P_c(np.array([yunseen_pred1]), np.argmax(yunseen_pred1))
+        P_c_2 = P_c(np.array([yunseen_pred2]), np.argmax(yunseen_pred1))
+        #P_c_1 = yunseen_pred1
+        #P_c_2 = yunseen_pred2
     
         P_c_1[P_c_1 <= 0] = epsilon
         P_c_2[P_c_2 <= 0] = epsilon
