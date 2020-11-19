@@ -325,14 +325,14 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
                     if diversity_new > diversity_old:
                         winner_idx = indx
                         diversity_old = diversity_new
-
+                print(diversity_old)
             indx_list_winner_new = indx_list_winner_new + [winner_idx]
             indx_list = list(set(indx_list)-set(indx_list_winner_new))
             #try:
              #   indx_list.remove(winner_idx)
             #except:
              #   continue
-            print(diversity_old)
+
         print('len(indx_list): ',len(indx_list))
         print('len(indx_list_winner): ',len(indx_list_winner))
 
