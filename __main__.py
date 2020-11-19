@@ -43,6 +43,7 @@ def __main__():
     #random_contextual_diversity_method(X, y, retrain_batch, model)
     #bob_contextual_diversity_method(X, y, retrain_batch, model)
     setsize_list = [20,30,40]
+
     experiment_CD('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,setsize_list)
     #list_methods = [entropy_fn,RL_human_method]
     #experiment_accumulated('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)

@@ -402,7 +402,7 @@ def experiment_CD(model_base_str, epochs_retrain, retrain_size, mini_batch_size,
 
         print('training data concatenated')
 
-        model_base = load_model('./DocumentClassification/'+model_base_str)
+        model_base = load_model(model_base_str)
         print('model loaded')
         model_new = retrain(model_base, epochs_retrain, mini_batch_size, Xtrain_new, ytrain_new)[0]
         accuracy = tester(Xtest, ytest, model_new)[0]
