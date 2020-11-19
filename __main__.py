@@ -13,7 +13,7 @@ from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegr
 from .Qlearning import epsgreedy_dual_oracle, epsgreedy_mono_oracle, RL_CNN_method, RL_human_method
 from .ContextualBandits import ContextualAdaptiveGreedy_mono_algo, ContextualAdaptiveGreedy_dual_algo
 from .Backbone import RL_model_dual, RL_model_mono, pretrain_dual_oracle, pretrain_mono_oracle
-from .ContextualDiversity import bob_contextual_diversity_method, random_contextual_diversity_method, random_contextual_diversity_method_numberoption, experiment_CD, genetic_contextual_diversity_method
+from .ContextualDiversity import bob_contextual_diversity_method_setoption_method,bob_contextual_diversity_method, random_contextual_diversity_method, random_contextual_diversity_method_numberoption, experiment_CD, genetic_contextual_diversity_method
 
 tf.random.set_seed(42)
 np.random.seed(42)
@@ -21,7 +21,7 @@ np.random.seed(42)
 #epochs = 100
 epochs_retrain = 10
 batch_size = 128
-retrain_batch = 100
+retrain_batch = 200
 #number_games = 200
 
 def __main__():
@@ -42,11 +42,14 @@ def __main__():
 
     #random_contextual_diversity_method(X, y, retrain_batch, model)
     #bob_contextual_diversity_method(X, y, retrain_batch, model)
-    setsize_list = [20,30,40]
-
-    experiment_CD('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,setsize_list)
+    #setsize_list = [20,30,40]
+    #X,model = None,None
+    #bob_contextual_diversity_method_setoption(X,y,retrain_batch,model,5)
+    #bob_contextual_diversity_method_setoption(X, y, retrain_batch, model,10)
+    #bob_contextual_diversity_method_setoption(X, y, retrain_batch, model, 20)
+    #experiment_CD('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,setsize_list)
     #list_methods = [entropy_fn,RL_human_method]
-    #experiment_accumulated('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
+    experiment_single('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,[bob_contextual_diversity_method_setoption_method])
 
 if __name__ == "__main__":
     __main__()

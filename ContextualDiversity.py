@@ -59,7 +59,7 @@ def diversity_pairwise(yunseen_pred1,yunseen_pred2):
     d_[I_1,I_2] in paper
 
     '''
-    epsilon = 0.001
+    epsilon = 0.01
     if np.argmax(yunseen_pred1) == np.argmax(yunseen_pred2):# or True:
         P_c_1 = P_c(np.array([yunseen_pred1]), np.argmax(yunseen_pred1))
         P_c_2 = P_c(np.array([yunseen_pred2]), np.argmax(yunseen_pred1))
@@ -291,7 +291,8 @@ def random_contextual_diversity_method_numberoption(X,y,number_samples,model, nu
 
     return(Xwinner, ywinner, Xloser, yloser, diversity_old)
 
-def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
+def bob_contextual_diversity_method_setoption_method(X,y,number_samples,model):
+    setsize = 10
     if np.shape(X)[0] <= number_samples:
         X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
         y_empty = np.empty([0, np.shape(y)[1]])
@@ -301,50 +302,42 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
         model = load_model(model)
 
     ypred = model.predict(X)
-
+    #ypred = y
     pool_size = np.shape(ypred)[0]
     indx_list = list(range(pool_size))
     indx_list_winner = list(sample(indx_list, 1))
     indx_list.remove(indx_list_winner[0])
-    #done = False
+    done = False
     while len(indx_list_winner) < number_samples:
         indx_list_winner_new = [indx_list_winner[-1]]
         for step in range(setsize):
             print('step: ',step)
-            #preloop
-
-            #for indx_winner in indx_list_winner_new:
-             #   winner_idx = indx_list[0]
-              #  diversity_old += diversity_pairwise(y[winner_idx], y[indx_winner])
-
+            diversity_old = 0
             for indx in indx_list:
                 diversity_new = 0
-                diversity_old = 0
                 for indx_winner in indx_list_winner_new:
                     diversity_new += diversity_pairwise(ypred[indx],ypred[indx_winner])
-                    if diversity_new > diversity_old:
-                        winner_idx = indx
-                        diversity_old = diversity_new
-                print(diversity_old)
+                if diversity_new > diversity_old:
+                    winner_idx = indx
+                    diversity_old = diversity_new
+
+     #       print(diversity_old)
             indx_list_winner_new = indx_list_winner_new + [winner_idx]
             indx_list = list(set(indx_list)-set(indx_list_winner_new))
-            #try:
-             #   indx_list.remove(winner_idx)
-            #except:
-             #   continue
 
-        print('len(indx_list): ',len(indx_list))
-        print('len(indx_list_winner): ',len(indx_list_winner))
+      #      print('len(indx_list): ',len(indx_list))
+       #     print('len(indx_list_winner_new): ',len(indx_list_winner_new))
 
+
+
+            if len(indx_list_winner_new) + len(indx_list_winner) == number_samples+1:
+                indx_list_winner = indx_list_winner + indx_list_winner_new[1:]
+                done = True
+                break
+        if done == True:
+            break
         indx_list_winner = indx_list_winner + indx_list_winner_new[1:]
-
-
-            #if len(indx_list_winner_new) + len(indx_list_winner) == number_samples:
-                #indx_list_winner = indx_list_winner + indx_list_winner_new[1:]
-                #done = True
-                #break
-        #if done == True:
-            #break
+        #print('len(indx_list_winner): ', len(indx_list_winner))
 
     print('orig len: ',len(indx_list_winner))
     indx_list_winner = np.unique(indx_list_winner)
@@ -354,7 +347,7 @@ def bob_contextual_diversity_method_setoption(X,y,number_samples,model,setsize):
     diversity_fin = diversity(ypred[indx_list_winner])
     # seperate unseen data in winner and looser data set by the indices
     print(diversity_fin)
-    print(indx_list_winner)
+    #print(indx_list_winner)
     Xwinner = X[indx_list_winner, :, :]
     ywinner = y[indx_list_winner]
 
