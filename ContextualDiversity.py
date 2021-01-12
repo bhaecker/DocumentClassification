@@ -117,7 +117,7 @@ def diversity_metric_method(X,y,number_samples,model):
 
     print(score_array)
 
-    distance_list = sorted(score_array, key =lambda x: x[1], reverse=False)
+    distance_list = sorted(score_array, key =lambda x: x[1], reverse=True)
     print(distance_list)
     #get the indices coresponding to the distances in the right order
     #index_list = [index[1][i] for index in distance_list for i in range(0,2)]
@@ -129,7 +129,8 @@ def diversity_metric_method(X,y,number_samples,model):
      #       n_farest = n_farest + [index_list[i]]
       #  i += 1
     #seperate unseen data in winner and looser data set by the indices
-    n_farest = distance_list[0,:number_samples]
+    distance_list = np.asarray(distance_list)
+    n_farest = distance_list[0, :number_samples]
     print(n_farest)
     Xwinner = X[n_farest, :, :]
     ywinner = y[n_farest]
