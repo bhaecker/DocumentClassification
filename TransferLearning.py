@@ -161,9 +161,10 @@ def retrain_early_stopping(model,epochs,batch_size,X,y,Xtest, ytest):
             validation_data=(Xtest, ytest),
             callbacks=[es,mc])
 
-    saved_model = load_model('best_model.h5')
+    #saved_model = load_model('best_model.h5')
+    #print('best model loaded')
 
-    return(saved_model,history)
+    return('best_model.h5',history)
 
 
 
