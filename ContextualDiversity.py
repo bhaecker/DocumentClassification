@@ -130,6 +130,8 @@ def diversity_metric_method(X,y,number_samples,model):
       #  i += 1
     #seperate unseen data in winner and looser data set by the indices
     distance_list = np.asarray(distance_list)
+    print(distance_list)
+    print(np.shape(distance_list))
     n_farest = distance_list[0, :number_samples]
     print(n_farest)
     Xwinner = X[n_farest, :, :]
