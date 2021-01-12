@@ -170,7 +170,7 @@ def retrain_early_stopping(model,epochs,batch_size,X,y,Xtest, ytest):
     if type(model) == str:
         #model = loadmodel(model)
         model = load_model(model)
-    es = EarlyStopping(monitor='accuracy', mode='max', verbose=1, patience=5)
+    es = EarlyStopping(monitor='accuracy', mode='max', verbose=1, patience=1)
     mc = ModelCheckpoint('best_model.h5', monitor='accuracy', mode='max', verbose=1, save_best_only=True)
     print('start retraining')
     history = model.fit(X,y,
