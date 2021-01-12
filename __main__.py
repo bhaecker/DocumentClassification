@@ -44,12 +44,9 @@ def __main__():
     #bob_contextual_diversity_method(X, y, retrain_batch, model)
     #setsize_list = [20,30,40]
     #X,model = None,None
-    #bob_contextual_diversity_method_setoption(X,y,retrain_batch,model,5)
-    #bob_contextual_diversity_method_setoption(X, y, retrain_batch, model,10)
-    #bob_contextual_diversity_method_setoption(X, y, retrain_batch, model, 20)
-    #experiment_CD('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,setsize_list)
-    #list_methods = [entropy_fn,RL_human_method]
-    experiment_single('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,[bob_contextual_diversity_method_setoption_method])
+
+    list_methods = [entropy_fn,mutural_info_uniform_fn,diff_uniform_fn]
+    experiment_single('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
     __main__()

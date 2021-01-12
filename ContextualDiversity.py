@@ -291,8 +291,8 @@ def random_contextual_diversity_method_numberoption(X,y,number_samples,model, nu
 
     return(Xwinner, ywinner, Xloser, yloser, diversity_old)
 
-def bob_contextual_diversity_method_setoption_method(X,y,number_samples,model):
-    setsize = 10
+def bob_contextual_diversity_method_setoption_method(X,y,number_samples,model,setsize):
+
     if np.shape(X)[0] <= number_samples:
         X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
         y_empty = np.empty([0, np.shape(y)[1]])
@@ -339,7 +339,7 @@ def bob_contextual_diversity_method_setoption_method(X,y,number_samples,model):
         indx_list_winner = indx_list_winner + indx_list_winner_new[1:]
         #print('len(indx_list_winner): ', len(indx_list_winner))
 
-    print('orig len: ',len(indx_list_winner))
+    print('orig len: ',len(indx_list_winner))#todo apperantly they are not unique!
     indx_list_winner = np.unique(indx_list_winner)
     print('after uniq len: ', len(indx_list_winner))
     indx_list_winner = indx_list_winner[:number_samples]

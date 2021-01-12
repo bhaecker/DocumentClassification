@@ -44,10 +44,10 @@ def diff_uniform_fn(annotation_vector):
     '''
     vector_sum = sum(np.array(annotation_vector))
     norm_ann_vec = annotation_vector/vector_sum
-    #print(norm_ann_vec)
+
     length = len(annotation_vector)
     normalized_vector = np.full_like(annotation_vector,1/length)
-    #print(normal_vector)
+
     diff_vector = abs(norm_ann_vec-normalized_vector)
 
     return(-sum(diff_vector))
