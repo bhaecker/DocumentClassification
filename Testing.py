@@ -39,7 +39,6 @@ def tester(Xtest,ytest,model):
 
     return(accuracy,ypred)
 
-#TODO: retrain only with choosen batch plus training not accumalted samples ---> experiment_single
 
 
 def experiment_accumulated(model_base_str,epochs_retrain,retrain_size,mini_batch_size,list_methods):

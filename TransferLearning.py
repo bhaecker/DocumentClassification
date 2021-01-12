@@ -142,6 +142,27 @@ def retrain(model,epochs,batch_size,X,y):
     #savemodel(model,'retrained_'+str(epochs)+'epochs')
     return(model,history)
 
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+
+def tester(Xtest,ytest,model):
+    print('start evaluating')
+    if type(model) == str:
+        model = load_model(model)
+
+    loss = model.evaluate(Xtest, ytest, verbose=0)
+    print('loss :'+ str(loss[0]))
+
+    ypred = model.predict(Xtest)
+
+    ytest_flat = np.argmax(ytest, axis=1)
+    ypred_flat = np.argmax(ypred, axis=1)
+    accuracy = accuracy_score(ytest_flat, ypred_flat)
+    print('acc :' + str(accuracy))
+    print(confusion_matrix(ytest_flat, ypred_flat))
+
+    return(accuracy,ypred)
+
 def retrain_early_stopping(model,epochs,batch_size,X,y,Xtest, ytest):
     '''
     retrain model with early stopping
@@ -161,9 +182,9 @@ def retrain_early_stopping(model,epochs,batch_size,X,y,Xtest, ytest):
             validation_data=(Xtest, ytest),
             callbacks=[es,mc])
 
-    #saved_model = load_model('best_model.h5')
-    #print('best model loaded')
-
+    saved_model = load_model('best_model.h5')
+    print('best model loaded')
+    print(tester(Xtest, ytest, saved_model))
     return('best_model.h5',history)
 
 
