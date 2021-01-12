@@ -132,7 +132,7 @@ def diversity_metric_method(X,y,number_samples,model):
     distance_list = np.asarray(distance_list)
     print(distance_list)
     print(np.shape(distance_list))
-    n_farest = distance_list[0, :number_samples]
+    n_farest = distance_list[:number_samples,0]
     print(n_farest)
     Xwinner = X[n_farest, :, :]
     ywinner = y[n_farest]
