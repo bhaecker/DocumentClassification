@@ -19,13 +19,12 @@ tf.random.set_seed(42)
 np.random.seed(42)
 
 #epochs = 100
-epochs_retrain = 20
+epochs_retrain = 10
 batch_size = 128
 retrain_batch = 100
 #number_games = 200
 
 def __main__():
-    #TODO:Early Stopping!
     #print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
     #X = None
     #model = None
@@ -46,7 +45,7 @@ def __main__():
     #X,model = None,None
 
     list_methods = [diversity_metric_method,vecnorm_metric_method,entropy_fn]
-    experiment_single_earlystopping('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
+    experiment_single('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
     __main__()
