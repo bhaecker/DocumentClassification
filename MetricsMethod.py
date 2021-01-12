@@ -21,29 +21,36 @@ def vecnorm_metric_method(X,y,number_samples,model):
         model = load_model(model)
     Ypred = model.predict(X)
 
-    #matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
     distance_list = []
     for row, ypred_a in enumerate(Ypred):
-        # TODO: Start from current row since matrix is semetric! check where is the mistake
-        for column, ypred_b in enumerate(Ypred):
-            #matrix[row][column] = LA.norm(ypred_a-ypred_b)
-            #fill index_list
-            if row != column:
-                current_distance = LA.norm(ypred_a - ypred_b)
-                distance_list.append((current_distance,(row,column)))
+        for column, ypred_b in enumerate(Ypred[row + 1:]):
+            current_distance = LA.norm(ypred_a-ypred_b)
+            distance_list.append((current_distance, (row, column + row + 1)))
 
-    distance_list = sorted(distance_list, key =lambda x: x[0], reverse=False)
+    score_array = np.empty([np.shape(y)[0], 2])
+    for idx, _ in enumerate(score_array):
+        # sum up the distances for each av
+        accumulated_distance = sum(
+            [triple[0] for triple in distance_list if (triple[1][0] == idx or triple[1][1] == idx)])
+        score_array[idx, 0], score_array[idx, 1] = int(idx), accumulated_distance
 
-    #get the indices coresponding to the distances in the right order
-    index_list = [index[1][i] for index in distance_list for i in range(0,2)]
-    #shorten the list to desired length without duplicates
-    n_farest = []
-    i = 0
-    while len(n_farest)+1 <= number_samples:
-        if index_list[i] not in n_farest:
-            n_farest = n_farest + [index_list[i]]
-        i += 1
-    #seperate unseen data in winner and looser data set by the indices
+    distance_list = sorted(score_array, key=lambda x: x[1], reverse=True)
+
+    # get the indices coresponding to the distances in the right order
+    # index_list = [index[1][i] for index in distance_list for i in range(0,2)]
+    # shorten the list to desired length without duplicates
+    # n_farest = []
+    # i = 0
+    # while len(n_farest)+1 <= number_samples:
+    #    if index_list[i] not in n_farest:
+    #       n_farest = n_farest + [index_list[i]]
+    #  i += 1
+    # seperate unseen data in winner and looser data set by the indices
+
+    distance_list = np.asarray(distance_list, dtype=int)
+
+    n_farest = distance_list[:number_samples, 0]
+
     Xwinner = X[n_farest, :, :]
     ywinner = y[n_farest]
 
@@ -51,6 +58,7 @@ def vecnorm_metric_method(X,y,number_samples,model):
     mask[n_farest] = False
     Xloser = X[mask, :, :]
     yloser = y[mask]
+    del n_farest, distance_list, score_array
 
     return(Xwinner, ywinner, Xloser, yloser)
 

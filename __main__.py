@@ -45,7 +45,7 @@ def __main__():
     #setsize_list = [20,30,40]
     #X,model = None,None
 
-    list_methods = [diversity_metric_method,vecnorm_metric_method]
+    list_methods = [vecnorm_metric_method,diversity_metric_method]
     experiment_single_earlystopping('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":

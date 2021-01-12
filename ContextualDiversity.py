@@ -100,13 +100,11 @@ def diversity_metric_method(X,y,number_samples,model):
 
     distance_list = []
     for row, ypred_a in enumerate(Ypred):
-        # TODO: Start from current row since matrix is semetric! check where is the mistake
         for column, ypred_b in enumerate(Ypred[row+1:]):
-            #print(np.shape(ypred_a),np.shape(ypred_b))
             current_distance = diversity_pairwise(ypred_a,ypred_b)
             distance_list.append((current_distance,(row,column + row + 1)))
 
-    print(distance_list)
+
 
     score_array = np.empty([np.shape(y)[0],2])
     for idx, _ in enumerate(score_array):
@@ -115,10 +113,10 @@ def diversity_metric_method(X,y,number_samples,model):
             [triple[0] for triple in distance_list if (triple[1][0] == idx or triple[1][1] == idx)])
         score_array[idx,0],score_array[idx,1] = int(idx), accumulated_distance
 
-    print(score_array)
+
 
     distance_list = sorted(score_array, key =lambda x: x[1], reverse=True)
-    print(distance_list)
+
     #get the indices coresponding to the distances in the right order
     #index_list = [index[1][i] for index in distance_list for i in range(0,2)]
     #shorten the list to desired length without duplicates
@@ -130,10 +128,9 @@ def diversity_metric_method(X,y,number_samples,model):
       #  i += 1
     #seperate unseen data in winner and looser data set by the indices
     distance_list = np.asarray(distance_list, dtype=int)
-    print(distance_list)
-    print(np.shape(distance_list))
+
     n_farest = distance_list[:number_samples,0]
-    print(n_farest)
+
     Xwinner = X[n_farest, :, :]
     ywinner = y[n_farest]
 
@@ -141,7 +138,7 @@ def diversity_metric_method(X,y,number_samples,model):
     mask[n_farest] = False
     Xloser = X[mask, :, :]
     yloser = y[mask]
-
+    del n_farest,distance_list,score_array
     return(Xwinner, ywinner, Xloser, yloser)
 
 
