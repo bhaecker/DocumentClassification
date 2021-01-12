@@ -98,14 +98,13 @@ def diversity_metric_method(X,y,number_samples,model):
         model = load_model(model)
     Ypred = model.predict(X)
 
-    #matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
     distance_list = []
     for row, ypred_a in enumerate(Ypred):
         # TODO: Start from current row since matrix is semetric! check where is the mistake
         for column, ypred_b in enumerate(Ypred[row+1]):
+            print(np.shape(ypred_a),np.shape(ypred_b))
             current_distance = diversity_pairwise(ypred_a,ypred_b)
-            distance_list.append((current_distance,(row,column)))
-
+            distance_list.append((current_distance,(row,column + row + 1)))
 
     print(distance_list)
 
