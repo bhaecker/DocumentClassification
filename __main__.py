@@ -8,12 +8,12 @@ from .TransferLearning import fetch_data, fine_tune, retrain#, savemodel, loadmo
 from .Testing import tester, experiment_accumulated, experiment_single
 from .ActiveLearning import seperation
 from .baseline import entropy_fn, least_confident_fn, margin_sampling_fn, random_fn, mutural_info_uniform_fn, diff_uniform_fn
-from .MetricsMethod import metric_method, diversity_method, diversity_images_balanced_method #mutural_info_method and diversity_images_method too slow
+from .MetricsMethod import vecnorm_metric_method, diversity_method, diversity_images_balanced_method #mutural_info_method and diversity_images_method too slow
 from .RandomForest import RandomForest_method, RandomForest_fn, RandomForestRegressor_pretraining
 from .Qlearning import epsgreedy_dual_oracle, epsgreedy_mono_oracle, RL_CNN_method, RL_human_method
 from .ContextualBandits import ContextualAdaptiveGreedy_mono_algo, ContextualAdaptiveGreedy_dual_algo
 from .Backbone import RL_model_dual, RL_model_mono, pretrain_dual_oracle, pretrain_mono_oracle
-from .ContextualDiversity import bob_contextual_diversity_method_setoption_method,bob_contextual_diversity_method, random_contextual_diversity_method, random_contextual_diversity_method_numberoption, experiment_CD, genetic_contextual_diversity_method
+from .ContextualDiversity import diversity_metric_method,bob_contextual_diversity_method_setoption_method,bob_contextual_diversity_method, random_contextual_diversity_method, random_contextual_diversity_method_numberoption, experiment_CD, genetic_contextual_diversity_method
 
 tf.random.set_seed(42)
 np.random.seed(42)
@@ -45,7 +45,7 @@ def __main__():
     #setsize_list = [20,30,40]
     #X,model = None,None
 
-    list_methods = [entropy_fn,mutural_info_uniform_fn,diff_uniform_fn]
+    list_methods = [diversity_metric_method,vecnorm_metric_method]
     experiment_single('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":

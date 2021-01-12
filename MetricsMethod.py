@@ -9,7 +9,7 @@ from tensorflow.keras.models import load_model
 
 from .TransferLearning import fetch_data
 
-def metric_method(X,y,number_samples,model):
+def vecnorm_metric_method(X,y,number_samples,model):
     '''
     gives back the samples, which predictions are most far away (with respect to L2 norm) in prediction space
     '''

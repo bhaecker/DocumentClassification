@@ -84,6 +84,60 @@ def diversity(yunseen_pred):
     return(aggregate_diversity)
 
 
+
+
+def diversity_metric_method(X,y,number_samples,model):
+    '''
+    gives back the samples, which predictions are most far away (with respect to L2 norm) in prediction space
+    '''
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+    if type(model) == str:
+        model = load_model(model)
+    Ypred = model.predict(X)
+
+    #matrix = np.zeros((np.shape(Ypred)[0],np.shape(Ypred)[0]))
+    distance_list = []
+    for row, ypred_a in enumerate(Ypred):
+        # TODO: Start from current row since matrix is semetric! check where is the mistake
+        for column, ypred_b in enumerate(Ypred):
+            #matrix[row][column] = LA.norm(ypred_a-ypred_b)
+            #fill index_list
+            if row != column:
+                current_distance = diversity_pairwise(ypred_a,ypred_b)
+                distance_list.append((current_distance,(row,column)))
+
+    distance_list = sorted(distance_list, key =lambda x: x[0], reverse=False)
+
+    #get the indices coresponding to the distances in the right order
+    index_list = [index[1][i] for index in distance_list for i in range(0,2)]
+    #shorten the list to desired length without duplicates
+    n_farest = []
+    i = 0
+    while len(n_farest)+1 <= number_samples:
+        if index_list[i] not in n_farest:
+            n_farest = n_farest + [index_list[i]]
+        i += 1
+    #seperate unseen data in winner and looser data set by the indices
+    Xwinner = X[n_farest, :, :]
+    ywinner = y[n_farest]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[n_farest] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+
+    return(Xwinner, ywinner, Xloser, yloser)
+
+
+
+
+
+
+
+
 def random_contextual_diversity_method(X,y,number_samples,model):
     if np.shape(X)[0] <= number_samples:
         X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
