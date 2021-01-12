@@ -9,6 +9,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D
+from tensorflow.keras.callbacks import EarlyStopping
 
 #DATA_DIRECTORY = './DocumentClassification/Data/'  #use for local
 DATA_DIRECTORY = '/newstorage4/bhaecker/Data/'    #use for small data set
@@ -140,6 +141,28 @@ def retrain(model,epochs,batch_size,X,y):
             shuffle=True)
     #savemodel(model,'retrained_'+str(epochs)+'epochs')
     return(model,history)
+
+def retrain_early_stopping(model,epochs,batch_size,X,y,Xtest, ytest):
+    '''
+    retrain model with early stopping
+    '''
+    if type(model) == str:
+        #model = loadmodel(model)
+        model = load_model(model)
+    es = EarlyStopping(monitor='accuracy', mode='max', verbose=1, patience=5)
+    print('start retraining')
+    history = model.fit(X,y,
+            #validation_split=0.2,
+            batch_size=batch_size,
+            epochs=epochs,
+            verbose=1,
+            shuffle=True,
+            validation_data=(Xtest, ytest),
+            callbacks=[es])
+    #savemodel(model,'retrained_'+str(epochs)+'epochs')
+    return(model,history)
+
+
 
 def concate(W,V):
     W_dim = np.shape(W)
