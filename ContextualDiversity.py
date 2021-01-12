@@ -113,7 +113,7 @@ def diversity_metric_method(X,y,number_samples,model):
         # sum up the distances for each av
         accumulated_distance = sum(
             [triple[0] for triple in distance_list if (triple[1][0] == idx or triple[1][1] == idx)])
-        score_array[idx,0],score_array[idx,1] = idx,accumulated_distance
+        score_array[idx,0],score_array[idx,1] = int(idx), accumulated_distance
 
     print(score_array)
 
