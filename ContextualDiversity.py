@@ -108,8 +108,8 @@ def diversity_metric_method(X,y,number_samples,model):
 
     print(distance_list)
 
-    score_array = np.empty_like((np.shape(y)[0],2))
-    for idx, entry in enumerate(score_array):
+    score_array = np.empty((np.shape(y)[0],2))
+    for idx, _ in enumerate(score_array):
         # sum up the distances for each av
         accumulated_distance = sum(
             [triple[0] for triple in distance_list if (triple[1][0] == idx or triple[1][1] == idx)])
