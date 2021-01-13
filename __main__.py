@@ -21,7 +21,7 @@ np.random.seed(42)
 #epochs = 100
 epochs_retrain = 10
 batch_size = 128
-retrain_batch = 100
+retrain_batch = 700
 #number_games = 200
 
 def __main__():
@@ -44,7 +44,7 @@ def __main__():
     #setsize_list = [20,30,40]
     #X,model = None,None
 
-    list_methods = [diversity_metric_method,vecnorm_metric_method,entropy_fn]
+    list_methods = [entropy_fn]
     experiment_accumulated('model_101_epochs.h5',epochs_retrain,retrain_batch,batch_size,list_methods)
 
 if __name__ == "__main__":
