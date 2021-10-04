@@ -1,3 +1,10 @@
+# -----------------------------------------------------------
+# Implementation of Contextual Diversity
+# from
+# Sharat Agarwal, Himanshu Arora, Saket Anand, Chetan Arora:
+# Contextual Diversity for Active Learning. CoRR abs/2008.05723 (2020)
+# -----------------------------------------------------------
+
 import sys
 import numpy as np
 from random import sample
@@ -5,21 +12,15 @@ from scipy.stats import entropy
 from scipy.special import binom
 from tensorflow.keras.models import load_model
 
-
 ##test out Contextual Diversity:
 import pandas as pd
 from .TransferLearning import fetch_data, fine_tune, retrain, concate#, savemodel, loadmodel
 from .Testing import tester
 
-#todo: just take the short formula my guy
-#todo: experiment with low and high CD and see if performance improves
-#todo: if its just chose the subset not randomly but by looking at the vector
-
 def w(P_r):
     '''
     w_r Shannon entropy in paper
     not needed since (1) in paper is not needed
-
     '''
 
     #P_r = P_rr + epsilon
@@ -142,10 +143,57 @@ def diversity_metric_method(X,y,number_samples,model):
     return(Xwinner, ywinner, Xloser, yloser)
 
 
+def diversity_metric_opti_method(X,y,number_samples,model):
+    '''
+    gives back the samples, which predictions are most far away (with respect to cd) in prediction space
+    '''
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+    if type(model) == str:
+        model = load_model(model)
+    Ypred = model.predict(X)
 
+    score_array = np.zeros([np.shape(y)[0], 2])
+    for idx in range(np.shape(y)[0]):
+        score_array[idx,0] = int(idx)
+    print(score_array)
+    print(np.shape(score_array))
+    for row, ypred_a in enumerate(Ypred):
+        for column, ypred_b in enumerate(Ypred[row + 1:]):
+            current_distance = diversity_pairwise(ypred_a,ypred_b)
+            score_array[row, 1] += current_distance
+            score_array[column + row + 1, 1] += current_distance
+            # distance_list.append((current_distance, (row, column + row + 1)))
+        print(row / np.shape(Ypred)[0])
+    print(score_array)
 
+    distance_list = sorted(score_array, key =lambda x: x[1], reverse=True)
 
+    #get the indices coresponding to the distances in the right order
+    #index_list = [index[1][i] for index in distance_list for i in range(0,2)]
+    #shorten the list to desired length without duplicates
+    #n_farest = []
+    #i = 0
+    #while len(n_farest)+1 <= number_samples:
+    #    if index_list[i] not in n_farest:
+     #       n_farest = n_farest + [index_list[i]]
+      #  i += 1
+    #seperate unseen data in winner and looser data set by the indices
+    distance_list = np.asarray(distance_list, dtype=int)
 
+    n_farest = distance_list[:number_samples,0]
+
+    Xwinner = X[n_farest, :, :]
+    ywinner = y[n_farest]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[n_farest] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+    del n_farest,distance_list,score_array
+    return(Xwinner, ywinner, Xloser, yloser)
 
 
 def random_contextual_diversity_method(X,y,number_samples,model):

@@ -1,12 +1,15 @@
+# -----------------------------------------------------------
+# Backbone ml algorithms
+# serving as/for
+# Reinforcement oracles and Multi-armed bandits
+# -----------------------------------------------------------
+
 import sys
-import random
 import numpy as np
 import pickle
 #from xgboost import XGBClassifier as XGB
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-
-
 from tensorflow.keras.models import Model, Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D, InputLayer, Input, Concatenate, Conv2D, Flatten, Dense
 
@@ -83,9 +86,9 @@ def pretrain_dual_oracle(dual_oracle,CNN_model,epochs):
     if type(CNN_model) == str:
         CNN_model = load_model(CNN_model)
 
-    Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = fetch_data('trans_train')
     #Xtrain, ytrain = Xtrain[:50], ytrain[:50]
-    Xtest, ytest = fetch_data('test')
+    Xtest, ytest = fetch_data('trans_test')
     #Xtest, ytest = Xtest[:50], ytest[:50]
     sample_size = np.shape(Xtrain)[0]
     reward = np.empty(sample_size)
@@ -95,7 +98,7 @@ def pretrain_dual_oracle(dual_oracle,CNN_model,epochs):
     for idx in range(sample_size):
         print(idx / sample_size)
         #maybe retrain plus training samples?
-        CNN_model_retrained = retrain(CNN_model,10,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
+        CNN_model_retrained = retrain(CNN_model,20,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward[idx] = new_acc - base_acc
     print(reward)
@@ -103,6 +106,7 @@ def pretrain_dual_oracle(dual_oracle,CNN_model,epochs):
     # feed that into oracle
     ypred_train = CNN_model.predict(Xtrain)  # feed that into oracle
     oracle = dual_oracle
+    oracle_name = "pretrained_dual_oracle.h5"
 
     try:
         oracle.fit(x=[Xtrain,ypred_train],y=reward,
@@ -110,11 +114,11 @@ def pretrain_dual_oracle(dual_oracle,CNN_model,epochs):
                                 batch_size=128,
                                 epochs=epochs,
                                 verbose=1)
-        oracle_name = "{}_{}_epochs.h5".format(oracle.__name__,epochs)
+        #oracle_name = "{}_{}_epochs.h5".format(oracle.__name__,epochs)
         oracle.save(oracle_name)
     except:
         oracle.fit(x=[Xtrain,ypred_train],y=reward)
-        oracle_name = "{}_{}.pkl".format(oracle.__name__,'prefitted')
+        #oracle_name = "{}_{}.pkl".format(oracle.__name__,'prefitted')
         with open(oracle_name, 'wb') as file:
             pickle.dump(oracle, file)
     del Xtest, ytest, Xtrain, ytrain, ypred_train, reward
@@ -128,9 +132,9 @@ def pretrain_mono_oracle(mono_oracle,CNN_model,epochs):
     if type(CNN_model) == str:
         CNN_model = load_model(CNN_model)
 
-    Xtrain, ytrain = fetch_data('train')
+    Xtrain, ytrain = fetch_data('trans_train')
     Xtrain, ytrain = Xtrain[:50], ytrain[:50]
-    Xtest, ytest = fetch_data('test')
+    Xtest, ytest = fetch_data('trans_test')
     #Xtest, ytest = Xtest[:50], ytest[:50]
     sample_size = np.shape(Xtrain)[0]
     reward = np.empty(sample_size)
@@ -139,7 +143,7 @@ def pretrain_mono_oracle(mono_oracle,CNN_model,epochs):
     for idx in range(sample_size):
         print(idx / sample_size)
         #maybe retrain plus training samples?
-        CNN_model_retrained = retrain(CNN_model,100,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
+        CNN_model_retrained = retrain(CNN_model,20,1,Xtrain[idx:idx+1],ytrain[idx:idx+1])[0]
         new_acc = CNN_model_retrained.evaluate(Xtest, ytest, verbose=0)[1]
         reward[idx] = new_acc - base_acc
     print(reward)
@@ -147,21 +151,21 @@ def pretrain_mono_oracle(mono_oracle,CNN_model,epochs):
     ypred_train = CNN_model.predict(Xtrain)  # feed that into oracle
 
     oracle = mono_oracle
+    oracle_name = "pretrained_mono_oracle.h5"
     try:
         oracle.fit(x=ypred_train, y=reward,
                    validation_split=0,
                    batch_size=128,
                    epochs=epochs,
                    verbose=1)
-        oracle_name = "{}_{}_epochs.h5".format(oracle.__name__, epochs)
+        #oracle_name = "{}_{}_epochs.h5".format(oracle.__name__, epochs)
         oracle.save(oracle_name)
     except:
         oracle.fit(ypred_train, reward)
         oracle.fit(x=[Xtrain, ypred_train], y=reward)
-        oracle_name = "{}_{}.pkl".format(oracle.__name__, 'prefitted')
+        #oracle_name = "{}_{}.pkl".format(oracle.__name__, 'prefitted')
         with open(oracle_name, 'wb') as file:
             pickle.dump(oracle, file)
 
     del Xtest, ytest, Xtrain, ytrain, ypred_train, reward
     return(oracle)
-

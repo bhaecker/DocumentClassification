@@ -1,4 +1,5 @@
-from .Preprocessing import make_split, split
+#from .Preprocessing import make_split, split
+from .Preprocessing_include_names import make_split, split
 
 def __main__():
     sum = split[0]+split[1]+split[2]

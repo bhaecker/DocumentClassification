@@ -1,22 +1,26 @@
+# -----------------------------------------------------------
+# Train reinforcement learning oracles with epsilon greedy
+# to obtain
+# Four reinforcement Active Learning methods:
+# Predict reward for option asking human or model
+# Based on ml-predictions or ml-predictions AND images
+# -----------------------------------------------------------
+
 import sys
 import numpy as np
-
-from tensorflow.keras.models import Model, Sequential, load_model
-from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Dense, GlobalAveragePooling2D, InputLayer, Input, Concatenate, Conv2D, Flatten, Dense
-
+from tensorflow.keras.models import load_model
 from .TransferLearning import fetch_data
-from .Backbone import RL_model_mono, RL_model_dual
-
-##TODO: reinforcemnt learning with explore then exploit and Softmaxexplorer
 
 def epsgreedy_dual_oracle(Xtrain,ytrain,RL_dual,CNN_model,num_episodes):
     '''
-    a correct prediction is
-
+    train the RL model (dual oracle), which gets as inputs the images and the predictions of the images
+    based on a policy, the RL model learns to predict its reward, when choosing either the CNN model to predict or a human annotator
     '''
 
     #just for testing:
     Xtest,ytest = fetch_data('test')
+    if type(CNN_model) == str:
+        CNN_model = load_model(CNN_model)
     y_pred_test = CNN_model.predict(Xtest)
 
     RL_model = RL_dual
@@ -70,7 +74,7 @@ def epsgreedy_dual_oracle(Xtrain,ytrain,RL_dual,CNN_model,num_episodes):
             #print(weird)
             #print(np.max(weird))
             target = r #+ y * np.max(weird)
-            #reniforce the decision
+            #reinforce the decision
             target_vec = RL_model.predict([sample,predicted_class])[0]
             #print(target_vec)
             target_vec[decision] = target
@@ -84,7 +88,7 @@ def epsgreedy_dual_oracle(Xtrain,ytrain,RL_dual,CNN_model,num_episodes):
             idx += 1
             r_sum += r
 
-        RL_model.save('RL_model_dual_'+str(i)+'.h5')
+        RL_model.save('RL_model_dual_best.h5')
         r_avg_list.append(r_sum / 1000)
 
         #just for testing
@@ -106,6 +110,8 @@ def epsgreedy_mono_oracle(Xtrain,ytrain,RL_mono,CNN_model,num_episodes):
 
     #just for testing:
     Xtest,ytest = fetch_data('test')
+    if type(CNN_model) == str:
+        CNN_model = load_model(CNN_model)
     y_pred_test = CNN_model.predict(Xtest)
 
     RL_model = RL_mono
@@ -173,12 +179,14 @@ def epsgreedy_mono_oracle(Xtrain,ytrain,RL_mono,CNN_model,num_episodes):
             idx += 1
             r_sum += r
 
-        RL_model.save('RL_model_mono_'+str(i)+'.h5')
+        #RL_model.save('RL_model_mono_'+str(i)+'.h5')
+        RL_model.save('RL_model_mono_best.h5')
+
         r_avg_list.append(r_sum / 1000)
 
         #just for testing
 
-        expected_rewards = RL_model.predict([Xtest, y_pred_test])
+        expected_rewards = RL_model.predict(y_pred_test)
         print(expected_rewards)
 
 
@@ -186,9 +194,10 @@ def epsgreedy_mono_oracle(Xtrain,ytrain,RL_mono,CNN_model,num_episodes):
 
     return(RL_model)
 
+
 def RL_human_method(X, y, batch_size, CNN_model):
     '''
-
+    AL method which predicts reward for option asking human and sorts samples by that on base of ml output
     '''
     number_samples = np.shape(X)[0]
     if number_samples <= batch_size:
@@ -200,8 +209,11 @@ def RL_human_method(X, y, batch_size, CNN_model):
         CNN_model = load_model(CNN_model)
 
     y_pred = CNN_model.predict(X)
-
-    RL_model = load_model('RL_model_4.h5')
+    try:
+        RL_model = load_model('RL_model_mono_best.h5')
+    except:
+        RL_model = load_model('RL_model_mono_11.h5')
+    #RL_model = load_model('RL_model_4.h5')
 
     try:
         expected_rewards = RL_model.predict([X,y_pred])
@@ -224,12 +236,14 @@ def RL_human_method(X, y, batch_size, CNN_model):
     Xwinner, ywinner = X[:batch_size], y[:batch_size]
     Xloser, yloser = X[batch_size:], y[batch_size:]
 
+    epsgreedy_mono_oracle(Xwinner, ywinner,RL_model,CNN_model,11)
+
     return(Xwinner, ywinner, Xloser, yloser)
 
 
 def RL_CNN_method(X, y, batch_size, CNN_model):
     '''
-
+    AL method which predicts reward for option asking model and sorts samples by that on base of ml output
     '''
     number_samples = np.shape(X)[0]
     if number_samples <= batch_size:
@@ -240,9 +254,14 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
     if type(CNN_model) == str:
         CNN_model = load_model(CNN_model)
 
-    y_pred = CNN_model.predict(X)
 
-    RL_model = load_model('RL_model_4.h5')
+
+    y_pred = CNN_model.predict(X)
+    try:
+        RL_model = load_model('RL_model_mono_best.h5')
+    except:
+        RL_model = load_model('RL_model_mono_11.h5')
+    #RL_model = load_model('RL_model_mono_11.h5')
 
     try:
         expected_rewards = RL_model.predict([X, y_pred])
@@ -266,10 +285,108 @@ def RL_CNN_method(X, y, batch_size, CNN_model):
 
     Xwinner, ywinner = X[:batch_size], y[:batch_size]
     Xloser, yloser = X[batch_size:], y[batch_size:]
-
+    epsgreedy_mono_oracle(Xwinner, ywinner, RL_model, CNN_model, 11)
     print(np.shape(Xwinner))
     print(np.shape(Xloser))
     return (Xwinner, ywinner, Xloser, yloser)
 
+def RL_dual_human_method(X, y, batch_size, CNN_model):
+    '''
+    AL method which predicts reward for option asking human and sorts samples by that on base of ml output and images
+    '''
+    number_samples = np.shape(X)[0]
+    if number_samples <= batch_size:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
 
+    if type(CNN_model) == str:
+        CNN_model = load_model(CNN_model)
+
+    y_pred = CNN_model.predict(X)
+
+    try:
+        RL_model = load_model('RL_model_dual_best.h5')
+    except:
+        RL_model = load_model('RL_model_dual_11.h5')
+
+    #RL_model = load_model('RL_model_dual_11.h5')
+    #RL_model = load_model('RL_model_4.h5')
+
+    try:
+        expected_rewards = RL_model.predict([X,y_pred])
+    except:
+        expected_rewards = RL_model.predict(y_pred)
+
+    #decisions = [np.random.choice(2, p = expected_rewards[i]) for i in range(number_samples)]
+
+
+    #reminder: first entry expected reward for asking CNN model, second entry for asking human
+    ##either sort for lowest expected reward for CNN model, or highest expected reward for asking human
+    sort_ind = np.argsort(expected_rewards[:,1])
+    #sort samples (and labels) in descending order from highest expected reward to lowest
+    X = X[sort_ind[::-1]]
+    y = y[sort_ind[::-1]]
+
+    # just for testing
+    #y_pred = y_pred[sort_ind[::-1]]
+    #print(RL_model.predict([X, y_pred]))
+
+    Xwinner, ywinner = X[:batch_size], y[:batch_size]
+    Xloser, yloser = X[batch_size:], y[batch_size:]
+    epsgreedy_dual_oracle(Xwinner, ywinner, RL_model, CNN_model, 11)
+
+
+    return(Xwinner, ywinner, Xloser, yloser)
+
+
+def RL_dual_CNN_method(X, y, batch_size, CNN_model):
+    '''
+    AL method which predicts reward for option asking model and sorts samples by that on base of ml output and images
+    '''
+    number_samples = np.shape(X)[0]
+    if number_samples <= batch_size:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return (X, y, X_empty, y_empty)
+
+    if type(CNN_model) == str:
+        CNN_model = load_model(CNN_model)
+
+    y_pred = CNN_model.predict(X)
+
+    try:
+        RL_model = load_model('RL_model_dual_best.h5')
+    except:
+        RL_model = load_model('RL_model_dual_11.h5')
+
+    #RL_model = load_model('RL_model_dual_11.h5')
+
+    try:
+        expected_rewards = RL_model.predict([X, y_pred])
+    except:
+        expected_rewards = RL_model.predict(y_pred)
+
+    # decisions = [np.random.choice(2, p = expected_rewards[i]) for i in range(number_samples)]
+
+    # reminder: first entry expected reward for asking CNN model, second entry for asking human
+    ##either sort for lowest expected reward for CNN model, or highest expected reward for asking human
+    sort_ind = np.argsort(expected_rewards[:, 0])
+    # sort samples (and labels) in ascending order from lowest expected reward to highest
+    X = X[sort_ind]
+    y = y[sort_ind]
+
+
+    #just for testing
+    #y_pred = y_pred[sort_ind]
+    #print(RL_model.predict([X, y_pred]))
+
+
+    Xwinner, ywinner = X[:batch_size], y[:batch_size]
+    Xloser, yloser = X[batch_size:], y[batch_size:]
+    epsgreedy_dual_oracle(Xwinner, ywinner, RL_model, CNN_model, 11)
+
+    print(np.shape(Xwinner))
+    print(np.shape(Xloser))
+    return (Xwinner, ywinner, Xloser, yloser)
 

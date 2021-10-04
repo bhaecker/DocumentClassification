@@ -1,12 +1,21 @@
+# -----------------------------------------------------------
+# Zoo of distance based methods
+# based on
+# the vector space spanned by the predictions made by the ml model
+# to obtain
+# a diverse set of training samples
+# -----------------------------------------------------------
+
 import sys
 import math
 import random
 import numpy as np
 from numpy import linalg as LA
+from scipy.spatial import distance
 from skimage.metrics import structural_similarity as ssim
 from sklearn.metrics import mutual_info_score,normalized_mutual_info_score
 from tensorflow.keras.models import load_model
-
+from scipy.stats import wasserstein_distance
 from .TransferLearning import fetch_data
 
 def vecnorm_metric_method(X,y,number_samples,model):
@@ -33,6 +42,60 @@ def vecnorm_metric_method(X,y,number_samples,model):
         accumulated_distance = sum(
             [triple[0] for triple in distance_list if (triple[1][0] == idx or triple[1][1] == idx)])
         score_array[idx, 0], score_array[idx, 1] = int(idx), accumulated_distance
+
+    distance_list = sorted(score_array, key=lambda x: x[1], reverse=True)
+
+    # get the indices coresponding to the distances in the right order
+    # index_list = [index[1][i] for index in distance_list for i in range(0,2)]
+    # shorten the list to desired length without duplicates
+    # n_farest = []
+    # i = 0
+    # while len(n_farest)+1 <= number_samples:
+    #    if index_list[i] not in n_farest:
+    #       n_farest = n_farest + [index_list[i]]
+    #  i += 1
+    # seperate unseen data in winner and looser data set by the indices
+
+    distance_list = np.asarray(distance_list, dtype=int)
+
+    n_farest = distance_list[:number_samples, 0]
+
+    Xwinner = X[n_farest, :, :]
+    ywinner = y[n_farest]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[n_farest] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+    del n_farest, distance_list, score_array
+
+    return(Xwinner, ywinner, Xloser, yloser)
+
+def vecnorm_metric_opti_method(X,y,number_samples,model):
+    '''
+    gives back the samples, which predictions are most far away (with respect to L2 norm) in prediction space
+    '''
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+    if type(model) == str:
+        model = load_model(model)
+    Ypred = model.predict(X)
+
+    score_array = np.zeros([np.shape(y)[0], 2])
+    for idx in range(np.shape(y)[0]):
+        score_array[idx,0] = int(idx)
+    print(score_array)
+    print(np.shape(score_array))
+    for row, ypred_a in enumerate(Ypred):
+        for column, ypred_b in enumerate(Ypred[row + 1:]):
+            current_distance = LA.norm(ypred_a-ypred_b)
+            score_array[row, 1] += current_distance
+            score_array[column + row + 1, 1] += current_distance
+            # distance_list.append((current_distance, (row, column + row + 1)))
+        print(row / np.shape(Ypred)[0])
+    print(score_array)
 
     distance_list = sorted(score_array, key=lambda x: x[1], reverse=True)
 
@@ -104,6 +167,185 @@ def diversity_method(X,y,number_samples,model):
     mask[winner_indices] = False
     Xloser = X[mask, :, :]
     yloser = y[mask]
+
+    return(Xwinner, ywinner, Xloser, yloser)
+
+def cosine_distance_method(X,y,number_samples,model):
+    '''
+    gives back the samples, which predictions are most far away (with respect to L2 norm) in prediction space
+    '''
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+    if type(model) == str:
+        model = load_model(model)
+    Ypred = model.predict(X)
+
+    distance_list = []
+    for row, ypred_a in enumerate(Ypred):
+        for column, ypred_b in enumerate(Ypred[row + 1:]):
+            current_distance = distance.cosine(ypred_a,ypred_b)
+            distance_list.append((current_distance, (row, column + row + 1)))
+        print(row/np.shape(Ypred)[0])
+
+    score_array = np.empty([np.shape(y)[0], 2])
+    for idx, _ in enumerate(score_array):
+        # sum up the distances for each av
+        accumulated_distance = sum(
+            [triple[0] for triple in distance_list if (triple[1][0] == idx or triple[1][1] == idx)])
+        score_array[idx, 0], score_array[idx, 1] = int(idx), accumulated_distance
+
+    distance_list = sorted(score_array, key=lambda x: x[1], reverse=True)
+
+    # get the indices coresponding to the distances in the right order
+    # index_list = [index[1][i] for index in distance_list for i in range(0,2)]
+    # shorten the list to desired length without duplicates
+    # n_farest = []
+    # i = 0
+    # while len(n_farest)+1 <= number_samples:
+    #    if index_list[i] not in n_farest:
+    #       n_farest = n_farest + [index_list[i]]
+    #  i += 1
+    # seperate unseen data in winner and looser data set by the indices
+
+    distance_list = np.asarray(distance_list, dtype=int)
+
+    n_farest = distance_list[:number_samples, 0]
+
+    Xwinner = X[n_farest, :, :]
+    ywinner = y[n_farest]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[n_farest] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+    del n_farest, distance_list, score_array
+
+    return(Xwinner, ywinner, Xloser, yloser)
+
+
+def cosine_distance_opti_method(X,y,number_samples,model):
+    '''
+    gives back the samples, which predictions are most far away (with respect to cosine distance) in prediction space
+    '''
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+    if type(model) == str:
+        model = load_model(model)
+    Ypred = model.predict(X)
+
+    #distance_list = []
+    score_array = np.zeros([np.shape(y)[0], 2])
+    for idx in range(np.shape(y)[0]):
+        score_array[idx,0]= int(idx)
+    print(score_array)
+    print(np.shape(score_array))
+    for row, ypred_a in enumerate(Ypred):
+        for column, ypred_b in enumerate(Ypred[row + 1:]):
+            current_distance = distance.cosine(ypred_a,ypred_b)
+            score_array[row,1] += current_distance
+            score_array[column + row + 1, 1] += current_distance
+            #distance_list.append((current_distance, (row, column + row + 1)))
+        print(row/np.shape(Ypred)[0])
+    print(score_array)
+
+    #score_array = np.empty([np.shape(y)[0], 2])
+    #for idx, _ in enumerate(score_array):
+        # sum up the distances for each av
+    #    accumulated_distance = sum(
+    #        [triple[0] for triple in distance_list if (triple[1][0] == idx or triple[1][1] == idx)])
+     #   score_array[idx, 0], score_array[idx, 1] = int(idx), accumulated_distance
+
+    distance_list = sorted(score_array, key=lambda x: x[1], reverse=True)
+
+    # get the indices coresponding to the distances in the right order
+    # index_list = [index[1][i] for index in distance_list for i in range(0,2)]
+    # shorten the list to desired length without duplicates
+    # n_farest = []
+    # i = 0
+    # while len(n_farest)+1 <= number_samples:
+    #    if index_list[i] not in n_farest:
+    #       n_farest = n_farest + [index_list[i]]
+    #  i += 1
+    # seperate unseen data in winner and looser data set by the indices
+
+    distance_list = np.asarray(distance_list, dtype=int)
+
+    n_farest = distance_list[:number_samples, 0]
+
+    Xwinner = X[n_farest, :, :]
+    ywinner = y[n_farest]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[n_farest] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+    del n_farest, distance_list, score_array
+
+    return(Xwinner, ywinner, Xloser, yloser)
+
+def wasserstein_distance_opti_method(X,y,number_samples,model):
+    '''
+    gives back the samples, which predictions are most far away (with respect to wasserstein metric) in prediction space
+    '''
+    if np.shape(X)[0] <= number_samples:
+        X_empty = np.empty([0, np.shape(X)[1], np.shape(X)[2], np.shape(X)[3]])
+        y_empty = np.empty([0, np.shape(y)[1]])
+        return(X,y,X_empty,y_empty)
+    if type(model) == str:
+        model = load_model(model)
+    Ypred = model.predict(X)
+
+    #distance_list = []
+    score_array = np.zeros([np.shape(y)[0], 2])
+    for idx in range(np.shape(y)[0]):
+        score_array[idx,0]= int(idx)
+    print(score_array)
+    print(np.shape(score_array))
+    for row, ypred_a in enumerate(Ypred):
+        for column, ypred_b in enumerate(Ypred[row + 1:]):
+            current_distance = wasserstein_distance(ypred_a,ypred_b)
+            score_array[row,1] += current_distance
+            score_array[column + row + 1, 1] += current_distance
+            #distance_list.append((current_distance, (row, column + row + 1)))
+        print(row/np.shape(Ypred)[0])
+    print(score_array)
+
+    #score_array = np.empty([np.shape(y)[0], 2])
+    #for idx, _ in enumerate(score_array):
+        # sum up the distances for each av
+    #    accumulated_distance = sum(
+    #        [triple[0] for triple in distance_list if (triple[1][0] == idx or triple[1][1] == idx)])
+     #   score_array[idx, 0], score_array[idx, 1] = int(idx), accumulated_distance
+
+    distance_list = sorted(score_array, key=lambda x: x[1], reverse=True)
+
+    # get the indices coresponding to the distances in the right order
+    # index_list = [index[1][i] for index in distance_list for i in range(0,2)]
+    # shorten the list to desired length without duplicates
+    # n_farest = []
+    # i = 0
+    # while len(n_farest)+1 <= number_samples:
+    #    if index_list[i] not in n_farest:
+    #       n_farest = n_farest + [index_list[i]]
+    #  i += 1
+    # seperate unseen data in winner and looser data set by the indices
+
+    distance_list = np.asarray(distance_list, dtype=int)
+
+    n_farest = distance_list[:number_samples, 0]
+
+    Xwinner = X[n_farest, :, :]
+    ywinner = y[n_farest]
+
+    mask = np.ones(X.shape[0], dtype=bool)
+    mask[n_farest] = False
+    Xloser = X[mask, :, :]
+    yloser = y[mask]
+    del n_farest, distance_list, score_array
 
     return(Xwinner, ywinner, Xloser, yloser)
 
