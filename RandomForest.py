@@ -1,3 +1,7 @@
+# -----------------------------------------------------------
+# Use a Random Forest to do the Active Learning
+# -----------------------------------------------------------
+
 import sys
 import numpy as np
 import pickle

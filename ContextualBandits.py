@@ -1,3 +1,7 @@
+# -----------------------------------------------------------
+# Contextual Multi-armed Bandits for AL
+# -----------------------------------------------------------
+
 import sys
 import random
 import numpy as np

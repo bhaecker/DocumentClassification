@@ -1,3 +1,7 @@
+# -----------------------------------------------------------
+# Use Active Learning method to seperate training data
+# -----------------------------------------------------------
+
 import sys
 import math
 import glob
@@ -5,11 +9,8 @@ import os
 import functools
 import numpy as np
 import collections
-import tensorflow as tf
 
 from tensorflow.keras.models import load_model
-
-
 
 def seperation(X,y,model,batch_size,method):
     '''

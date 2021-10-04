@@ -1,3 +1,7 @@
+# -----------------------------------------------------------
+# Test methods and models on artificial data
+# -----------------------------------------------------------
+
 import sys
 import math
 import glob
